@@ -4,15 +4,15 @@ using namespace std;
 
 int main()
 {
-    int ile, lenght, indexing, num, indexes, sum;
+    int ile, length, indexing, num, indexes, sum;
     char action_type;
     cin >> ile;
     while (ile > 0)
     {
-        cin >> lenght;
+        cin >> length;
         indexing = 0;
-        int lista[lenght];
-        while (indexing < lenght)
+        int lista[length];
+        while (indexing < length)
         {
             cin >> num;
             lista[indexing] = num;
@@ -32,77 +32,92 @@ int main()
 
         while (action_type != 'F')
         {
-            int cur_index = 0, real_index, fragment, migration, fragment_count, fragment_start, fragment_end;
+            int cur_index = 0, real_index, fragment, migration, fragment_count, fragment_start, fragment_end, is_fragment_full = 0; // 0 - undefined state, 1 - full segment state, 2 - not full segment state
             cin >> action_type;
-
-            cin >> indexes >> fragment;
+            if (action_type != 'F')
+            {
+                cin >> indexes >> fragment;
+            }
             if (action_type == 'M')
             {
                 cin >> migration;
             }
-            real_index = (((indexes % lenght) + lenght) % lenght);
+            real_index = (((indexes % length) + length) % length);
             cur_index = real_index;
             fragment_count = 0;
             do
             {
-                cout << lista[cur_index++] << ' ';
-                cur_index = (cur_index == lenght) ? 0 : cur_index;
+
+                cur_index = (cur_index == length) ? 0 : cur_index;
+                cout << lista[cur_index] << ' ';
                 fragment_count++;
+                cout << fragment_count << ' ' << cur_index << ' ' << is_fragment_full << ' ' << endl;
                 if (fragment_count == 1)
                 {
                     fragment_start = cur_index;
                 }
-
                 if (fragment_count == fragment)
                 {
-                    fragment_end = cur_index - 1;
+                    is_fragment_full = 1;
+                    fragment_end = cur_index;
                 }
-                if (fragment_count == fragment) // Only for R and C
+                else if (cur_index + 1 == real_index)
                 {
-                    cout << "end of fragment" << ' ';
+                    is_fragment_full = 2;
+                    fragment_end = cur_index;
+                }
+
+                cur_index++;
+                if (is_fragment_full == 1)
+                {
                     fragment_count = 0;
-                    cout << fragment_start - 1 << ' ' << fragment_end - 1 << ' ' << endl;
+                    cout << fragment_start << ' ' << fragment_end << ' ' << endl;
+                    is_fragment_full = 0;
                     if (action_type == 'R')
                     {
-                        int reverse_buffer1, reverse_buffer2;
-                        while (fragment_start != fragment_end && (fragment_start + 1 != fragment_end && (fragment_start != 0 && fragment_end != lenght)))
+                        int left = fragment_start;
+                        int right = fragment_end;
+                        while (left != right && (left + length - 1) % length != right)
                         {
-                            reverse_buffer1 = lista[fragment_start];
-                            reverse_buffer2 = lista[fragment_end];
-                            lista[fragment_end] = reverse_buffer1;
-                            lista[fragment_start] = reverse_buffer2;
-                            fragment_start++;
-                            fragment_start = (fragment_start == lenght) ? 0 : fragment_start;
-                            fragment_end--;
-                            fragment_end = (fragment_end == 0) ? lenght - 1 : fragment_end;
+
+                            int temp = lista[left];
+                            lista[left] = lista[right];
+                            lista[right] = temp;
+
+                            left = (left + 1) % length;
+
+                            right = (right - 1 + length) % length;
                         }
                     }
                 }
-                if (action_type == 'M')
+                if (is_fragment_full == 1 || is_fragment_full == 2)
                 {
-                    int buffer_migrate1, buffer_migrate2, migrate_to_index, index1, index2;
-                    index1 = fragment_start;
-                    migrate_to_index = 0;
-                    cout << migrate_to_index << ' ' << index1 << endl;
-                    cout << "result" << endl;
-                    int i = 0;
-                    while (i < sizeof(lista) / sizeof(lista[0]))
+                    if (action_type == 'M')
                     {
-                        cout << lista[i] << ' ';
-                        ++i;
+                        int buffer_migrate1, buffer_migrate2, migrate_to_index, index1, index2;
+                        index1 = fragment_start;
+                        migrate_to_index = 0;
+                        cout << migrate_to_index << ' ' << index1 << endl;
+                        cout << "result" << endl;
+                        int i = 0;
+                        while (i < sizeof(lista) / sizeof(lista[0]))
+                        {
+                            cout << lista[i] << ' ';
+                            ++i;
+                        }
+                        cout << endl
+                             << "result" << endl;
                     }
-                    cout << endl
-                         << "result" << endl;
+                }
+                if (is_fragment_full == 2)
+                {
+                    cout << "end of fragment" << ' ';
+                    fragment_count = 0;
+                    cout << fragment_start << ' ' << fragment_end << ' ' << endl;
+                    is_fragment_full = 0;
                 }
 
             } while (cur_index != real_index);
-
-            fragment_start = cur_index - fragment;
-            fragment_end = cur_index;
-            fragment_count = 0;
-            cout << endl;
-            cout << "end of fragment" << endl;
-            cout << "result" << endl;
             i = 0;
             while (i < sizeof(lista) / sizeof(lista[0]))
             {

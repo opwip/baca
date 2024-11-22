@@ -32,7 +32,7 @@ int main()
 
         while (action_type != 'F')
         {
-            int cur_index = 0, real_index, fragment, migration, fragment_count, fragment_start, fragment_end, is_fragment_full = 0; // 0 - undefined state, 1 - full segment state, 2 - not full segment state
+            int cur_index = 0, real_index, real_fragment, fragment, migration, fragment_count, fragment_start, fragment_end, is_fragment_full = 0; // 0 - undefined state, 1 - full segment state, 2 - not full segment state
             cin >> action_type;
             if (action_type != 'F')
             {
@@ -49,9 +49,7 @@ int main()
             {
 
                 cur_index = (cur_index == length) ? 0 : cur_index;
-                cout << lista[cur_index] << ' ';
                 fragment_count++;
-                cout << fragment_count << ' ' << cur_index << ' ' << is_fragment_full << ' ' << endl;
                 if (fragment_count == 1)
                 {
                     fragment_start = cur_index;
@@ -60,19 +58,18 @@ int main()
                 {
                     is_fragment_full = 1;
                     fragment_end = cur_index;
+                    real_fragment = fragment_count;
                 }
                 else if (cur_index + 1 == real_index)
                 {
                     is_fragment_full = 2;
                     fragment_end = cur_index;
+                    real_fragment = fragment_count;
                 }
 
                 cur_index++;
-                if (is_fragment_full == 1)
+                if (is_fragment_full == 1) // R and S
                 {
-                    fragment_count = 0;
-                    cout << fragment_start << ' ' << fragment_end << ' ' << endl;
-                    is_fragment_full = 0;
                     if (action_type == 'R')
                     {
                         int left = fragment_start;
@@ -90,24 +87,38 @@ int main()
                         }
                     }
                 }
-                if (is_fragment_full == 1 || is_fragment_full == 2)
+                if (is_fragment_full == 1 || is_fragment_full == 2) // M and C
                 {
                     if (action_type == 'M')
                     {
-                        int buffer_migrate1, buffer_migrate2, migrate_to_index, index1, index2;
-                        index1 = fragment_start;
-                        migrate_to_index = 0;
-                        cout << migrate_to_index << ' ' << index1 << endl;
-                        cout << "result" << endl;
-                        int i = 0;
-                        while (i < sizeof(lista) / sizeof(lista[0]))
+                        int left = fragment_start;
+                        int right = fragment_end;
+                        int temp, migrate_to;
+                        migration = migration % real_fragment;
+                        if (migration < 0)
                         {
-                            cout << lista[i] << ' ';
-                            ++i;
+                            migration += real_fragment;
                         }
-                        cout << endl
-                             << "result" << endl;
+                        cout
+                            << migration << endl;
+                        int k = 0;
+                        while (k < real_fragment)
+                        {
+
+                            int current_index = (fragment_start + k) % length;
+                            int new_index = (current_index + migration) % real_fragment + fragment_start;
+                            new_index %= length;
+                            cout << "Element at index " << current_index << " migrates to index " << new_index << endl;
+                            k++;
+                        }
                     }
+                }
+                if (is_fragment_full == 1)
+                {
+                    cout << "end of fragment" << ' ';
+                    fragment_count = 0;
+                    cout << fragment_start << ' ' << fragment_end << ' ' << endl;
+                    is_fragment_full = 0;
                 }
                 if (is_fragment_full == 2)
                 {
@@ -116,7 +127,6 @@ int main()
                     cout << fragment_start << ' ' << fragment_end << ' ' << endl;
                     is_fragment_full = 0;
                 }
-
             } while (cur_index != real_index);
             i = 0;
             while (i < sizeof(lista) / sizeof(lista[0]))
@@ -129,6 +139,5 @@ int main()
         }
         action_type = 'N';
     }
-    system("pause");
     return 0;
 }

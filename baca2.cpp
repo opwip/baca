@@ -27,7 +27,7 @@ int main()
         }
         cout << endl;
         ile = ile - 1;
-
+        action_type = 'N';
         while (action_type != 'F')
         {
             int cur_index = 0, real_index, real_fragment, fragment, migration, fragment_count, fragment_start, fragment_end, is_fragment_full = 0, counter_pairs = 0; // 0 - undefined state, 1 - full segment state, 2 - not full segment state
@@ -51,7 +51,6 @@ int main()
             fragment_count = 0;
             while (make_it)
             {
-                cur_index = (cur_index == length) ? 0 : cur_index;
                 fragment_count = fragment_count + 1;
                 if (fragment_count == 1)
                 {
@@ -63,7 +62,7 @@ int main()
                     fragment_end = cur_index;
                     real_fragment = fragment_count;
                 }
-                else if (cur_index + 1 == real_index)
+                else if (((cur_index + 1) % length) == real_index)
                 {
                     is_fragment_full = 2;
                     fragment_end = cur_index;
@@ -194,13 +193,12 @@ int main()
                 }
                 if (is_fragment_full == 1)
                 {
-                    cout << fragment_start << ' ' << fragment_end << endl;
+
                     fragment_count = 0;
                     is_fragment_full = 0;
                 }
                 if (is_fragment_full == 2)
                 {
-                    cout << fragment_start << ' ' << fragment_end << endl;
 
                     fragment_count = 0;
                     is_fragment_full = 0;
@@ -212,16 +210,16 @@ int main()
                 }
                 else
                     do_once = true;
-                cur_index = cur_index + 1;
+                cur_index = (cur_index + 1) % length;
             }
+            int i = 0;
+            while (i < length)
+            {
+                cout << lista[i] << ' ';
+                i = i + 1;
+            }
+            cout << endl;
         }
-        i = 0;
-        while (i < length)
-        {
-            cout << lista[i] << ' ';
-            i = i + 1;
-        }
-        cout << endl;
 
         action_type = 'N';
     }

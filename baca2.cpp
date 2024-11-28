@@ -35,10 +35,12 @@ int main()
             bool do_once = false;
             bool make_it = true;
             bool sort_type = false;
+            bool migration_type = false;
             if (action_type != 'F')
             {
 
                 cin >> indexes >> fragment;
+                migration_type = (fragment < 0) ? true : false;
                 sort_type = (fragment < 0) ? true : false;
                 fragment = (fragment < 0) ? (fragment * -1) : fragment;
             }
@@ -49,7 +51,8 @@ int main()
             real_index = (((indexes % length) + length) % length);
             cur_index = real_index;
             fragment_count = 0;
-            while (make_it)
+            do
+
             {
                 fragment_count = fragment_count + 1;
                 if (fragment_count == 1)
@@ -62,7 +65,7 @@ int main()
                     fragment_end = cur_index;
                     real_fragment = fragment_count;
                 }
-                else if (((cur_index + 1) % length) == real_index)
+                else if (((cur_index + 1) % length) == real_index && fragment_count < fragment)
                 {
                     is_fragment_full = 2;
                     fragment_end = cur_index;
@@ -71,19 +74,22 @@ int main()
 
                 if (is_fragment_full == 1) // R and C
                 {
-                    if (action_type == 'R')
+
+                    if (action_type == 'R' && sort_type == false)
                     {
                         int left = fragment_start;
                         int right = fragment_end;
-                        while (left != right && (left + length - 1) % length != right)
+                        int last_left = left;
+                        int last_right = right;
+                        while (left != right && left != last_right && right != last_left)
                         {
 
                             int temp = lista[left];
                             lista[left] = lista[right];
                             lista[right] = temp;
-
+                            last_left == left;
                             left = (left + 1) % length;
-
+                            last_right = right;
                             right = (right - 1 + length) % length;
                         }
                     }
@@ -122,6 +128,7 @@ int main()
                         int left = fragment_start;
                         int right = fragment_end;
                         int migrations_counter = 0;
+                        int save_migration = migration;
                         migration = migration % real_fragment;
 
                         if (migration < 0)
@@ -131,24 +138,46 @@ int main()
 
                         while (migrations_counter < migration)
                         {
-
-                            int k = 0;
-
-                            int current_index_migrate = right;
-                            int temp = lista[right];
-                            while (k < real_fragment)
+                            if (migration_type == false)
                             {
+                                int k = 0;
 
-                                lista[current_index_migrate] = lista[(current_index_migrate - 1 + length) % length];
-                                current_index_migrate = (current_index_migrate - 1 + length) % length;
+                                int current_index_migrate = right;
+                                int temp = lista[right];
+                                while (k < real_fragment)
+                                {
 
-                                k = k + 1;
+                                    lista[current_index_migrate] = lista[(current_index_migrate - 1 + length) % length];
+                                    current_index_migrate = (current_index_migrate - 1 + length) % length;
+
+                                    k = k + 1;
+                                }
+
+                                lista[(left) % length] = temp;
+
+                                migrations_counter = migrations_counter + 1;
                             }
+                            else if (migration_type == true)
+                            {
+                                int k = 0;
 
-                            lista[(left) % length] = temp;
+                                int current_index_migrate = left;
+                                int temp = lista[left];
+                                while (k < real_fragment)
+                                {
 
-                            migrations_counter = migrations_counter + 1;
+                                    lista[current_index_migrate] = lista[(current_index_migrate + 1) % length];
+                                    current_index_migrate = (current_index_migrate + 1) % length;
+
+                                    k = k + 1;
+                                }
+
+                                lista[(right + length) % length] = temp;
+
+                                migrations_counter = migrations_counter + 1;
+                            }
                         }
+                        migration = save_migration;
                     }
 
                     if (action_type == 'S')
@@ -193,34 +222,25 @@ int main()
                 }
                 if (is_fragment_full == 1)
                 {
-
                     fragment_count = 0;
                     is_fragment_full = 0;
                 }
                 if (is_fragment_full == 2)
                 {
-
                     fragment_count = 0;
                     is_fragment_full = 0;
                 }
 
-                if (cur_index == real_index && do_once)
-                {
-                    make_it = false;
-                }
-                else
-                    do_once = true;
                 cur_index = (cur_index + 1) % length;
-            }
-            int i = 0;
-            while (i < length)
-            {
-                cout << lista[i] << ' ';
-                i = i + 1;
-            }
-            cout << endl;
+            } while (cur_index != real_index);
         }
-
+        i = 0;
+        while (i < length)
+        {
+            cout << lista[i] << ' ';
+            i = i + 1;
+        }
+        cout << endl;
         action_type = 'N';
     }
     return 0;

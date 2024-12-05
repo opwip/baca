@@ -135,50 +135,48 @@ bool Element(int num, int set[])
 double Arithmetic(int set[])
 {
     double sum = 0;
-    int i = 0;
-    for (; set[i] != -1; i++)
+    int count = 0;
+    for (int i = 0; set[i] != -1; i++)
+    {
         sum += set[i];
-    return (sum / i);
+        count++;
+    }
+    return (count > 0) ? (sum / count) : 0.0;
 }
 
 double Harmonic(int set[])
 {
     double sum = 0;
-    int i = 0;
-    for (i; set[i] != -1; i++)
+    int count = 0;
+    for (int i = 0; set[i] != -1; i++)
     {
-        double thing = set[i];
-        sum += (1 / thing);
+        if (set[i] != 0)
+        {
+            sum += 1.0 / set[i];
+            count++;
+        }
     }
-    if (sum == 0)
-    {
-        return 1;
-    }
-    return (sum);
+    return (count > 0) ? count / sum : 1.0;
 }
 
 void MinMax(int set[], int *min, int &max)
 {
-    bool do_it;
-    for (int i = 0; set[i] != -1; i++)
-        do_it = true;
-    if (!do_it)
-        do_it = false;
-    if (do_it)
+    if (set[0] == -1)
     {
+        return;
+    }
 
-        *min = set[0];
-        max = set[0];
-        for (int i = 0; set[i] != -1; i++)
+    *min = set[0];
+    max = set[0];
+    for (int i = 1; set[i] != -1; i++)
+    {
+        if (set[i] < *min)
         {
-            if (set[i] < *min)
-            {
-                *min = set[i];
-            }
-            if (set[i] > max)
-            {
-                max = set[i];
-            }
+            *min = set[i];
+        }
+        if (set[i] > max)
+        {
+            max = set[i];
         }
     }
 }
@@ -308,21 +306,21 @@ void Symmetric(int set1[], int set2[], int result[])
 
 bool Subset(int set1[], int set2[])
 {
-    bool in = false;
     for (int i = 0; set1[i] != -1; i++)
     {
-        in = false;
+        bool in = false;
         for (int j = 0; set2[j] != -1; j++)
         {
-            if (set2[j] == set1[i])
+            if (set1[i] == set2[j])
             {
                 in = true;
+                break;
             }
         }
         if (!in)
         {
             return false;
         }
+        return true;
     }
-    return in;
 }

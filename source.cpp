@@ -2,6 +2,27 @@
 #include <iostream>
 using namespace std;
 
+
+
+void SortSet(int set[])
+{
+    int size = 0;
+    while (set[size] != -1)
+        size++;
+
+    for (int i = 0; i < size - 1; i++)
+    {
+        for (int j = 0; j < size - i - 1; j++)
+        {
+            if (set[j] > set[j + 1])
+            {
+                int temp = set[j];
+                set[j] = set[j + 1];
+                set[j + 1] = temp;
+            }
+        }
+    }
+}
 void Add(int adding, int set[])
 {
     bool add = true;
@@ -13,7 +34,7 @@ void Add(int adding, int set[])
             add = false;
         }
     }
-    if (!(adding >= 1 && adding <= 4095))
+    if (adding < 1 || adding > 4095)
     {
         add = false;
     }
@@ -22,6 +43,7 @@ void Add(int adding, int set[])
 
         set[i] = adding;
         set[i + 1] = -1;
+        SortSet(set);
     }
 }
 
@@ -49,43 +71,36 @@ void Create(int size, int array[], int set[])
             }
         }
     }
+    SortSet(set);
 }
 
 void Complement(int set[], int result[])
 {
-    int i = 0;
-    for (i; result[i] != -1; i++)
+    int k = 0;
+
+    for (int num = 1; num <= 4095; num++)
     {
         bool in = false;
-        for (int j = 0; set[j] != -1; j++)
+
+        for (int i = 0; set[i] != -1; i++)
         {
-            if (set[j] == result[i])
+            if (set[i] == num)
             {
                 in = true;
+                break;
             }
         }
-        if (in)
-        {
-            result[i] = 0;
-        }
-    }
-    int k = 0;
-    for (i = 0; result[i] != -1; i++)
-    {
 
-        if (result[i] != 0)
+        if (!in)
         {
-            cout << "set[" << i - k << "] = " << set[i - k] << " ";
-            cout << "result[" << i << "] = " << result[i] << " ";
-            cout << "Difference: " << i - k << endl;
-            set[i - k] = result[i];
-        }
-        else
-        {
+            result[k] = num;
             k++;
         }
     }
-    set[i - k] = -1;
+
+    result[k] = -1;
+
+    SortSet(result);
 }
 
 bool Equal(int setA[], int setB[])
@@ -99,6 +114,23 @@ bool Equal(int setA[], int setB[])
             {
                 in = true;
             }
+            
+        }
+        if (!in)
+        {
+            return false;
+        }
+    }
+    for (int i = 0; setB[i] != -1; i++)
+    {
+        bool in = false;
+        for (int j = 0; setA[j] != -1; j++)
+        {
+            if (setA[j] == setB[i])
+            {
+                in = true;
+            }
+            
         }
         if (!in)
         {
@@ -183,10 +215,12 @@ void MinMax(int set[], int *min, int &max)
 
 void Cardinality(int set[], int *var)
 {
+    int counter = 0;
     for (int i = 0; set[i] != -1; i++)
     {
-        *var += 1;
+        counter += 1;
     }
+    *var = counter;
 }
 
 void Union(int set1[], int set2[], int result[])
@@ -314,13 +348,29 @@ bool Subset(int set1[], int set2[])
             if (set1[i] == set2[j])
             {
                 in = true;
-                break;
             }
         }
         if (!in)
         {
             return false;
         }
-        return true;
+    }
+    return true;
+}
+
+void Properties(int set[], char inions[], double &arith, double *harmo, int &min, int *max, int &moc){
+    bool stop = false;
+    for (int i = 0; !stop; i++){
+        if (inions[i] == 'a')
+        
+        {
+            arith = Arithmetic(set);}
+        else if (inions[i] == 'h')
+        {*harmo = Harmonic(set);}
+        else if (inions[i] == 'm')
+        {MinMax(set,&min,*max);}
+        else if (inions[i] == 'c')
+        {Cardinality(set, &moc);}
+        else {stop = true;}
     }
 }

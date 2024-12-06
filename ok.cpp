@@ -2,6 +2,26 @@
 #include <iostream>
 using namespace std;
 
+
+void SortSet(int set[])
+{
+    int size = 0;
+    while (set[size] != -1)
+        size++;
+
+    for (int i = 0; i < size - 1; i++)
+    {
+        for (int j = 0; j < size - i - 1; j++)
+        {
+            if (set[j] > set[j + 1])
+            {
+                int temp = set[j];
+                set[j] = set[j + 1];
+                set[j + 1] = temp;
+            }
+        }
+    }
+}
 void Add(int adding, int set[])
 {
     bool add = true;
@@ -13,7 +33,7 @@ void Add(int adding, int set[])
             add = false;
         }
     }
-    if (!(adding >= 1 && adding <= 4095))
+    if (adding < 1 || adding > 4095)
     {
         add = false;
     }
@@ -22,6 +42,7 @@ void Add(int adding, int set[])
 
         set[i] = adding;
         set[i + 1] = -1;
+        SortSet(set);
     }
 }
 
@@ -49,43 +70,36 @@ void Create(int size, int array[], int set[])
             }
         }
     }
+    SortSet(set);
 }
 
 void Complement(int set[], int result[])
 {
-    int i = 0;
-    for (i; result[i] != -1; i++)
+    int k = 0;
+
+    for (int num = 1; num <= 4095; num++)
     {
         bool in = false;
-        for (int j = 0; set[j] != -1; j++)
+
+        for (int i = 0; set[i] != -1; i++)
         {
-            if (set[j] == result[i])
+            if (set[i] == num)
             {
                 in = true;
+                break;
             }
         }
-        if (in)
-        {
-            result[i] = 0;
-        }
-    }
-    int k = 0;
-    for (i = 0; result[i] != -1; i++)
-    {
 
-        if (result[i] != 0)
+        if (!in)
         {
-            cout << "set[" << i - k << "] = " << set[i - k] << " ";
-            cout << "result[" << i << "] = " << result[i] << " ";
-            cout << "Difference: " << i - k << endl;
-            set[i - k] = result[i];
-        }
-        else
-        {
+            result[k] = num;
             k++;
         }
     }
-    set[i - k] = -1;
+
+    result[k] = -1;
+
+    SortSet(result);
 }
 
 bool Equal(int setA[], int setB[])
@@ -99,6 +113,23 @@ bool Equal(int setA[], int setB[])
             {
                 in = true;
             }
+            
+        }
+        if (!in)
+        {
+            return false;
+        }
+    }
+    for (int i = 0; setB[i] != -1; i++)
+    {
+        bool in = false;
+        for (int j = 0; setA[j] != -1; j++)
+        {
+            if (setA[j] == setB[i])
+            {
+                in = true;
+            }
+            
         }
         if (!in)
         {
@@ -183,10 +214,12 @@ void MinMax(int set[], int *min, int &max)
 
 void Cardinality(int set[], int *var)
 {
+    int counter = 0;
     for (int i = 0; set[i] != -1; i++)
     {
-        *var += 1;
+        counter += 1;
     }
+    *var = counter;
 }
 
 void Union(int set1[], int set2[], int result[])
@@ -314,16 +347,33 @@ bool Subset(int set1[], int set2[])
             if (set1[i] == set2[j])
             {
                 in = true;
-                break;
             }
         }
         if (!in)
         {
             return false;
         }
-        return true;
+    }
+    return true;
+}
+
+void Properties(int set[], char inions[], double &arith, double *harmo, int &min, int *max, int &moc){
+    bool stop = false;
+    for (int i = 0; !stop; i++){
+        if (inions[i] == 'a')
+        
+        {
+            arith = Arithmetic(set);}
+        else if (inions[i] == 'h')
+        {*harmo = Harmonic(set);}
+        else if (inions[i] == 'm')
+        {MinMax(set,&min,*max);}
+        else if (inions[i] == 'c')
+        {Cardinality(set, &moc);}
+        else {stop = true;}
     }
 }
+
 
 void printArray(int set[])
 {
@@ -332,9 +382,6 @@ void printArray(int set[])
     {
         cout << set[i] << " ";
     }
-    cout << endl;
-    cout << set[i] << " ";
-    cout << endl;
 }
 
 int main()
@@ -342,8 +389,8 @@ int main()
     // int arr1[] = {13, 13, 2, 3, 5};
     // int arr[] = {1, 2, 6, 3, -1, 0};
     // int res[] = {1, 2, 3, 4, 5, 6, -1};
-    int kola[] = {4, 5, -1};
-    int kola2[] = {4, 5, 6, -1};
+    int kola[] = {1,2,-1};
+    int kola2[] = {1,2,-1};
     // int res1[7];
     // int mix = 1, nim = 2;
     // int *mixp = &mix, &nimp = nim;
@@ -356,8 +403,8 @@ int main()
     // // Create(6, arr1, ko);
     // Cardinality(kola2, mixp);
     // Subset(kola, kola2);
-    cout << endl
-         << Subset(kola, kola2) << endl;
+    Add(1, kola2);
+    printArray(kola2);
     int firstSet[] = {2, 3, 4, 8, 5, 77, 77, 77, 77, 4342, 5552, 41241, 9};
 
     int sizeFirst = 13;
@@ -378,26 +425,45 @@ int main()
     printArray(setFromFirst);
     cout << "\n";
 
-    cout << "Empty: " << Empty(setFromFirst);
-    cout << "\n";
-    printArray(setFromFirst);
-    cout << "\n";
+    char inions[] = {'a', 'h', 'm', 'c'};  // Instructions array
+    
+    // Variables to hold results
+    double arith = 0.0;
+    double harmo = 0.0;
+    int min = 0;
+    int max = 0;
+    int moc = 0;
 
-    cout << "Nonempty: " << Nonempty(setFromFirst);
-    cout << "\n";
-    printArray(setFromFirst);
-    cout << "\n";
+    // Call the function
+    Properties(setFromFirst, inions, arith, &harmo, min, &max, moc);
 
-    cout << "Element (14): " << Element(14, setFromFirst);
-    cout << "\n";
-    cout << "Element (3999): " << Element(3999, setFromFirst);
-    cout << "\n";
-    cout << "Element (-1): " << Element(-1, setFromFirst);
-    cout << "\n";
-    cout << "Element (8): " << Element(8, setFromFirst);
-    cout << "\n";
-    printArray(setFromFirst);
-    cout << "\n";
+    // Display results
+    cout << "Arithmetic Mean: " << arith << endl;
+    cout << "Harmonic Mean: " << harmo << endl;
+    cout << "Minimum: " << min << endl;
+    cout << "Maximum: " << max << endl;
+    cout << "Cardinality: " << moc << endl;
+
+    // cout << "Empty: " << Empty(setFromFirst);
+    // cout << "\n";
+    // printArray(setFromFirst);
+    // cout << "\n";
+
+    // cout << "Nonempty: " << Nonempty(setFromFirst);
+    // cout << "\n";
+    // printArray(setFromFirst);
+    // cout << "\n";
+
+    // cout << "Element (14): " << Element(14, setFromFirst);
+    // cout << "\n";
+    // cout << "Element (3999): " << Element(3999, setFromFirst);
+    // cout << "\n";
+    // cout << "Element (-1): " << Element(-1, setFromFirst);
+    // cout << "\n";
+    // cout << "Element (8): " << Element(8, setFromFirst);
+    // cout << "\n";
+    // printArray(setFromFirst);
+    // cout << "\n";
 
     cout << "Arithmetic: " << Arithmetic(setFromFirst);
     cout << "\n";
@@ -406,9 +472,9 @@ int main()
     printArray(setFromFirst);
     cout << "\n";
 
-    int min, max;
-    MinMax(setFromFirst, &min, max);
-    cout << "MinMax: " << min << " " << max;
+    int min1, max1;
+    MinMax(setFromFirst, &min1, max1);
+    cout << "MinMax: " << min1 << " " << max1;
     cout << "\n";
     printArray(setFromFirst);
     cout << "\n";
@@ -420,30 +486,30 @@ int main()
     printArray(setFromFirst);
     cout << "\n";
 
-    int secondArray[] = {432, 41, 644, 6, 26, 99, 35362, 34, 77, 2, 3, 4};
+    // int secondArray[] = {432, 41, 644, 6, 26, 99, 35362, 34, 77, 2, 3, 4};
 
-    int sizeSecond = 12;
-    int setFromSecond[sizeSecond + 1];
+    // int sizeSecond = 12;
+    // int setFromSecond[sizeSecond + 1];
 
-    cout << "Create: ";
-    Create(sizeSecond, secondArray, setFromSecond);
-    printArray(setFromSecond);
-    cout << "\n";
+    // cout << "Create: ";
+    // Create(sizeSecond, secondArray, setFromSecond);
+    // printArray(setFromSecond);
+    // cout << "\n";
 
-    int setOfUnions[10000];
-    Union(setFromFirst, setFromSecond, setOfUnions);
-    cout << "Union: ";
-    printArray(setOfUnions);
-    cout << "\n";
+    // int setOfUnions[10000];
+    // Union(setFromFirst, setFromSecond, setOfUnions);
+    // cout << "Union: ";
+    // printArray(setOfUnions);
+    // cout << "\n";
 
-    int tarr[] = {-1};
-    int farr[] = {-1};
-    int uarr[10];
-    Union(tarr, farr, uarr);
-    cout << "uarr: ";
-    printArray(uarr);
-    cout << "\n";
+    // int tarr[] = {-1};
+    // int farr[] = {-1};
+    // int uarr[10];
+    // Union(tarr, farr, uarr);
+    // cout << "uarr: ";
+    // printArray(uarr);
+    // cout << "\n";
 
-    cout << "\n";
+    // cout << "\n";
     return 0;
 }

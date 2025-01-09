@@ -240,7 +240,7 @@ void POPW(int w, int r, int s, int p, int A)
         return;
     }
     warehouses[w].racks[r].shelfs[s].places[p].quantity -=
-        ((warehouses[w].racks[r].shelfs[s].places[p].quantity + A) >= 0)
+        ((warehouses[w].racks[r].shelfs[s].places[p].quantity - A) >= 0)
             ? A
             : warehouses[w].racks[r].shelfs[s].places[p].quantity;
 }
@@ -253,7 +253,7 @@ void POPH(int w, int p, int A)
         return;
     }
     warehouses[w].handy_shelf.places[p].quantity -=
-        ((warehouses[w].handy_shelf.places[p].quantity + A) >= 0)
+        ((warehouses[w].handy_shelf.places[p].quantity - A) >= 0)
             ? A
             : warehouses[w].handy_shelf.places[p].quantity;
 }
@@ -266,7 +266,7 @@ void POPR(int s, int p, int A)
         return;
     }
     handy_rack.shelfs[s].places[p].quantity -=
-        ((handy_rack.shelfs[s].places[p].quantity + A) >= 0)
+        ((handy_rack.shelfs[s].places[p].quantity - A) >= 0)
             ? A
             : handy_rack.shelfs[s].places[p].quantity;
 }
@@ -626,7 +626,32 @@ int main()
             int P, A;
             cin >> P >> A;
             PUTS(P, A);
+                }
+        else if (input[0] == 'P' && input[1] == 'O' && input[2] == 'P' && input[3] == '-' && input[4] == 'W')
+        {
+            int w, r, s, p, A;
+            cin >> w >> r >> s >> p >> A;
+            POPW(w, r, s, p, A);
         }
+        else if (input[0] == 'P' && input[1] == 'O' && input[2] == 'P' && input[3] == '-' && input[4] == 'H')
+        {
+            int w, p, A;
+            cin >> w >> p >> A;
+            POPH(w, p, A);
+        }
+        else if (input[0] == 'P' && input[1] == 'O' && input[2] == 'P' && input[3] == '-' && input[4] == 'R')
+        {
+            int s, p, A;
+            cin >> s >> p >> A;
+            POPR(s, p, A);
+        }
+        else if (input[0] == 'P' && input[1] == 'O' && input[2] == 'P' && input[3] == '-' && input[4] == 'S')
+        {
+            int p, A;
+            cin >> p >> A;
+            POPS(p, A);
+        }
+
         else if (input[0] == 'F' && input[1] == 'I' && input[2] == 'L' && input[3] == 'L')
         {
 

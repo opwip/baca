@@ -331,7 +331,7 @@ void FILL(int W, int R, int S, int P, int A)
 
     for (int w = 0; w < max_warehouses; w++)
     {
-        if (w >= max_warehouses)
+        if (w >= max_warehouses || w < 0)
         {
             cout << "error" << endl;
             return;
@@ -351,12 +351,12 @@ void FILL(int W, int R, int S, int P, int A)
         }
         for (int r = 0; r < warehouses[w].max_racks; r++)
         {
-            if (w >= max_warehouses)
+            if (w >= max_warehouses || w < 0)
             {
                 cout << "error" << endl;
                 return;
             }
-            if (r >= warehouses[w].max_racks)
+            if (r >= warehouses[w].max_racks || r < 0)
             {
                 cout << "error" << endl;
                 return;
@@ -369,17 +369,17 @@ void FILL(int W, int R, int S, int P, int A)
             warehouses[w].racks[r].max_shelfs = S;
             for (int s = 0; s < warehouses[w].racks[r].max_shelfs; s++)
             {
-                if (w >= max_warehouses)
+                if (w >= max_warehouses || w < 0)
                 {
                     cout << "error" << endl;
                     return;
                 }
-                if (r >= warehouses[w].max_racks)
+                if (r >= warehouses[w].max_racks || r < 0)
                 {
                     cout << "error" << endl;
                     return;
                 }
-                if (s >= warehouses[w].racks[r].max_shelfs)
+                if (s >= warehouses[w].racks[r].max_shelfs || s < 0)
                 {
                     cout << "error" << endl;
                     return;
@@ -417,7 +417,132 @@ void GETE()
     }
     cout << qua << endl;
 }
+void GETW(int w)
+{
+    unsigned qua = 0;
+    if (w >= max_warehouses || w < 0)
+    {
+        cout << "error" << endl;
+        return;
+    }
+    for (int r = 0; r < warehouses[w].max_racks; r++)
+    {
 
+        for (int s = 0; s < warehouses[w].racks[r].max_shelfs; s++)
+        {
+
+            for (int p = 0; p < warehouses[w].racks[r].shelfs[s].max_places; p++)
+            {
+                qua += warehouses[w].racks[r].shelfs[s].places[p].quantity;
+            }
+        }
+    }
+    cout << qua << endl;
+}
+void GETRW(int w, int r)
+{
+    unsigned qua = 0;
+    if (w >= max_warehouses || w < 0)
+    {
+        cout << "error" << endl;
+        return;
+    }
+    if (r >= warehouses[w].max_racks || r < 0)
+    {
+        cout << "error" << endl;
+        return;
+    }
+    for (int s = 0; s < warehouses[w].racks[r].max_shelfs; s++)
+    {
+
+        for (int p = 0; p < warehouses[w].racks[r].shelfs[s].max_places; p++)
+        {
+            qua += warehouses[w].racks[r].shelfs[s].places[p].quantity;
+        }
+    }
+
+    cout << qua << endl;
+}
+void GETRH()
+{
+    unsigned qua = 0;
+    for (int i = 0; i < handy_rack.max_shelfs; i++)
+    {
+        for (int j = 0; j < handy_rack.shelfs[i].max_places; j++)
+        {
+            qua += handy_rack.shelfs[i].places[j].quantity;
+        }
+    }
+
+    cout << qua << endl;
+}
+
+void GETSW(int w, int r, int s)
+{
+    if (w >= max_warehouses || w < 0)
+    {
+        cout << "error" << endl;
+        return;
+    }
+    if (r >= warehouses[w].max_racks || r < 0)
+    {
+        cout << "error" << endl;
+        return;
+    }
+    if (s >= warehouses[w].racks[r].max_shelfs || s < 0)
+    {
+        cout << "error" << endl;
+        return;
+    }
+    unsigned qua = 0;
+    for (int p = 0; p < warehouses[w].racks[r].shelfs[s].max_places; p++)
+    {
+        qua += warehouses[w].racks[r].shelfs[s].places[p].quantity;
+    }
+
+    cout << qua << endl;
+}
+void GETSH(int w)
+{
+    if (w >= max_warehouses || w < 0)
+    {
+        cout << "error" << endl;
+        return;
+    }
+    unsigned qua = 0;
+    for (int p = 0; p < warehouses[w].handy_shelf.max_places; p++)
+    {
+
+        qua += warehouses[w].handy_shelf.places[p].quantity;
+    }
+
+    cout << qua << endl;
+}
+void GETSR(int s)
+{
+    if (s >= handy_rack.max_shelfs || s < 0)
+    {
+        cout << "error" << endl;
+        return;
+    }
+    unsigned qua = 0;
+    for (int j = 0; j < handy_rack.shelfs[s].max_places; j++)
+    {
+        qua += handy_rack.shelfs[s].places[j].quantity;
+    }
+
+    cout << qua << endl;
+}
+void GETS()
+{
+    unsigned qua = 0;
+    for (int j = 0; j < handy_shelf.max_places; j++)
+    {
+        qua += handy_shelf.places[j].quantity;
+    }
+
+    cout << qua << endl;
+}
 int main()
 {
     char input[7];
@@ -432,86 +557,124 @@ int main()
         {
             end = true;
         }
-        if (input[0] == 'S' && input[1] == 'E' && input[2] == 'T' && input[3] == '-' && input[4] == 'A' && input[5] == 'P')
+        else if (input[0] == 'S' && input[1] == 'E' && input[2] == 'T' && input[3] == '-' && input[4] == 'A' && input[5] == 'P')
         {
             int l, v, p, h;
             cin >> l >> v >> p >> h;
             SETAP(l, v, p, h);
         }
-        if (input[0] == 'S' && input[1] == 'E' && input[2] == 'T' && input[3] == '-' && input[4] == 'A' && input[5] == 'S')
+        else if (input[0] == 'S' && input[1] == 'E' && input[2] == 'T' && input[3] == '-' && input[4] == 'A' && input[5] == 'S')
         {
             int l, v, p, h;
             cin >> l >> v >> p >> h;
             SETAS(l, v, p, h);
         }
-        if (input[0] == 'S' && input[1] == 'E' && input[2] == 'T' && input[3] == '-' && input[4] == 'A' && input[5] == 'R')
+        else if (input[0] == 'S' && input[1] == 'E' && input[2] == 'T' && input[3] == '-' && input[4] == 'A' && input[5] == 'R')
         {
             int l, v, p, h;
             cin >> l >> v >> p >> h;
             SETAR(l, v, p, h);
         }
-        if (input[0] == 'S' && input[1] == 'E' && input[2] == 'T' && input[3] == '-' && input[4] == 'A' && input[5] == 'W')
+        else if (input[0] == 'S' && input[1] == 'E' && input[2] == 'T' && input[3] == '-' && input[4] == 'A' && input[5] == 'W')
         {
             int l, v, p, h;
             cin >> l >> v >> p >> h;
             SETAW(l, v, p, h);
         }
-        if (input[0] == 'S' && input[1] == 'E' && input[2] == 'T' && input[3] == '-' && input[4] == 'H' && input[5] == 'W')
+        else if (input[0] == 'S' && input[1] == 'E' && input[2] == 'T' && input[3] == '-' && input[4] == 'H' && input[5] == 'W')
         {
             int l, v, p, h;
             cin >> l >> v;
             SETHW(l, v);
         }
-        if (input[0] == 'S' && input[1] == 'E' && input[2] == 'T' && input[3] == '-' && input[4] == 'H' && input[5] == 'R')
+        else if (input[0] == 'S' && input[1] == 'E' && input[2] == 'T' && input[3] == '-' && input[4] == 'H' && input[5] == 'R')
         {
             int l, v;
             cin >> l >> v;
             SETHR(l, v);
         }
-        if (input[0] == 'S' && input[1] == 'E' && input[2] == 'T' && input[3] == '-' && input[4] == 'H' && input[5] == 'S')
+        else if (input[0] == 'S' && input[1] == 'E' && input[2] == 'T' && input[3] == '-' && input[4] == 'H' && input[5] == 'S')
         {
             int l;
             cin >> l;
             SETHS(l);
         }
-        if (input[0] == 'P' && input[1] == 'U' && input[2] == 'T' && input[3] == '-' && input[4] == 'W')
+        else if (input[0] == 'P' && input[1] == 'U' && input[2] == 'T' && input[3] == '-' && input[4] == 'W')
         {
 
             int W, R, S, P, A;
             cin >> W >> R >> S >> P >> A;
             PUTW(W, R, S, P, A);
         }
-        if (input[0] == 'P' && input[1] == 'U' && input[2] == 'T' && input[3] == '-' && input[4] == 'H')
+        else if (input[0] == 'P' && input[1] == 'U' && input[2] == 'T' && input[3] == '-' && input[4] == 'H')
         {
 
             int W, P, A;
             cin >> W >> P >> A;
             PUTH(W, P, A);
         }
-        if (input[0] == 'P' && input[1] == 'U' && input[2] == 'T' && input[3] == '-' && input[4] == 'R')
+        else if (input[0] == 'P' && input[1] == 'U' && input[2] == 'T' && input[3] == '-' && input[4] == 'R')
         {
 
             int S, P, A;
             cin >> S >> P >> A;
             PUTR(S, P, A);
         }
-        if (input[0] == 'P' && input[1] == 'U' && input[2] == 'T' && input[3] == '-' && input[4] == 'S')
+        else if (input[0] == 'P' && input[1] == 'U' && input[2] == 'T' && input[3] == '-' && input[4] == 'S')
         {
 
             int P, A;
             cin >> P >> A;
             PUTS(P, A);
         }
-        if (input[0] == 'F' && input[1] == 'I' && input[2] == 'L' && input[3] == 'L')
+        else if (input[0] == 'F' && input[1] == 'I' && input[2] == 'L' && input[3] == 'L')
         {
 
             int W, R, S, P, A;
             cin >> W >> R >> S >> P >> A;
             FILL(W, R, S, P, A);
         }
-        if (input[0] == 'G' && input[1] == 'E' && input[2] == 'T' && input[3] == '-' && input[4] == 'E')
+        else if (input[0] == 'G' && input[1] == 'E' && input[2] == 'T' && input[3] == '-' && input[4] == 'E')
         {
             GETE();
+        }
+        else if (input[0] == 'G' && input[1] == 'E' && input[2] == 'T' && input[3] == '-' && input[4] == 'W')
+        {
+            int w;
+            cin >> w;
+            GETW(w);
+        }
+        else if (input[0] == 'G' && input[1] == 'E' && input[2] == 'T' && input[3] == '-' && input[4] == 'R' && input[5] == 'W')
+        {
+            int w, r;
+            cin >> w >> r;
+            GETRW(w, r);
+        }
+        else if (input[0] == 'G' && input[1] == 'E' && input[2] == 'T' && input[3] == '-' && input[4] == 'R' && input[5] == 'H')
+        {
+            GETRH();
+        }
+        else if (input[0] == 'G' && input[1] == 'E' && input[2] == 'T' && input[3] == '-' && input[4] == 'S' && input[5] == 'W')
+        {
+            int w, r, s;
+            cin >> w >> r >> s;
+            GETSW(w, r, s);
+        }
+        else if (input[0] == 'G' && input[1] == 'E' && input[2] == 'T' && input[3] == '-' && input[4] == 'S' && input[5] == 'H')
+        {
+            int w;
+            cin >> w;
+            GETSH(w);
+        }
+        else if (input[0] == 'G' && input[1] == 'E' && input[2] == 'T' && input[3] == '-' && input[4] == 'S' && input[5] == 'R')
+        {
+            int s;
+            cin >> s;
+            GETSH(s);
+        }
+        else if (input[0] == 'G' && input[1] == 'E' && input[2] == 'T' && input[3] == '-' && input[4] == 'S')
+        {
+            GETS();
         }
     }
 

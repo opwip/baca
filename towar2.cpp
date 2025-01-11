@@ -638,40 +638,61 @@ void FILL(int W, int R, int S, int P, int A)
     }
 }
 
+void MOVW(int w, int r, int s, int w2, int r2, int s2, int p, int A)
+{
+    if (w >= max_warehouses || w < 0)
+    {
+        cout << "error" << endl;
+        return;
+    }
+    if (r >= warehouses[w].max_racks || r < 0)
+    {
+        cout << "error" << endl;
+        return;
+    }
+    if (s >= warehouses[w].racks[r].max_shelfs || s < 0)
+    {
+        cout << "error" << endl;
+        return;
+    }
+    if (p >= warehouses[w].racks[r].shelfs[s].max_places || p < 0)
+    {
+        cout << "error" << endl;
+        return;
+    }
+    if (w2 >= max_warehouses || w2 < 0)
+    {
+        cout << "error" << endl;
+        return;
+    }
+    if (r2 >= warehouses[w2].max_racks || r2 < 0)
+    {
+        cout << "error" << endl;
+        return;
+    }
+    if (s2 >= warehouses[w2].racks[r2].max_shelfs || s2 < 0)
+    {
+        cout << "error" << endl;
+        return;
+    }
+    if (p >= warehouses[w2].racks[r2].shelfs[s2].max_places || p < 0)
+    {
+        cout << "error" << endl;
+        return;
+    }
+    int K = (warehouses[w].racks[r].shelfs[s].places[p].quantity - A >= 0)
+                ? A
+                : warehouses[w].racks[r].shelfs[s].places[p].quantity;
+    int A1 = ((warehouses[w2].racks[r2].shelfs[s2].places[p].quantity + K) <= 65535)
+                 ? K
+                 : (65535 - warehouses[w].racks[r].shelfs[s].places[p].quantity);
+    cout << K << ' ' << A1 << endl;
+    warehouses[w].racks[r].shelfs[s].places[p].quantity -= A1;
+    warehouses[w2].racks[r2].shelfs[s2].places[p].quantity += A1;
+}
+
 void GETE()
 {
-    // unsigned long long qua = 0;
-    // for (int i = 0; i < handy_rack.max_shelfs; i++)
-    // {
-    //     for (int j = 0; j < handy_rack.shelfs[i].max_places; j++)
-    //     {
-    //         qua += handy_rack.shelfs[i].places[j].quantity;
-    //     }
-    // }
-    // for (int j = 0; j < handy_shelf.max_places; j++)
-    // {
-    //     qua += handy_shelf.places[j].quantity;
-    // }
-    // for (int w = 0; w < max_warehouses; w++)
-    // {
-    //     for (int p = 0; p < warehouses[w].handy_shelf.max_places; p++)
-    //     {
-    //         qua += warehouses[w].handy_shelf.places[p].quantity;
-    //     }
-
-    //     for (int r = 0; r < warehouses[w].max_racks; r++)
-    //     {
-
-    //         for (int s = 0; s < warehouses[w].racks[r].max_shelfs; s++)
-    //         {
-
-    //             for (int p = 0; p < warehouses[w].racks[r].shelfs[s].max_places; p++)
-    //             {
-    //                 qua += warehouses[w].racks[r].shelfs[s].places[p].quantity;
-    //             }
-    //         }
-    //     }
-    // }
     cout << total << endl;
 }
 void GETW(int w)
@@ -919,6 +940,12 @@ int main()
             int W, R, S, P, A;
             cin >> W >> R >> S >> P >> A;
             FILL(W, R, S, P, A);
+        }
+        else if (input[0] == 'M' && input[1] == 'O' && input[2] == 'V' && input[3] == '-' && input[4] == 'W')
+        {
+            int w, r, s, w2, r2, s2, p, A;
+            cin >> w >> r >> s >> w2 >> r2 >> s2 >> p >> A;
+            MOVW(w, r, s, w2, r2, s2, p, A);
         }
         else if (input[0] == 'G' && input[1] == 'E' && input[2] == 'T' && input[3] == '-' && input[4] == 'E')
         {

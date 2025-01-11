@@ -29,6 +29,7 @@ struct warehouse
 rack handy_rack;
 shelf handy_shelf;
 unsigned short int max_warehouses;
+unsigned long long total = 0;
 
 void SETAP(int w, int r, int s, int P)
 {
@@ -52,16 +53,27 @@ void SETAP(int w, int r, int s, int P)
         cout << "error" << endl;
         return;
     }
-    warehouses[w].racks[r].shelfs[s].max_places = P;
-    for (int i = 0; i < warehouses[w].racks[r].shelfs[s].max_places; i++)
+    if (P > warehouses[w].racks[r].shelfs[s].max_places)
     {
-        if (warehouses[w].racks[r].shelfs[s].places[i].quantity != 0 || warehouses[w].racks[r].shelfs[s].places[i].code == "")
+        for (int i = warehouses[w].racks[r].shelfs[s].max_places; i < P; i++)
         {
+            total -= warehouses[w].racks[r].shelfs[s].places[i].quantity;
             warehouses[w].racks[r].shelfs[s].places[i].quantity = 0;
             warehouses[w].racks[r].shelfs[s].places[i].code[0] = '\0';
             warehouses[w].racks[r].shelfs[s].places[i].code[1] = '\0';
         }
     }
+    if (P < warehouses[w].racks[r].shelfs[s].max_places)
+    {
+        for (int i = P; i < warehouses[w].racks[r].shelfs[s].max_places; i++)
+        {
+            total -= warehouses[w].racks[r].shelfs[s].places[i].quantity;
+            warehouses[w].racks[r].shelfs[s].places[i].quantity = 0;
+            warehouses[w].racks[r].shelfs[s].places[i].code[0] = '\0';
+            warehouses[w].racks[r].shelfs[s].places[i].code[1] = '\0';
+        }
+    }
+    warehouses[w].racks[r].shelfs[s].max_places = P;
 }
 
 void SETAS(int w, int r, int S, int P)
@@ -81,10 +93,38 @@ void SETAS(int w, int r, int S, int P)
         cout << "error" << endl;
         return;
     }
-    warehouses[w].racks[r].max_shelfs = S;
-    for (int i = 0; i < warehouses[w].racks[r].max_shelfs; i++)
+    if (P > 128 || P < 0)
     {
-        SETAP(w, r, i, P);
+        cout << "error" << endl;
+        return;
+    }
+    warehouses[w].racks[r].max_shelfs = S;
+    for (int i = i; i < S; i++)
+    {
+
+        if (P > warehouses[w].racks[r].shelfs[i].max_places)
+        {
+
+            for (int j = warehouses[w].racks[r].shelfs[i].max_places; j < P; j++)
+            {
+                total -= warehouses[w].racks[r].shelfs[i].places[j].quantity;
+                warehouses[w].racks[r].shelfs[i].places[j].quantity = 0;
+                warehouses[w].racks[r].shelfs[i].places[j].code[0] = '\0';
+                warehouses[w].racks[r].shelfs[i].places[j].code[1] = '\0';
+            }
+        }
+        if (P < warehouses[w].racks[r].shelfs[i].max_places)
+        {
+
+            for (int j = P; j < warehouses[w].racks[r].shelfs[i].max_places; j++)
+            {
+                total -= warehouses[w].racks[r].shelfs[i].places[j].quantity;
+                warehouses[w].racks[r].shelfs[i].places[j].quantity = 0;
+                warehouses[w].racks[r].shelfs[i].places[j].code[0] = '\0';
+                warehouses[w].racks[r].shelfs[i].places[j].code[1] = '\0';
+            }
+        }
+        warehouses[w].racks[r].shelfs[i].max_places = P;
     }
 }
 
@@ -100,10 +140,48 @@ void SETAR(int w, int R, int S, int P)
         cout << "error" << endl;
         return;
     }
+    if (S > 128 || S < 0)
+    {
+        cout << "error" << endl;
+        return;
+    }
+    if (P > 128 || P < 0)
+    {
+        cout << "error" << endl;
+        return;
+    }
     warehouses[w].max_racks = R;
     for (int i = 0; i < warehouses[w].max_racks; i++)
     {
-        SETAS(w, i, S, P);
+
+        warehouses[w].racks[i].max_shelfs = S;
+        for (int j = 0; j < warehouses[w].racks[i].max_shelfs; j++)
+        {
+
+            if (P > warehouses[w].racks[i].shelfs[j].max_places)
+            {
+
+                for (int k = warehouses[w].racks[i].shelfs[j].max_places; k < P; k++)
+                {
+                    total -= warehouses[w].racks[i].shelfs[j].places[k].quantity;
+                    warehouses[w].racks[i].shelfs[j].places[k].quantity = 0;
+                    warehouses[w].racks[i].shelfs[j].places[k].code[0] = '\0';
+                    warehouses[w].racks[i].shelfs[j].places[k].code[1] = '\0';
+                }
+            }
+            if (P < warehouses[w].racks[i].shelfs[j].max_places)
+            {
+
+                for (int k = P; k < warehouses[w].racks[i].shelfs[j].max_places; k++)
+                {
+                    total -= warehouses[w].racks[i].shelfs[j].places[k].quantity;
+                    warehouses[w].racks[i].shelfs[j].places[k].quantity = 0;
+                    warehouses[w].racks[i].shelfs[j].places[k].code[0] = '\0';
+                    warehouses[w].racks[i].shelfs[j].places[k].code[1] = '\0';
+                }
+            }
+            warehouses[w].racks[i].shelfs[j].max_places = P;
+        }
     }
 }
 
@@ -114,10 +192,58 @@ void SETAW(int W, int R, int S, int P)
         cout << "error" << endl;
         return;
     }
+    if (R > 128 || R < 0)
+    {
+        cout << "error" << endl;
+        return;
+    }
+    if (S > 128 || S < 0)
+    {
+        cout << "error" << endl;
+        return;
+    }
+    if (P > 128 || P < 0)
+    {
+        cout << "error" << endl;
+        return;
+    }
     max_warehouses = W;
     for (int i = 0; i < max_warehouses; i++)
     {
-        SETAR(i, R, S, P);
+
+        warehouses[i].max_racks = R;
+        for (int j = 0; j < warehouses[i].max_racks; j++)
+        {
+
+            warehouses[i].racks[j].max_shelfs = S;
+            for (int k = 0; k < warehouses[i].racks[j].max_shelfs; k++)
+            {
+
+                if (P > warehouses[i].racks[j].shelfs[k].max_places)
+                {
+
+                    for (int z = warehouses[i].racks[j].shelfs[k].max_places; z < P; z++)
+                    {
+                        total -= warehouses[i].racks[j].shelfs[k].places[z].quantity;
+                        warehouses[i].racks[j].shelfs[k].places[z].quantity = 0;
+                        warehouses[i].racks[j].shelfs[k].places[z].code[0] = '\0';
+                        warehouses[i].racks[j].shelfs[k].places[z].code[1] = '\0';
+                    }
+                }
+                if (P < warehouses[i].racks[j].shelfs[k].max_places)
+                {
+
+                    for (int z = P; z < warehouses[i].racks[j].shelfs[k].max_places; z++)
+                    {
+                        total -= warehouses[i].racks[j].shelfs[k].places[z].quantity;
+                        warehouses[i].racks[j].shelfs[k].places[z].quantity = 0;
+                        warehouses[i].racks[j].shelfs[k].places[z].code[0] = '\0';
+                        warehouses[i].racks[j].shelfs[k].places[z].code[1] = '\0';
+                    }
+                }
+                warehouses[i].racks[j].shelfs[k].max_places = P;
+            }
+        }
     }
 }
 
@@ -133,16 +259,23 @@ void SETHW(int w, int P)
         cout << "error" << endl;
         return;
     }
-    warehouses[w].handy_shelf.max_places = P;
-    for (int i = 0; i < warehouses[w].handy_shelf.max_places; i++ || warehouses[w].handy_shelf.places[i].code == "")
-    {
-        if (warehouses[w].handy_shelf.places[i].quantity != 0)
+    if (warehouses[w].handy_shelf.max_places < P)
+        for (int i = warehouses[w].handy_shelf.max_places; i < P; i++)
         {
+            total -= warehouses[w].handy_shelf.places[i].quantity;
             warehouses[w].handy_shelf.places[i].quantity = 0;
             warehouses[w].handy_shelf.places[i].code[0] = '\0';
             warehouses[w].handy_shelf.places[i].code[1] = '\0';
         }
-    }
+    if (warehouses[w].handy_shelf.max_places > P)
+        for (int i = P; i < warehouses[w].handy_shelf.max_places; i++)
+        {
+            total -= warehouses[w].handy_shelf.places[i].quantity;
+            warehouses[w].handy_shelf.places[i].quantity = 0;
+            warehouses[w].handy_shelf.places[i].code[0] = '\0';
+            warehouses[w].handy_shelf.places[i].code[1] = '\0';
+        }
+    warehouses[w].handy_shelf.max_places = P;
 }
 
 void SETHR(int S, int P)
@@ -152,24 +285,44 @@ void SETHR(int S, int P)
         cout << "error" << endl;
         return;
     }
-    handy_rack.max_shelfs = S;
-    for (int i = 0; i < handy_rack.max_shelfs; i++)
+    if (P > 128 || P < 0)
     {
-        if (P > 128 || P < 0)
+        cout << "error" << endl;
+        return;
+    }
+    if (S < handy_rack.max_shelfs)
+    {
+        for (int i = S; i < handy_rack.max_shelfs; i++)
         {
-            cout << "error" << endl;
-            return;
-        }
-        handy_rack.shelfs[i].max_places = P;
-        for (int j = 0; j < handy_rack.shelfs[i].max_places; j++)
-        {
-            if (handy_rack.shelfs[i].places[j].quantity != 0 || handy_rack.shelfs[i].places[j].code == "")
+            for (int j = 0; j < handy_rack.shelfs[i].max_places; j++)
             {
+                total -= handy_rack.shelfs[i].places[j].quantity;
                 handy_rack.shelfs[i].places[j].quantity = 0;
                 handy_rack.shelfs[i].places[j].code[0] = '\0';
                 handy_rack.shelfs[i].places[j].code[1] = '\0';
             }
         }
+    }
+    handy_rack.max_shelfs = S;
+    for (int i = 0; i < handy_rack.max_shelfs; i++)
+    {
+        if (handy_rack.shelfs[i].max_places < P)
+            for (int j = handy_rack.shelfs[i].max_places; j < P; j++)
+            {
+                total -= handy_rack.shelfs[i].places[j].quantity;
+                handy_rack.shelfs[i].places[j].quantity = 0;
+                handy_rack.shelfs[i].places[j].code[0] = '\0';
+                handy_rack.shelfs[i].places[j].code[1] = '\0';
+            }
+        if (handy_rack.shelfs[i].max_places > P)
+            for (int j = P; j < handy_rack.shelfs[i].max_places; j++)
+            {
+                total -= handy_rack.shelfs[i].places[j].quantity;
+                handy_rack.shelfs[i].places[j].quantity = 0;
+                handy_rack.shelfs[i].places[j].code[0] = '\0';
+                handy_rack.shelfs[i].places[j].code[1] = '\0';
+            }
+        handy_rack.shelfs[i].max_places = P;
     }
 }
 
@@ -180,16 +333,23 @@ void SETHS(int P)
         cout << "error" << endl;
         return;
     }
-    handy_shelf.max_places = P;
-    for (int j = 0; j < handy_shelf.max_places; j++)
-    {
-        if (handy_shelf.places[j].quantity != 0 || handy_shelf.places[j].code == "")
+    if (handy_shelf.max_places < P)
+        for (int j = handy_shelf.max_places; j < P; j++)
         {
+            total -= handy_shelf.places[j].quantity;
             handy_shelf.places[j].quantity = 0;
             handy_shelf.places[j].code[0] = '\0';
             handy_shelf.places[j].code[1] = '\0';
         }
-    }
+    if (handy_shelf.max_places > P)
+        for (int j = P; j < handy_shelf.max_places; j++)
+        {
+            total -= handy_shelf.places[j].quantity;
+            handy_shelf.places[j].quantity = 0;
+            handy_shelf.places[j].code[0] = '\0';
+            handy_shelf.places[j].code[1] = '\0';
+        }
+    handy_shelf.max_places = P;
 }
 
 void PUTW(int w, int r, int s, int p, int A)
@@ -199,6 +359,10 @@ void PUTW(int w, int r, int s, int p, int A)
         cout << "error" << endl;
         return;
     }
+    total +=
+        ((warehouses[w].racks[r].shelfs[s].places[p].quantity + A) <= 65535)
+            ? A
+            : (65535 - warehouses[w].racks[r].shelfs[s].places[p].quantity);
     warehouses[w].racks[r].shelfs[s].places[p].quantity +=
         ((warehouses[w].racks[r].shelfs[s].places[p].quantity + A) <= 65535)
             ? A
@@ -212,6 +376,10 @@ void PUTH(int w, int p, int A)
         cout << "error" << endl;
         return;
     }
+    total +=
+        ((warehouses[w].handy_shelf.places[p].quantity + A) <= 65535)
+            ? A
+            : (65535 - warehouses[w].handy_shelf.places[p].quantity);
     warehouses[w].handy_shelf.places[p].quantity +=
         ((warehouses[w].handy_shelf.places[p].quantity + A) <= 65535)
             ? A
@@ -225,6 +393,10 @@ void PUTR(int s, int p, int A)
         cout << "error" << endl;
         return;
     }
+    total +=
+        ((handy_rack.shelfs[s].places[p].quantity + A) <= 65535)
+            ? A
+            : (65535 - handy_rack.shelfs[s].places[p].quantity);
     handy_rack.shelfs[s].places[p].quantity +=
         ((handy_rack.shelfs[s].places[p].quantity + A) <= 65535)
             ? A
@@ -238,6 +410,10 @@ void PUTS(int p, int A)
         cout << "error" << endl;
         return;
     }
+    total +=
+        ((handy_shelf.places[p].quantity + A) <= 65535)
+            ? A
+            : (65535 - handy_shelf.places[p].quantity);
     handy_shelf.places[p].quantity +=
         ((handy_shelf.places[p].quantity + A) <= 65535)
             ? A
@@ -251,6 +427,10 @@ void POPW(int w, int r, int s, int p, int A)
         cout << "error" << endl;
         return;
     }
+    total -=
+        ((warehouses[w].racks[r].shelfs[s].places[p].quantity - A) >= 0)
+            ? A
+            : warehouses[w].racks[r].shelfs[s].places[p].quantity;
     warehouses[w].racks[r].shelfs[s].places[p].quantity -=
         ((warehouses[w].racks[r].shelfs[s].places[p].quantity - A) >= 0)
             ? A
@@ -264,6 +444,10 @@ void POPH(int w, int p, int A)
         cout << "error" << endl;
         return;
     }
+    total -=
+        ((warehouses[w].handy_shelf.places[p].quantity - A) >= 0)
+            ? A
+            : warehouses[w].handy_shelf.places[p].quantity;
     warehouses[w].handy_shelf.places[p].quantity -=
         ((warehouses[w].handy_shelf.places[p].quantity - A) >= 0)
             ? A
@@ -277,6 +461,10 @@ void POPR(int s, int p, int A)
         cout << "error" << endl;
         return;
     }
+    total -=
+        ((handy_rack.shelfs[s].places[p].quantity - A) >= 0)
+            ? A
+            : handy_rack.shelfs[s].places[p].quantity;
     handy_rack.shelfs[s].places[p].quantity -=
         ((handy_rack.shelfs[s].places[p].quantity - A) >= 0)
             ? A
@@ -290,6 +478,10 @@ void POPS(int p, int A)
         cout << "error" << endl;
         return;
     }
+    total -=
+        ((handy_shelf.places[p].quantity - A) >= 0)
+            ? A
+            : handy_shelf.places[p].quantity;
     handy_shelf.places[p].quantity -=
         ((handy_shelf.places[p].quantity - A) >= 0)
             ? A
@@ -333,6 +525,9 @@ void FILL(int W, int R, int S, int P, int A)
                 cout << "error" << endl;
                 return;
             }
+            total += ((handy_rack.shelfs[i].places[j].quantity + A) <= 65535)
+                         ? A
+                         : (65535 - handy_rack.shelfs[i].places[j].quantity);
             handy_rack.shelfs[i].places[j].quantity +=
                 ((handy_rack.shelfs[i].places[j].quantity + A) <= 65535)
                     ? A
@@ -351,6 +546,9 @@ void FILL(int W, int R, int S, int P, int A)
             cout << "error" << endl;
             return;
         }
+        total += ((handy_shelf.places[j].quantity + A) <= 65535)
+                     ? A
+                     : (65535 - handy_shelf.places[j].quantity);
         handy_shelf.places[j].quantity +=
             ((handy_shelf.places[j].quantity + A) <= 65535)
                 ? A
@@ -425,6 +623,9 @@ void FILL(int W, int R, int S, int P, int A)
                         cout << "error" << endl;
                         return;
                     }
+                    total += ((warehouses[w].racks[r].shelfs[s].places[i].quantity + A) <= 65535)
+                                 ? A
+                                 : (65535 - warehouses[w].racks[r].shelfs[s].places[i].quantity);
                     warehouses[w].racks[r].shelfs[s].places[i].quantity +=
                         ((warehouses[w].racks[r].shelfs[s].places[i].quantity + A) <= 65535)
                             ? A
@@ -439,39 +640,39 @@ void FILL(int W, int R, int S, int P, int A)
 
 void GETE()
 {
-    unsigned long long qua = 0;
-    for (int i = 0; i < handy_rack.max_shelfs; i++)
-    {
-        for (int j = 0; j < handy_rack.shelfs[i].max_places; j++)
-        {
-            qua += handy_rack.shelfs[i].places[j].quantity;
-        }
-    }
-    for (int j = 0; j < handy_shelf.max_places; j++)
-    {
-        qua += handy_shelf.places[j].quantity;
-    }
-    for (int w = 0; w < max_warehouses; w++)
-    {
-        for (int p = 0; p < warehouses[w].handy_shelf.max_places; p++)
-        {
-            qua += warehouses[w].handy_shelf.places[p].quantity;
-        }
+    // unsigned long long qua = 0;
+    // for (int i = 0; i < handy_rack.max_shelfs; i++)
+    // {
+    //     for (int j = 0; j < handy_rack.shelfs[i].max_places; j++)
+    //     {
+    //         qua += handy_rack.shelfs[i].places[j].quantity;
+    //     }
+    // }
+    // for (int j = 0; j < handy_shelf.max_places; j++)
+    // {
+    //     qua += handy_shelf.places[j].quantity;
+    // }
+    // for (int w = 0; w < max_warehouses; w++)
+    // {
+    //     for (int p = 0; p < warehouses[w].handy_shelf.max_places; p++)
+    //     {
+    //         qua += warehouses[w].handy_shelf.places[p].quantity;
+    //     }
 
-        for (int r = 0; r < warehouses[w].max_racks; r++)
-        {
+    //     for (int r = 0; r < warehouses[w].max_racks; r++)
+    //     {
 
-            for (int s = 0; s < warehouses[w].racks[r].max_shelfs; s++)
-            {
+    //         for (int s = 0; s < warehouses[w].racks[r].max_shelfs; s++)
+    //         {
 
-                for (int p = 0; p < warehouses[w].racks[r].shelfs[s].max_places; p++)
-                {
-                    qua += warehouses[w].racks[r].shelfs[s].places[p].quantity;
-                }
-            }
-        }
-    }
-    cout << qua << endl;
+    //             for (int p = 0; p < warehouses[w].racks[r].shelfs[s].max_places; p++)
+    //             {
+    //                 qua += warehouses[w].racks[r].shelfs[s].places[p].quantity;
+    //             }
+    //         }
+    //     }
+    // }
+    cout << total << endl;
 }
 void GETW(int w)
 {

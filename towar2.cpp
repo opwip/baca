@@ -352,6 +352,32 @@ void SETHS(int P)
     handy_shelf.max_places = P;
 }
 
+void SETLW(int w, int r, int s, int p, char dd[2])
+{
+    if (w >= max_warehouses || w < 0)
+    {
+        cout << "error" << endl;
+        return;
+    }
+    if (r >= warehouses[w].max_racks || r < 0)
+    {
+        cout << "error" << endl;
+        return;
+    }
+    if (s >= warehouses[w].racks[r].max_shelfs || s < 0)
+    {
+        cout << "error" << endl;
+        return;
+    }
+    if (p >= warehouses[w].racks[r].shelfs[s].max_places || p < 0)
+    {
+        cout << "error" << endl;
+        return;
+    }
+    warehouses[w].racks[r].shelfs[s].places[p].code[0] = dd[0];
+    warehouses[w].racks[r].shelfs[s].places[p].code[1] = dd[1];
+}
+
 void PUTW(int w, int r, int s, int p, int A)
 {
     if (A < 0 || w >= max_warehouses || w < 0 || r >= warehouses[w].max_racks || r < 0 || s >= warehouses[w].racks[r].max_shelfs || p >= warehouses[w].racks[r].shelfs[s].max_places || p < 0)
@@ -516,7 +542,7 @@ void FILL(int W, int R, int S, int P, int A)
     handy_rack.max_shelfs = S;
     for (int i = 0; i < handy_rack.max_shelfs; i++)
     {
-        handy_rack.shelfs[i].max_places = S;
+        handy_rack.shelfs[i].max_places = P;
         for (int j = 0; j < handy_rack.shelfs[i].max_places; j++)
         {
             handy_rack.shelfs[i].places[j].quantity = 0;
@@ -575,7 +601,19 @@ void FILL(int W, int R, int S, int P, int A)
         {
 
             warehouses[w].handy_shelf.places[i].quantity = 0;
-            PUTH(w, i, A);
+            if (A < 0 || w >= max_warehouses || w < 0 || i >= warehouses[w].handy_shelf.max_places || i < 0)
+            {
+                cout << "error" << endl;
+                return;
+            }
+            total +=
+                ((warehouses[w].handy_shelf.places[i].quantity + A) <= 65535)
+                    ? A
+                    : (65535 - warehouses[w].handy_shelf.places[i].quantity);
+            warehouses[w].handy_shelf.places[i].quantity +=
+                ((warehouses[w].handy_shelf.places[i].quantity + A) <= 65535)
+                    ? A
+                    : (65535 - warehouses[w].handy_shelf.places[i].quantity);
             warehouses[w].handy_shelf.places[i].code[0] = '\0';
             warehouses[w].handy_shelf.places[i].code[1] = '\0';
         }
@@ -685,10 +723,115 @@ void MOVW(int w, int r, int s, int w2, int r2, int s2, int p, int A)
                 : warehouses[w].racks[r].shelfs[s].places[p].quantity;
     int A1 = ((warehouses[w2].racks[r2].shelfs[s2].places[p].quantity + K) <= 65535)
                  ? K
-                 : (65535 - warehouses[w].racks[r].shelfs[s].places[p].quantity);
-    cout << K << ' ' << A1 << endl;
+                 : (65535 - warehouses[w2].racks[r2].shelfs[s2].places[p].quantity);
     warehouses[w].racks[r].shelfs[s].places[p].quantity -= A1;
     warehouses[w2].racks[r2].shelfs[s2].places[p].quantity += A1;
+}
+
+void MOVH(int w, int r, int s, int p, int A)
+{
+    if (w >= max_warehouses || w < 0)
+    {
+        cout << "error" << endl;
+        return;
+    }
+    if (r >= warehouses[w].max_racks || r < 0)
+    {
+        cout << "error" << endl;
+        return;
+    }
+    if (s >= warehouses[w].racks[r].max_shelfs || s < 0)
+    {
+        cout << "error" << endl;
+        return;
+    }
+    if (p >= warehouses[w].handy_shelf.max_places || p < 0)
+    {
+        cout << "error" << endl;
+        return;
+    }
+    if (p >= warehouses[w].racks[r].shelfs[s].max_places || p < 0)
+    {
+        cout << "error" << endl;
+        return;
+    }
+    int K = (warehouses[w].racks[r].shelfs[s].places[p].quantity - A >= 0)
+                ? A
+                : warehouses[w].racks[r].shelfs[s].places[p].quantity;
+    int A1 = ((warehouses[w].handy_shelf.places[p].quantity + K) <= 65535)
+                 ? K
+                 : (65535 - warehouses[w].handy_shelf.places[p].quantity);
+    warehouses[w].racks[r].shelfs[s].places[p].quantity -= A1;
+    warehouses[w].handy_shelf.places[p].quantity += A1;
+}
+
+void MOVR(int w, int r, int s, int s2, int p, int A)
+{
+    if (w >= max_warehouses || w < 0)
+    {
+        cout << "error" << endl;
+        return;
+    }
+    if (r >= warehouses[w].max_racks || r < 0)
+    {
+        cout << "error" << endl;
+        return;
+    }
+    if (s >= warehouses[w].racks[r].max_shelfs || s < 0)
+    {
+        cout << "error" << endl;
+        return;
+    }
+    if (p >= warehouses[w].racks[r].shelfs[s].max_places || p < 0)
+    {
+        cout << "error" << endl;
+        return;
+    }
+    if (s2 >= warehouses[w].racks[r].max_shelfs || s2 < 0)
+    {
+        cout << "error" << endl;
+        return;
+    }
+    if (p >= handy_rack.shelfs[s2].max_places || p < 0)
+    {
+        cout << "error" << endl;
+        return;
+    }
+    int K = (warehouses[w].racks[r].shelfs[s].places[p].quantity - A >= 0)
+                ? A
+                : warehouses[w].racks[r].shelfs[s].places[p].quantity;
+    int A1 = ((handy_rack.shelfs[s2].places[p].quantity + K) <= 65535)
+                 ? K
+                 : (65535 - handy_rack.shelfs[s2].places[p].quantity);
+    warehouses[w].racks[r].shelfs[s].places[p].quantity -= A1;
+    handy_rack.shelfs[s2].places[p].quantity += A1;
+}
+
+void MOVS(int s, int p, int A)
+{
+    if (s >= handy_rack.max_shelfs || s < 0)
+    {
+        cout << "error" << endl;
+        return;
+    }
+    if (p >= handy_rack.shelfs[s].max_places || p < 0)
+    {
+        cout << "error" << endl;
+        return;
+    }
+    if (p >= handy_shelf.max_places || p < 0)
+    {
+        cout << "error" << endl;
+        return;
+    }
+    int K = (handy_rack.shelfs[s].places[p].quantity - A >= 0)
+                ? A
+                : handy_rack.shelfs[s].places[p].quantity;
+    int A1 = ((handy_shelf.places[p].quantity + K) <= 65535)
+                 ? K
+                 : (65535 - handy_shelf.places[p].quantity);
+    handy_rack.shelfs[s].places[p].quantity -= A1;
+    handy_shelf.places[p].quantity += A1;
 }
 
 void GETE()
@@ -946,6 +1089,24 @@ int main()
             int w, r, s, w2, r2, s2, p, A;
             cin >> w >> r >> s >> w2 >> r2 >> s2 >> p >> A;
             MOVW(w, r, s, w2, r2, s2, p, A);
+        }
+        else if (input[0] == 'M' && input[1] == 'O' && input[2] == 'V' && input[3] == '-' && input[4] == 'H')
+        {
+            int w, r, s, p, A;
+            cin >> w >> r >> s >> p >> A;
+            MOVH(w, r, s, p, A);
+        }
+        else if (input[0] == 'M' && input[1] == 'O' && input[2] == 'V' && input[3] == '-' && input[4] == 'R')
+        {
+            int w, r, s, s2, p, A;
+            cin >> w >> r >> s >> s2 >> p >> A;
+            MOVR(w, r, s, s2, p, A);
+        }
+        else if (input[0] == 'M' && input[1] == 'O' && input[2] == 'V' && input[3] == '-' && input[4] == 'S')
+        {
+            int s, p, A;
+            cin >> s >> p >> A;
+            MOVS(s, p, A);
         }
         else if (input[0] == 'G' && input[1] == 'E' && input[2] == 'T' && input[3] == '-' && input[4] == 'E')
         {

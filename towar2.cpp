@@ -378,6 +378,142 @@ void SETLW(int w, int r, int s, int p, char dd[2])
     warehouses[w].racks[r].shelfs[s].places[p].code[1] = dd[1];
 }
 
+void SETLH(int w, int p, char dd[2])
+{
+    if (w >= max_warehouses || w < 0)
+    {
+        cout << "error" << endl;
+        return;
+    }
+    if (p >= warehouses[w].handy_shelf.max_places || p < 0)
+    {
+        cout << "error" << endl;
+        return;
+    }
+    warehouses[w].handy_shelf.places[p].code[0] = dd[0];
+    warehouses[w].handy_shelf.places[p].code[1] = dd[1];
+}
+
+void SETLR(int s, int p, char dd[2])
+{
+    if (s >= handy_rack.max_shelfs || s < 0)
+    {
+        cout << "error" << endl;
+        return;
+    }
+    if (p >= handy_rack.shelfs[s].max_places || p < 0)
+    {
+        cout << "error" << endl;
+        return;
+    }
+    handy_rack.shelfs[s].places[p].code[0] = dd[0];
+    handy_rack.shelfs[s].places[p].code[1] = dd[1];
+}
+
+void SETLS(int p, char dd[2])
+{
+    if (p >= handy_shelf.max_places || p < 0)
+    {
+        cout << "error" << endl;
+        return;
+    }
+    handy_shelf.places[p].code[0] = dd[0];
+    handy_shelf.places[p].code[1] = dd[1];
+}
+
+void GETLW(int w, int r, int s, int p)
+{
+    if (w >= max_warehouses || w < 0)
+    {
+        cout << "error" << endl;
+        return;
+    }
+    if (r >= warehouses[w].max_racks || r < 0)
+    {
+        cout << "error" << endl;
+        return;
+    }
+    if (s >= warehouses[w].racks[r].max_shelfs || s < 0)
+    {
+        cout << "error" << endl;
+        return;
+    }
+    if (p >= warehouses[w].racks[r].shelfs[s].max_places || p < 0)
+    {
+        cout << "error" << endl;
+        return;
+    }
+    if (warehouses[w].racks[r].shelfs[s].places[p].code[0] != '\0' || warehouses[w].racks[r].shelfs[s].places[p].code[0] != '\0')
+    {
+        cout << warehouses[w].racks[r].shelfs[s].places[p].code[0] << warehouses[w].racks[r].shelfs[s].places[p].code[1] << endl;
+    }
+    else
+    {
+        cout << "--" << endl;
+    }
+}
+
+void GETLH(int w, int p)
+{
+    if (w >= max_warehouses || w < 0)
+    {
+        cout << "error" << endl;
+        return;
+    }
+    if (p >= warehouses[w].handy_shelf.max_places || p < 0)
+    {
+        cout << "error" << endl;
+        return;
+    }
+    if (warehouses[w].handy_shelf.places[p].code[0] != '\0' || warehouses[w].handy_shelf.places[p].code[0] != '\0')
+    {
+        cout << warehouses[w].handy_shelf.places[p].code[0] << warehouses[w].handy_shelf.places[p].code[1] << endl;
+    }
+    else
+    {
+        cout << "--" << endl;
+    }
+}
+
+void GETLR(int s, int p)
+{
+    if (s >= handy_rack.max_shelfs || s < 0)
+    {
+        cout << "error" << endl;
+        return;
+    }
+    if (p >= handy_rack.shelfs[s].max_places || p < 0)
+    {
+        cout << "error" << endl;
+        return;
+    }
+    if (handy_rack.shelfs[s].places[p].code[0] != '\0' || handy_rack.shelfs[s].places[p].code[0] != '\0')
+    {
+        cout << handy_rack.shelfs[s].places[p].code[0] << handy_rack.shelfs[s].places[p].code[1] << endl;
+    }
+    else
+    {
+        cout << "--" << endl;
+    }
+}
+
+void GETLS(int p)
+{
+    if (p >= handy_shelf.max_places || p < 0)
+    {
+        cout << "error" << endl;
+        return;
+    }
+    if (handy_shelf.places[p].code[0] != '\0' || handy_shelf.places[p].code[0] != '\0')
+    {
+        cout << handy_shelf.places[p].code[0] << handy_shelf.places[p].code[1] << endl;
+    }
+    else
+    {
+        cout << "--" << endl;
+    }
+}
+
 void PUTW(int w, int r, int s, int p, int A)
 {
     if (A < 0 || w >= max_warehouses || w < 0 || r >= warehouses[w].max_racks || r < 0 || s >= warehouses[w].racks[r].max_shelfs || p >= warehouses[w].racks[r].shelfs[s].max_places || p < 0)
@@ -976,8 +1112,6 @@ int main()
     while (!end)
     {
         cin >> input;
-        // for (char i : input)
-        //     cout << i << endl;
         if (input[0] == 'E' && input[1] == 'N' && input[2] == 'D')
         {
             end = true;
@@ -1023,6 +1157,34 @@ int main()
             int l;
             cin >> l;
             SETHS(l);
+        }
+        else if (input[0] == 'S' && input[1] == 'E' && input[2] == 'T' && input[3] == '-' && input[4] == 'L' && input[5] == 'W')
+        {
+            int l, v, p, h;
+            char dd[2];
+            cin >> l >> v >> p >> h >> dd;
+            SETLW(l, v, p, h, dd);
+        }
+        else if (input[0] == 'S' && input[1] == 'E' && input[2] == 'T' && input[3] == '-' && input[4] == 'L' && input[5] == 'H')
+        {
+            int l, v;
+            char dd[2];
+            cin >> l >> v >> dd;
+            SETLH(l, v, dd);
+        }
+        else if (input[0] == 'S' && input[1] == 'E' && input[2] == 'T' && input[3] == '-' && input[4] == 'L' && input[5] == 'R')
+        {
+            int l, v;
+            char dd[2];
+            cin >> l >> v >> dd;
+            SETLR(l, v, dd);
+        }
+        else if (input[0] == 'S' && input[1] == 'E' && input[2] == 'T' && input[3] == '-' && input[4] == 'L' && input[5] == 'S')
+        {
+            int l;
+            char dd[2];
+            cin >> l >> dd;
+            SETLS(l, dd);
         }
         else if (input[0] == 'P' && input[1] == 'U' && input[2] == 'T' && input[3] == '-' && input[4] == 'W')
         {
@@ -1150,10 +1312,30 @@ int main()
         {
             GETS();
         }
+        else if (input[0] == 'G' && input[1] == 'E' && input[2] == 'T' && input[3] == '-' && input[4] == 'L' && input[5] == 'W')
+        {
+            int w, r, s, p;
+            cin >> w >> r >> s >> p;
+            GETLW(w, r, s, p);
+        }
+        else if (input[0] == 'G' && input[1] == 'E' && input[2] == 'T' && input[3] == '-' && input[4] == 'L' && input[5] == 'H')
+        {
+            int w, p;
+            cin >> w >> p;
+            GETLH(w, p);
+        }
+        else if (input[0] == 'G' && input[1] == 'E' && input[2] == 'T' && input[3] == '-' && input[4] == 'L' && input[5] == 'R')
+        {
+            int s, p;
+            cin >> s >> p;
+            GETLR(s, p);
+        }
+        else if (input[0] == 'G' && input[1] == 'E' && input[2] == 'T' && input[3] == '-' && input[4] == 'L' && input[5] == 'S')
+        {
+            int p;
+            cin >> p;
+            GETLS(p);
+        }
     }
-
-    // showAllPlaces();
-
-    // system("Pause");
     return 0;
 }

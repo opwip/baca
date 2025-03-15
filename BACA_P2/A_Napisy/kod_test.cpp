@@ -23,14 +23,18 @@ string remove_from_to(string str, int index1, int index2) {
     return str;
 }
 
+string remove_last(string str){
+    return remove_at(str, str.size() - 1);
+}
+
 string add_after_index(string str, char symbol, int index){
     string str_out = "";
     str_out.resize(str.size() + 1);
     for (int i = 0; i <= index; i++){
         str_out[i] = str[i];
     }
-    str_out[index + 1] = symbol;
-    for (int i = index; i < index; i++){
+    str_out[++index] = symbol;
+    for (int i = index; i < str.size(); i++){
         str_out[i+1] = str[i];
     }
     return str_out;
@@ -92,11 +96,67 @@ string NajwiekszeSlowo(string str){
         if (word > word_max){
             word_max = word;
         }
-        
     }
 
     return word_max;
 }
+
+string NormalizujNapis(string str){
+    string str_out = str;
+    int end = str_out.size();
+    int space_start = 0;
+    int space_end = 0;
+    int i = 0;
+    while (i < end){
+        if (str_out[i] == ' '){
+			if (str_out[i-1] == ' '){
+                str_out = remove_at(str_out, i);
+                i--;
+                end--;
+            }
+			if (i == 0 || i == end - 1){
+				str_out = remove_at(str_out, i);
+				i--;
+                end--;
+			}
+        }
+        i++;
+    }
+    i = 0;
+	
+    end = str_out.size();
+    bool dot_comma = false;
+    while (i < end){
+        
+        if (dot_comma){
+            if (str_out[i] != ' '){
+
+                str_out = add_after_index(str_out, ' ', i-1);
+
+                i++;
+                end++;
+
+            }
+            dot_comma = false;
+        }
+        if (str_out[i] == '.' || str_out[i] == ','){
+            
+            if (str_out[i-1] == ' '){
+                str_out = remove_at(str_out, i-1);
+                i--;
+                end--;
+            }
+            dot_comma = true;
+        }
+        else{
+            dot_comma = false;
+        }
+        i++;
+    }
+   
+    return str_out;
+}
+
 
 
 int main(){
@@ -106,6 +166,8 @@ int main(){
     cout << add_after_index("Prok ", 'K', 3) << endl;
 
     cout << NajwiekszeSlowo("Prok work worknumer3 and not 3") << endl;
+
+    cout << NormalizujNapis("Prok   work worknumer3 .and not  ,  3") << endl;
     
     return 0;
 }

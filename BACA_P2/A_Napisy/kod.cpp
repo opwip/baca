@@ -28,8 +28,8 @@ string add_after_index(string str, char symbol, int index){
     for (int i = 0; i <= index; i++){
         str_out[i] = str[i];
     }
-    str_out[index + 1] = symbol;
-    for (int i = index; i < index; i++){
+    str_out[++index] = symbol;
+    for (int i = index; i < str.size(); i++){
         str_out[i+1] = str[i];
     }
     return str_out;
@@ -95,4 +95,60 @@ string NajwiekszeSlowo(string str){
     }
 
     return word_max;
+}
+
+string NormalizujNapis(string str){
+    string str_out = str;
+    int end = str_out.size();
+    int space_start = 0;
+    int space_end = 0;
+    int i = 0;
+    while (i < end){
+        if (str_out[i] == ' '){
+			if (str_out[i-1] == ' '){
+                str_out = remove_at(str_out, i);
+                i--;
+                end--;
+            }
+			if (i == 0 || i == end - 1){
+				str_out = remove_at(str_out, i);
+				i--;
+                end--;
+			}
+        }
+        i++;
+    }
+    i = 0;
+	
+    end = str_out.size();
+    bool dot_comma = false;
+    while (i < end){
+        
+        if (dot_comma){
+            if (str_out[i] != ' '){
+
+                str_out = add_after_index(str_out, ' ', i-1);
+
+                i++;
+                end++;
+
+            }
+            dot_comma = false;
+        }
+        if (str_out[i] == '.' || str_out[i] == ','){
+            
+            if (str_out[i-1] == ' '){
+                str_out = remove_at(str_out, i-1);
+                i--;
+                end--;
+            }
+            dot_comma = true;
+        }
+        else{
+            dot_comma = false;
+        }
+        i++;
+    }
+   
+    return str_out;
 }

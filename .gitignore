@@ -2,7 +2,7 @@
 *.d
 
 #Achives
-.zip
+*.zip
 
 # Compiled Object files
 *.slo

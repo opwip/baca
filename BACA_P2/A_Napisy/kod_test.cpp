@@ -24,7 +24,10 @@ string remove_from_to(string str, int index1, int index2) {
 }
 
 string remove_last(string str){
-    return remove_at(str, str.size() - 1);
+    if (str.size() >= 1){
+        return remove_at(str, str.size() - 1);
+    }
+    return str;
 }
 
 string add_after_index(string str, char symbol, int index){
@@ -34,6 +37,19 @@ string add_after_index(string str, char symbol, int index){
         str_out[i] = str[i];
     }
     str_out[++index] = symbol;
+    for (int i = index; i < str.size(); i++){
+        str_out[i+1] = str[i];
+    }
+    return str_out;
+}
+
+string add_b4_index(string str, char symbol, int index){
+    string str_out = "";
+    str_out.resize(str.size() + 1);
+    for (int i = 0; i < index; i++){
+        str_out[i] = str[i];
+    }
+    str_out[index] = symbol;
     for (int i = index; i < str.size(); i++){
         str_out[i+1] = str[i];
     }
@@ -157,6 +173,154 @@ string NormalizujNapis(string str){
     return str_out;
 }
 
+string FormatujNapis(string str, string arg1, string arg2, string arg3){
+    string str_out = "";
+    int where_to_format = 0;
+    for (int i = 0; i < str.size(); i++){
+        if (str[i] == '{'){
+            where_to_format = i;
+			i++;
+			while (str[i] != '}'){
+				if (str[i] == 'p'){
+                    
+					i += 2;
+					int quantity = 0;
+					while (str[i] != ':'){
+						switch (str[i]) {
+							case '0': quantity = quantity * 10 + 0; break;
+							case '1': quantity = quantity * 10 + 1; break;
+							case '2': quantity = quantity * 10 + 2; break;
+							case '3': quantity = quantity * 10 + 3; break;
+							case '4': quantity = quantity * 10 + 4; break;
+							case '5': quantity = quantity * 10 + 5; break;
+							case '6': quantity = quantity * 10 + 6; break;
+							case '7': quantity = quantity * 10 + 7; break;
+							case '8': quantity = quantity * 10 + 8; break;
+							case '9': quantity = quantity * 10 + 9; break;
+						}
+						i++;
+					}
+                    char to_add = str[++i];
+                    for (int counter = 0; counter < quantity; counter++){
+                        str_out = add_to_the_end(str_out, to_add);
+                    }
+                    
+                    i++;
+				}
+                else if (str[i] == 'u'){
+                    i += 2;
+					int quantity = 0;
+					while (str[i] != '}'){
+						switch (str[i]) {
+							case '0': quantity = quantity * 10 + 0; break;
+							case '1': quantity = quantity * 10 + 1; break;
+							case '2': quantity = quantity * 10 + 2; break;
+							case '3': quantity = quantity * 10 + 3; break;
+							case '4': quantity = quantity * 10 + 4; break;
+							case '5': quantity = quantity * 10 + 5; break;
+							case '6': quantity = quantity * 10 + 6; break;
+							case '7': quantity = quantity * 10 + 7; break;
+							case '8': quantity = quantity * 10 + 8; break;
+							case '9': quantity = quantity * 10 + 9; break;
+						}
+						i++;
+					}
+                    i+=quantity;
+                    break;
+
+                }
+                else if (str[i] == 'U'){
+                    i += 2;
+					int quantity = 0;
+					while (str[i] != '}'){
+						switch (str[i]) {
+							case '0': quantity = quantity * 10 + 0; break;
+							case '1': quantity = quantity * 10 + 1; break;
+							case '2': quantity = quantity * 10 + 2; break;
+							case '3': quantity = quantity * 10 + 3; break;
+							case '4': quantity = quantity * 10 + 4; break;
+							case '5': quantity = quantity * 10 + 5; break;
+							case '6': quantity = quantity * 10 + 6; break;
+							case '7': quantity = quantity * 10 + 7; break;
+							case '8': quantity = quantity * 10 + 8; break;
+							case '9': quantity = quantity * 10 + 9; break;
+						}
+						i++;
+					}
+                    for (int k = 0; k < quantity; k++){
+                        str_out = remove_last(str_out);
+                    }
+                    break;
+
+                }
+                else if (str[i] == 'w'){
+                    i += 2;
+					string to_add;
+                    switch (str[i])
+                    {
+                        case '1': to_add = arg1; break;
+                        case '2': to_add = arg2; break;
+                        case '3': to_add = arg3; break;
+                    }
+                    for (int k = 0; k < to_add.size(); k++){
+                        str_out = add_to_the_end(str_out, to_add[k]);
+                    }
+                    i++;
+
+                }
+                else if (str[i] == 'W'){
+                    i += 2;
+					string to_add;
+                    switch (str[i])
+                    {
+                        case '1': to_add = arg1; break;
+                        case '2': to_add = arg2; break;
+                        case '3': to_add = arg3; break;
+                    }
+                    i += 2;
+                    int quantity = 0;
+                    while (str[i] != '}'){
+						switch (str[i]) {
+							case '0': quantity = quantity * 10 + 0; break;
+							case '1': quantity = quantity * 10 + 1; break;
+							case '2': quantity = quantity * 10 + 2; break;
+							case '3': quantity = quantity * 10 + 3; break;
+							case '4': quantity = quantity * 10 + 4; break;
+							case '5': quantity = quantity * 10 + 5; break;
+							case '6': quantity = quantity * 10 + 6; break;
+							case '7': quantity = quantity * 10 + 7; break;
+							case '8': quantity = quantity * 10 + 8; break;
+							case '9': quantity = quantity * 10 + 9; break;
+						}
+						i++;
+					}
+                    
+                    if (quantity < to_add.size()){
+                        for (int k = 0; k < quantity; k++){
+                            str_out = add_to_the_end(str_out, to_add[k]);
+                        }
+                    }
+                    else if (quantity > to_add.size()){
+                        for (int k = 0; k < to_add.size(); k++){
+                            str_out = add_to_the_end(str_out, to_add[k]);
+                        }
+                        for (int k = 0; k < quantity - to_add.size(); k++){
+                            str_out = add_to_the_end(str_out, ' ');
+                        }
+                    }
+
+                }
+            }
+            
+		}
+		else{
+			str_out = add_to_the_end(str_out, str[i]);
+            
+		}
+    }
+    return str_out;
+}
+
 
 
 int main(){
@@ -168,6 +332,8 @@ int main(){
     cout << NajwiekszeSlowo("Prok work worknumer3 and not 3") << endl;
 
     cout << NormalizujNapis("Prok   work worknumer3 .and not  ,  3") << endl;
-    
+
+    cout << add_b4_index("Prok   work worknumer3 .and not  ,  3", 'B', 3) << endl;
+
     return 0;
 }

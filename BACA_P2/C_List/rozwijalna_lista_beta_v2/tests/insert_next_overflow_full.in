@@ -1,0 +1,17 @@
+8 0
+
+#init 14 elements
+I 16
+
+#find element 12
+XF 6
+
+#insert 1234 after that, since current and next nodes are full, there will be new node
+IN 1234
+
+#print
+P
+
+#quit
+Q
+

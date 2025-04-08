@@ -1,0 +1,16 @@
+8 0
+
+#init 14
+I 14
+
+#find 7, last element in second node
+XF 7
+
+#remove one before that
+RN
+
+#print
+P
+
+#quit
+Q

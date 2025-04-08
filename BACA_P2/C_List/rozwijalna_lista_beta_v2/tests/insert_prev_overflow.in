@@ -1,0 +1,23 @@
+8 0
+
+#init 14 elements
+I 16
+
+#make room in first node
+RF
+RF
+RF
+RF
+
+#find element 12
+XF 12
+
+#insert 1234 before that, since current node is full, element 8 will be yeeted to previous node
+IP 1234
+
+#print
+P
+
+#quit
+Q
+

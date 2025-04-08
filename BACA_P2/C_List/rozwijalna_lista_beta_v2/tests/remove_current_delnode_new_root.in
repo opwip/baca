@@ -1,0 +1,25 @@
+8 0
+
+#init 13 elements
+I 13
+
+#remove evrery but one elements from root
+RF
+RF
+RF
+RF
+RF
+RF
+RF
+
+#find 7, the only element left in root
+XF 7
+
+#remove it
+RC
+
+#print
+P
+
+#quit
+Q

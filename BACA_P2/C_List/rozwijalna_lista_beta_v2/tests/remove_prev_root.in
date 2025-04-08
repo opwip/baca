@@ -1,0 +1,16 @@
+8 0
+
+#init 6
+I 6
+
+#find first element
+GF
+
+#remove before first
+RP
+
+#print
+P
+
+#quit
+Q

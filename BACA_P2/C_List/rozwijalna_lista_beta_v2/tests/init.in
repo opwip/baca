@@ -1,0 +1,11 @@
+8 0
+#block size is 8, print labels no
+
+#init with 37 elements
+I 37
+
+#check by printing (init uses NewNode)
+P
+
+#quit
+Q

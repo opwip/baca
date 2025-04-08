@@ -1,0 +1,13 @@
+8 0
+
+#init 5 elements, leave room for new one
+I 5
+
+#add new one
+AF 1234
+
+#print
+P
+
+#quit
+Q

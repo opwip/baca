@@ -1,0 +1,14 @@
+8 0
+
+#init first node fill
+I 8
+
+#add alst
+AL 10
+
+#print
+P
+
+#quit
+Q
+

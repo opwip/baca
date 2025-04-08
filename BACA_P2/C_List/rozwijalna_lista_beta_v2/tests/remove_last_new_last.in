@@ -1,0 +1,15 @@
+3 0
+
+#init 7 elements
+I 7
+
+#remove 3 last elements
+RL
+RL
+RL
+
+#print
+P
+
+#quit
+Q

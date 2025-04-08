@@ -1,0 +1,22 @@
+8 0
+
+#init 14
+I 14
+
+#remove elements, so that first node is not full
+RF
+RF
+RF
+RF
+
+#find 7, last element in first node
+XF 7
+
+#remove one after that
+RN
+
+#print
+P
+
+#quit
+Q

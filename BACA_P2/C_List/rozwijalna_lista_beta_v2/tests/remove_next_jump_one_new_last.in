@@ -1,0 +1,20 @@
+8 0
+
+#init 9
+I 9
+
+#remove some elements from root
+RF
+RF
+
+#find 7
+XF 7
+
+#remove the only element left last node
+RN
+
+#print
+P
+
+#quit
+Q

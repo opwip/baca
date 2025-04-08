@@ -1,0 +1,10 @@
+8 0
+
+#add first to empty chain
+AF 1
+
+#print
+P
+
+#quit
+Q

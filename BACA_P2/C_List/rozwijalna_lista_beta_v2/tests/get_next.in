@@ -1,0 +1,20 @@
+8 1
+
+#init 3 nodes
+
+I 20
+
+#find element 13
+XF 13
+
+#print if element was found
+M
+
+#get next
+GN
+
+#print result
+M
+
+#quit
+Q

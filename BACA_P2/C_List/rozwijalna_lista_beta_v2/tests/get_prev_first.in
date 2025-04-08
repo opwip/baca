@@ -1,0 +1,14 @@
+8 1
+
+#init 5 elements
+I 5
+
+#find first
+GF
+
+#find one before first, should be null
+GP
+M
+
+#quit
+Q

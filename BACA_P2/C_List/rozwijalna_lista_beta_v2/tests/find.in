@@ -1,0 +1,392 @@
+8 1
+
+#init 128 elements
+I 128
+
+#find every element in random order
+XF 123
+M
+
+XF 115
+M
+
+XF 15
+M
+
+XF 88
+M
+
+XF 37
+M
+
+XF 44
+M
+
+XF 24
+M
+
+XF 94
+M
+
+XF 39
+M
+
+XF 63
+M
+
+XF 82
+M
+
+XF 40
+M
+
+XF 99
+M
+
+XF 48
+M
+
+XF 20
+M
+
+XF 118
+M
+
+XF 105
+M
+
+XF 6
+M
+
+XF 1
+M
+
+XF 21
+M
+
+XF 14
+M
+
+XF 110
+M
+
+XF 100
+M
+
+XF 116
+M
+
+XF 29
+M
+
+XF 78
+M
+
+XF 2
+M
+
+XF 107
+M
+
+XF 126
+M
+
+XF 65
+M
+
+XF 111
+M
+
+XF 89
+M
+
+XF 127
+M
+
+XF 90
+M
+
+XF 17
+M
+
+XF 45
+M
+
+XF 58
+M
+
+XF 84
+M
+
+XF 31
+M
+
+XF 34
+M
+
+XF 70
+M
+
+XF 85
+M
+
+XF 27
+M
+
+XF 23
+M
+
+XF 16
+M
+
+XF 8
+M
+
+XF 71
+M
+
+XF 68
+M
+
+XF 75
+M
+
+XF 119
+M
+
+XF 121
+M
+
+XF 97
+M
+
+XF 43
+M
+
+XF 73
+M
+
+XF 33
+M
+
+XF 91
+M
+
+XF 50
+M
+
+XF 83
+M
+
+XF 117
+M
+
+XF 11
+M
+
+XF 96
+M
+
+XF 101
+M
+
+XF 52
+M
+
+XF 86
+M
+
+XF 9
+M
+
+XF 113
+M
+
+XF 18
+M
+
+XF 53
+M
+
+XF 109
+M
+
+XF 61
+M
+
+XF 120
+M
+
+XF 49
+M
+
+XF 114
+M
+
+XF 42
+M
+
+XF 103
+M
+
+XF 41
+M
+
+XF 4
+M
+
+XF 72
+M
+
+XF 124
+M
+
+XF 79
+M
+
+XF 60
+M
+
+XF 125
+M
+
+XF 80
+M
+
+XF 12
+M
+
+XF 26
+M
+
+XF 76
+M
+
+XF 56
+M
+
+XF 35
+M
+
+XF 69
+M
+
+XF 66
+M
+
+XF 0
+M
+
+XF 106
+M
+
+XF 77
+M
+
+XF 5
+M
+
+XF 102
+M
+
+XF 7
+M
+
+XF 108
+M
+
+XF 3
+M
+
+XF 59
+M
+
+XF 62
+M
+
+XF 95
+M
+
+XF 51
+M
+
+XF 81
+M
+
+XF 55
+M
+
+XF 13
+M
+
+XF 47
+M
+
+XF 32
+M
+
+XF 30
+M
+
+XF 38
+M
+
+XF 104
+M
+
+XF 67
+M
+
+XF 112
+M
+
+XF 98
+M
+
+XF 36
+M
+
+XF 22
+M
+
+XF 19
+M
+
+XF 92
+M
+
+XF 25
+M
+
+XF 87
+M
+
+XF 54
+M
+
+XF 74
+M
+
+XF 64
+M
+
+XF 122
+M
+
+XF 93
+M
+
+XF 57
+M
+
+XF 28
+M
+
+XF 46
+M
+
+XF 10
+M
+
+#quit
+Q

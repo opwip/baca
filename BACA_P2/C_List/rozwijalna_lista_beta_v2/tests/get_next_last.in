@@ -1,0 +1,14 @@
+8 1
+
+#init 8 elements
+I 5
+
+#find last
+GL
+
+#find one after last, should be null
+GN
+M
+
+#quit
+Q

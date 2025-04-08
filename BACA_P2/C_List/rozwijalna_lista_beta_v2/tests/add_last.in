@@ -1,0 +1,13 @@
+8 0
+
+#init 2 nodes, last one not full
+I 14
+
+#add last element
+AL 1234
+
+#print
+P
+
+#quit
+Q

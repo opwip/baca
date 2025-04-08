@@ -1,0 +1,11 @@
+8 1
+
+#init 20 nodes, last one not full
+I 157
+
+#get last and print memory
+GL
+M
+
+#quit
+Q

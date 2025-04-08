@@ -1,0 +1,13 @@
+8 0
+
+#init 13 elements
+I 13
+
+#remove last
+RL
+
+#print
+P
+
+#quit
+Q

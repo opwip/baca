@@ -1,0 +1,17 @@
+8 0
+
+#init 16 elements
+I 16
+
+#find element 12
+XF 12
+
+#insert 1234 before that, since current node is full and prev node is also full new node will be created
+IP 1234
+
+#print
+P
+
+#quit
+Q
+

@@ -1,0 +1,19 @@
+8 1
+
+#init 3 nodes
+
+I 20
+
+#find element 8, previous one is on previous node
+XF 8
+
+#print if element was found
+M
+
+GP
+
+#print result
+M
+
+#quit
+Q

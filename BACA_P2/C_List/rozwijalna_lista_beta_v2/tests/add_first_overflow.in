@@ -1,0 +1,14 @@
+8 0
+
+#init first node full
+I 8
+
+#add new first element
+AF 1234
+
+#print
+P
+
+#quit
+Q
+

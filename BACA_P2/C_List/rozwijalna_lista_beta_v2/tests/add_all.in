@@ -1,0 +1,25 @@
+8 0
+
+#add first and last elements
+AF 1
+AL 2
+AF 3
+AL 4
+AF 5
+AL 6
+AF 7
+AL 8
+AF 9
+AL 10
+AF 11
+AL 12
+AF 13
+AL 14
+AF 15
+AL 16
+
+#print
+P
+
+#quit
+Q

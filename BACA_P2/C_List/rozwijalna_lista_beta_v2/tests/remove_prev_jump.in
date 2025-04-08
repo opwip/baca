@@ -1,0 +1,22 @@
+8 0
+
+#init 14
+I 14
+
+#remove elements, so that first node is not full
+RF
+RF
+RF
+RF
+
+#find 8, first element in second node
+XF 8
+
+#remove one after that
+RP
+
+#print
+P
+
+#quit
+Q

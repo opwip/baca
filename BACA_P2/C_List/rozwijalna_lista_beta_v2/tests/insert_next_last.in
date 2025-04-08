@@ -1,0 +1,17 @@
+8 0
+
+#init 14 elements
+I 14
+
+#find element 7, it's the last element in that node
+XF 7
+
+#insert 1234 after that
+IN 1234
+
+#print
+P
+
+#quit
+Q
+

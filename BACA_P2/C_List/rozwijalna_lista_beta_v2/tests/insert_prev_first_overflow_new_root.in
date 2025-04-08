@@ -1,0 +1,17 @@
+8 0
+
+#init 14 elements
+I 16
+
+#find element 0
+XF 0
+
+#insert 1234 before that, since current node is full and we are at root, new root will be created
+IP 1234
+
+#print
+P
+
+#quit
+Q
+

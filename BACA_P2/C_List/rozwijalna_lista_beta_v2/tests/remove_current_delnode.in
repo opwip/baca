@@ -1,0 +1,35 @@
+8 0
+
+#init 24
+I 24
+
+#remove second node by removing every element
+XF 8
+RC
+
+XF 9
+RC
+
+XF 10
+RC
+
+XF 11
+RC
+
+XF 12
+RC
+
+XF 13
+RC
+
+XF 14
+RC
+
+XF 15
+RC
+
+#print
+P
+
+#quit
+Q

@@ -1,0 +1,23 @@
+8 0
+
+#init 24
+I 24
+
+#find element 16, first one in thrid node
+XF 16
+
+#remove second node by removing 8 elements before third node
+RP
+RP
+RP
+RP
+RP
+RP
+RP
+RP
+
+#print
+P
+
+#quit
+Q

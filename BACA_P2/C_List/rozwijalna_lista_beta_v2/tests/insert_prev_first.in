@@ -1,0 +1,17 @@
+8 0
+
+#init 14 elements
+I 14
+
+#find element 8, it's the first element in that node
+XF 8
+
+#insert 1234 before that
+IP 1234
+
+#print
+P
+
+#quit
+Q
+

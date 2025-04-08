@@ -1,0 +1,27 @@
+8 1
+
+#init 3 nodes
+
+I 20
+
+#remove first 4 elements to make first node not full
+RF
+RF
+RF
+RF
+
+P
+#find element 7, next one is on next node
+XF 7
+
+#print if element was found
+M
+
+#get next
+GN
+
+#print result
+M
+
+#quit
+Q

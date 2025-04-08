@@ -1,0 +1,25 @@
+8 0
+
+#init 14
+I 14
+
+#remove all elements except one from root
+RF
+RF
+RF
+RF
+RF
+RF
+RF
+
+#find 8
+XF 8
+
+#remove the only element left in root
+RP
+
+#print
+P
+
+#quit
+Q

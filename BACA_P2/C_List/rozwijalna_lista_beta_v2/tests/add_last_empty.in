@@ -1,0 +1,10 @@
+8 0
+
+#add last to new empty node
+AL 10
+
+#print
+P
+
+#quit
+Q

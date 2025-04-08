@@ -1,0 +1,13 @@
+8 0
+
+#init 1 elements
+I 1
+
+#remove the only one element
+RF
+
+#print
+P
+
+#quit
+Q

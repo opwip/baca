@@ -1,0 +1,17 @@
+8 0
+
+#init 14 elements
+I 16
+
+#find element 15
+XF 15
+
+#insert 1234 after that, since current node is full and we are at last node, new last node will be created
+IN 1234
+
+#print
+P
+
+#quit
+Q
+

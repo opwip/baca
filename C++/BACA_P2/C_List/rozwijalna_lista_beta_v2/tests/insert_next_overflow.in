@@ -4,7 +4,7 @@
 I 14
 
 #find element 6
-XF 6
+XF 4
 
 #insert 1234 after that, since current node is full, element 7 will be yeeted to next node
 IN 1234

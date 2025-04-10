@@ -1,0 +1,592 @@
+255 0
+#init 255 elements
+I 255
+
+#remove 192 random elements
+XF 252
+RC
+
+XF 122
+RC
+
+XF 82
+RC
+
+XF 81
+RC
+
+XF 97
+RC
+
+XF 246
+RC
+
+XF 14
+RC
+
+XF 232
+RC
+
+XF 173
+RC
+
+XF 217
+RC
+
+XF 106
+RC
+
+XF 225
+RC
+
+XF 199
+RC
+
+XF 197
+RC
+
+XF 107
+RC
+
+XF 231
+RC
+
+XF 51
+RC
+
+XF 56
+RC
+
+XF 196
+RC
+
+XF 172
+RC
+
+XF 26
+RC
+
+XF 175
+RC
+
+XF 150
+RC
+
+XF 247
+RC
+
+XF 5
+RC
+
+XF 85
+RC
+
+XF 38
+RC
+
+XF 177
+RC
+
+XF 176
+RC
+
+XF 45
+RC
+
+XF 245
+RC
+
+XF 4
+RC
+
+XF 141
+RC
+
+XF 194
+RC
+
+XF 165
+RC
+
+XF 174
+RC
+
+XF 188
+RC
+
+XF 120
+RC
+
+XF 70
+RC
+
+XF 46
+RC
+
+XF 44
+RC
+
+XF 35
+RC
+
+XF 133
+RC
+
+XF 79
+RC
+
+XF 73
+RC
+
+XF 169
+RC
+
+XF 153
+RC
+
+XF 168
+RC
+
+XF 204
+RC
+
+XF 241
+RC
+
+XF 184
+RC
+
+XF 180
+RC
+
+XF 27
+RC
+
+XF 72
+RC
+
+XF 131
+RC
+
+XF 95
+RC
+
+XF 100
+RC
+
+XF 207
+RC
+
+XF 238
+RC
+
+XF 54
+RC
+
+XF 22
+RC
+
+XF 24
+RC
+
+XF 220
+RC
+
+XF 227
+RC
+
+XF 64
+RC
+
+XF 50
+RC
+
+XF 149
+RC
+
+XF 123
+RC
+
+XF 109
+RC
+
+XF 183
+RC
+
+XF 137
+RC
+
+XF 11
+RC
+
+XF 33
+RC
+
+XF 223
+RC
+
+XF 76
+RC
+
+XF 110
+RC
+
+XF 28
+RC
+
+XF 147
+RC
+
+XF 218
+RC
+
+XF 41
+RC
+
+XF 202
+RC
+
+XF 189
+RC
+
+XF 178
+RC
+
+XF 7
+RC
+
+XF 42
+RC
+
+XF 205
+RC
+
+XF 15
+RC
+
+XF 140
+RC
+
+XF 230
+RC
+
+XF 208
+RC
+
+XF 127
+RC
+
+XF 235
+RC
+
+XF 17
+RC
+
+XF 136
+RC
+
+XF 12
+RC
+
+XF 21
+RC
+
+XF 53
+RC
+
+XF 32
+RC
+
+XF 88
+RC
+
+XF 244
+RC
+
+XF 162
+RC
+
+XF 145
+RC
+
+XF 249
+RC
+
+XF 91
+RC
+
+XF 128
+RC
+
+XF 61
+RC
+
+XF 114
+RC
+
+XF 179
+RC
+
+XF 69
+RC
+
+XF 89
+RC
+
+XF 212
+RC
+
+XF 75
+RC
+
+XF 90
+RC
+
+XF 34
+RC
+
+XF 102
+RC
+
+XF 151
+RC
+
+XF 93
+RC
+
+XF 142
+RC
+
+XF 161
+RC
+
+XF 240
+RC
+
+XF 171
+RC
+
+XF 228
+RC
+
+XF 143
+RC
+
+XF 152
+RC
+
+XF 187
+RC
+
+XF 65
+RC
+
+XF 198
+RC
+
+XF 159
+RC
+
+XF 250
+RC
+
+XF 6
+RC
+
+XF 248
+RC
+
+XF 67
+RC
+
+XF 210
+RC
+
+XF 229
+RC
+
+XF 226
+RC
+
+XF 121
+RC
+
+XF 74
+RC
+
+XF 30
+RC
+
+XF 47
+RC
+
+XF 19
+RC
+
+XF 66
+RC
+
+XF 40
+RC
+
+XF 23
+RC
+
+XF 233
+RC
+
+XF 157
+RC
+
+XF 216
+RC
+
+XF 36
+RC
+
+XF 25
+RC
+
+XF 3
+RC
+
+XF 181
+RC
+
+XF 115
+RC
+
+XF 31
+RC
+
+XF 160
+RC
+
+XF 84
+RC
+
+XF 116
+RC
+
+XF 211
+RC
+
+XF 52
+RC
+
+XF 192
+RC
+
+XF 129
+RC
+
+XF 68
+RC
+
+XF 111
+RC
+
+XF 18
+RC
+
+XF 201
+RC
+
+XF 163
+RC
+
+XF 29
+RC
+
+XF 132
+RC
+
+XF 190
+RC
+
+XF 135
+RC
+
+XF 186
+RC
+
+XF 242
+RC
+
+XF 9
+RC
+
+XF 105
+RC
+
+XF 166
+RC
+
+XF 170
+RC
+
+XF 86
+RC
+
+XF 77
+RC
+
+XF 239
+RC
+
+XF 63
+RC
+
+XF 193
+RC
+
+XF 62
+RC
+
+XF 251
+RC
+
+XF 155
+RC
+
+XF 167
+RC
+
+XF 71
+RC
+
+XF 139
+RC
+
+XF 234
+RC
+
+XF 104
+RC
+
+XF 2
+RC
+
+XF 182
+RC
+
+XF 117
+RC
+
+XF 94
+RC
+
+XF 49
+RC
+
+#print after removal
+P
+
+#compress
+XC
+
+#print after compression
+P
+
+#quit
+Q

@@ -27,90 +27,90 @@ struct NODE_STRUCT {
 #include "source.cpp"
 
 void print_node(NODE_STRUCT* node) {
-	if (node == NULL) {
+	if(node == NULL) {
 		cout << "[NULL NODE]" << endl;
 		return;
 	}
 
-	if (node->use == 0) {
+	if(node -> use == 0) {
 		cout << "[EMPTY NODE]" << endl;
 		return;
 	}
-	if (print_node_ids) {
-		if (node->_label_initialized == LABEL_INITIALIZED_VAL)
-			cout << node->_node_label << ":\t";
+	if(print_node_ids) {
+		if(node -> _label_initialized == LABEL_INITIALIZED_VAL)
+			cout << node -> _node_label << ":\t";
 		else
 			cout << "X:\t";
 	}
 
-	for (BYTE i = 0; i < node->use; i = i + 1)
-		cout << node->object[i] << "\t";
-	for (BYTE i = node->use; i < SIZE; i = i + 1)
+	for(BYTE i = 0; i < node -> use; i = i + 1)
+		cout << node -> object[i] << "\t";
+	for(BYTE i = node -> use; i < SIZE; i = i + 1)
 		cout << "X\t";
 	cout << endl;
 }
 
 void print_object(NODE_STRUCT* node, BYTE index) {
-	if (node == NULL) {
+	if(node == NULL) {
 		cout << "[NULL OBJECT]" << endl;
 		return;
 	}
 
-	OBJECT_TYPE* obj = node->object + index;
-	cout << "OBJECT " << *obj;
+	OBJECT_TYPE* obj = node -> object + index;
+	cout << "OBJECT "<< *obj;
 
-	if (print_node_ids && node->_label_initialized == LABEL_INITIALIZED_VAL)
-		cout << " ON " << node->_node_label;
+	if(print_node_ids && node -> _label_initialized == LABEL_INITIALIZED_VAL)
+		cout <<" ON " << node -> _node_label;
 
 	cout << endl;
 	return;
 }
 
 void print_chain(NODE_STRUCT* root) {
-	if (root == NULL) {
+	if(root == NULL) {
 		cout << "[EMPTY CHAIN]" << endl;
 		return;
 	}
 	cout << "=====BEGIN PRINT=====" << endl;
 	NODE_STRUCT* current = root;
-	while (current != NULL) {
+	while(current != NULL) {
 		print_node(current);
-		current = current->next;
+		current = current -> next;
 	}
 	cout << "======END PRINT======" << endl;
 }
 
 void set_label(NODE_STRUCT* node, char label) {
-	if (node == NULL)
+	if(node == NULL)
 		return;
-	node->_node_label = label;
-	node->_label_initialized = LABEL_INITIALIZED_VAL;
+	node -> _node_label = label;
+	node -> _label_initialized = LABEL_INITIALIZED_VAL;
 }
 
 void init(NODE_STRUCT** root, unsigned int elements) {
 	unsigned int counter = 0;
 
 	char current_label = 'A';
-	while (counter < elements) {
+	while(counter < elements) {
 		unsigned int elements_to_init;
-		if (elements - counter < SIZE)
+		if(elements - counter < SIZE)
 			elements_to_init = elements - counter;
 		else
 			elements_to_init = SIZE;
 
 		NODE_STRUCT* new_node = NewNode();
-		new_node->_node_label = current_label;
-		new_node->_label_initialized = LABEL_INITIALIZED_VAL;
+		new_node -> _node_label = current_label;
+		new_node -> _label_initialized = LABEL_INITIALIZED_VAL;
 		current_label = current_label + 1;
-		new_node->use = elements_to_init;
-		for (unsigned int i = 0; i < elements_to_init; i = i + 1)
-			new_node->object[i] = counter + i;
+		new_node -> use = elements_to_init;
+		for(unsigned int i = 0; i < elements_to_init; i = i + 1)
+			new_node -> object[i] = counter + i;
 
 		counter = counter + elements_to_init;
 
-		new_node->next = NULL;
+		new_node -> next = NULL;
 		*root = new_node;
-		root = &(new_node->next);
+		root = &(new_node -> next);
 	}
 
 }
@@ -125,57 +125,57 @@ int main() {
 	BYTE index_memory;
 
 	string operation;
-	while (true) {
+	while(true) {
 		cin >> operation;
 
-		if (operation.length() >= 1 && operation[0] == '#') {
+		if(operation.length() >= 1 && operation[0] == '#') {
 			string tmp;
 			getline(cin, tmp);
 			continue;
 		}
 
-		if (operation == "I") {
+		if(operation == "I") {
 			unsigned int number;
 			cin >> number;
 			init(&root, number);
 			continue;
 		}
 
-		if (operation == "L") {
+		if(operation == "L") {
 			char label;
 			cin >> label;
 			set_label(node_memory, label);
 			continue;
 		}
 
-		if (operation == "P") {
+		if(operation == "P") {
 			print_chain(root);
 			continue;
 		}
 
-		if (operation == "Q") {
+		if(operation == "Q") {
 			Clear(&root);
 			return 0;
 		}
 
-		if (operation == "M") {
+		if(operation == "M") {
 			print_object(node_memory, index_memory);
 			continue;
 		}
 
-		if (operation == "CL") {
+		if(operation == "CL") {
 			Clear(&root);
 			continue;
 		}
 
-		if (operation == "AF") {
+		if(operation == "AF") {
 			unsigned long long number;
 			cin >> number;
 			AddFirst(&root, &number);
 			continue;
 		}
 
-		if (operation == "AL") {
+		if(operation == "AL") {
 			unsigned long long number;
 			cin >> number;
 			AddLast(&root, &number);
@@ -187,75 +187,75 @@ int main() {
 			continue;
 		}
 
-		// if(operation == "GP") {
-		// 	GetPrev(root, node_memory, index_memory, &node_memory, &index_memory);
-		// 	continue;
-		// }
+		if(operation == "GP") {
+			GetPrev(root, node_memory, index_memory, &node_memory, &index_memory);
+			continue;
+		}
 
-		// if(operation == "GN") {
-		// 	GetNext(root, node_memory, index_memory, &node_memory, &index_memory);
-		// 	continue;
-		// }
+		if(operation == "GN") {
+			GetNext(root, node_memory, index_memory, &node_memory, &index_memory);
+			continue;
+		}
 
 		if(operation == "GL") {
 			GetLast(root, &node_memory, &index_memory);
 			continue;
 		}
 
-		// if(operation == "IP") {
-		// 	unsigned long long number;
-		// 	cin >> number;
-		// 	InsertPrev(&root, node_memory, index_memory, &number);
-		// 	continue;
-		// }
+		if(operation == "IP") {
+			unsigned long long number;
+			cin >> number;
+			InsertPrev(&root, node_memory, index_memory, &number);
+			continue;
+		}
 
-		// if(operation == "IN") {
-		// 	unsigned long long number;
-		// 	cin >> number;
-		// 	InsertNext(root, node_memory, index_memory, &number);
-		// 	continue;
-		// }
+		if(operation == "IN") {
+			unsigned long long number;
+			cin >> number;
+			InsertNext(root, node_memory, index_memory, &number);
+			continue;
+		}
 
-		// if(operation == "RF") {
-		// 	RemoveFirst(&root);
-		// 	continue;
-		// }
+		if(operation == "RF") {
+			RemoveFirst(&root);
+			continue;
+		}
 
-		// if(operation == "RP") {
-		// 	RemovePrev(&root, node_memory, index_memory);
-		// 	continue;
-		// }
+		if(operation == "RP") {
+			RemovePrev(&root, node_memory, index_memory);
+			continue;
+		}
 
-		if (operation == "RC") {
+		if(operation == "RC") {
 			RemoveCurrent(&root, node_memory, index_memory);
 			continue;
 		}
 
-		// if(operation == "RN") {
-		// 	RemoveNext(root, node_memory, index_memory);
-		// 	continue;
-		// }
+		if(operation == "RN") {
+			RemoveNext(root, node_memory, index_memory);
+			continue;
+		}
 
-		// if(operation == "RL") {
-		// 	RemoveLast(&root);
-		// 	continue;
-		// }
+		if(operation == "RL") {
+			RemoveLast(&root);
+			continue;
+		}
 
-		// if(operation == "XF") {
-		// 	unsigned long long number;
-		// 	cin >> number;
-		// 	Find(root, &number, &node_memory, &index_memory);
-		// 	continue;
-		// }
+		if(operation == "XF") {
+			unsigned long long number;
+			cin >> number;
+			Find(root, &number, &node_memory, &index_memory);
+			continue;
+		}
 
-		// if(operation == "XC") {
-		// 	Compress(root);
-		// 	continue;
-		// }
+		if(operation == "XC") {
+			Compress(root);
+			continue;
+		}
 
-		// if(operation == "XR") {
-		// 	Reverse(root);
-		// 	continue;
-		// }
+		if(operation == "XR") {
+			Reverse(root);
+			continue;
+		}
 	}
 }

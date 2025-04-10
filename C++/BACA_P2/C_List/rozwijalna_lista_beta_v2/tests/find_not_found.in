@@ -1,0 +1,20 @@
+8 1
+
+#find from empty list
+XF 1
+
+#print memory
+M
+
+
+#init list
+I 10
+
+#find non-existing element
+F 1000
+
+#print memory
+M
+
+#quit
+Q

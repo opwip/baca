@@ -1,7 +1,6 @@
 // Yaroslav Kolesnik
 
-
-NODE_STRUCT* NewNode(void) {
+NODE_STRUCT* NewNode() {
     NODE_STRUCT* node = new NODE_STRUCT;
     node->object = new OBJECT_TYPE[SIZE];
     node->use = 0;
@@ -15,92 +14,100 @@ void DeleteNode(NODE_STRUCT* node) {
 }
 
 void Clear(NODE_STRUCT** node) {
-    while (*node != NULL) {
-        NODE_STRUCT* temp = *node;
-        *node = (*node)->next;
-        DeleteNode(temp);
+    if (*node == NULL) {
+        return;
     }
+    while (*node) {
+        NODE_STRUCT* temp = (*node)->next;
+        DeleteNode(*node);
+        *node = temp;
+    }
+    *node = NULL;
 }
 
-void AddFirst(NODE_STRUCT** head, OBJECT_TYPE* object_to_add) {
-    if ((*head)->use < SIZE) {
-        for (BYTE i = (*head)->use; i > 0; i--) {
-            *((*head)->object + i) = *((*head)->object + i - 1);
+void AddFirst(NODE_STRUCT** node, OBJECT_TYPE* obj) {
+    NODE_STRUCT* newNode;
+    if (node == NULL || (*node)->use == SIZE) {
+        newNode = NewNode();
+        newNode->next = (*node);
+        *node = newNode;
+    }
+    else {
+        newNode = *node;
+        for (BYTE i = newNode->use; i > 0; --i) {
+            *(newNode->object + i) = *(newNode->object + i - 1);
         }
-        *((*head))->object = *object_to_add;
-        (*head)->use++;
     }
-    else if ((*head) == NULL) {
-        NODE_STRUCT* newNode = NewNode();
-        *(newNode->object) = *object_to_add;
-        newNode->use = 1;
-        newNode->next = NULL;
-        *head = newNode;
+    *(newNode->object) = *obj;
+    newNode->use++;
+}
+
+void AddLast(NODE_STRUCT** node, OBJECT_TYPE* obj) {
+    if (node == NULL) {
+        *node = NewNode();
+        *((*node)->object) = *obj;
+        (*node)->use = 1;
+        return;
+    }
+    NODE_STRUCT* lastNode = *node;
+    while (lastNode->next != NULL) {
+        lastNode = lastNode->next;
+    }
+    if (lastNode->use < SIZE) {
+        *(lastNode->object + lastNode->use) = *obj;
+        lastNode->use++;
     }
     else {
         NODE_STRUCT* newNode = NewNode();
-        *(newNode->object) = *object_to_add;
+        *(newNode->object) = *obj;
         newNode->use = 1;
-        newNode->next = *head;
-        *head = newNode;
+        lastNode->next = newNode;
     }
 }
 
+void GetFirst(NODE_STRUCT* node, NODE_STRUCT** node_ptr, BYTE* object) {
+    *node_ptr = node;
+    if (node != NULL) {
+        *object = 0;
+    }
+}
 
-void AddLast(NODE_STRUCT** head, OBJECT_TYPE* object_to_add) {
-    if (*head == NULL) {
-        NODE_STRUCT* newNode = NewNode();
-        *(newNode->object) = *object_to_add;
-        newNode->use = 1;
-        newNode->next = NULL;
-        *head = newNode;
+void GetLast(NODE_STRUCT* node, NODE_STRUCT** node_ptr, BYTE* object) {
+    *node_ptr = node;
+    if (node == NULL) {
         return;
     }
-    NODE_STRUCT* temp = *head;
-    while (temp->next != NULL) {
-        temp = temp->next;
+    while (node->next != NULL) {
+        node = node->next;
     }
-    if (temp->use < SIZE) {
-        *(temp->object + temp->use) = *object_to_add;
-        temp->use++;
-        return;
+    *node_ptr = node;
+    if (node->use > 0) {
+        *object = node->use - 1;
     }
     else {
-        NODE_STRUCT* newNode = NewNode();
-        *(newNode->object) = *object_to_add;
-        newNode->use = 1;
-        temp->next = newNode;
-        newNode->next = NULL;
+        *object = 0;
     }
 }
 
 void RemoveCurrent(NODE_STRUCT** head, NODE_STRUCT* node, BYTE obj) {
-    if (node == NULL) {
+    if (node == NULL || obj < 0 || obj >= node->use) {
         return;
     }
-    if (node->use > 0) {
-        for (BYTE i = obj; i < node->use; i++) {
-            *(node->object + i - 1) = *(node->object + i);
-        }
-        node->use--;
+    for (BYTE i = obj; i < node->use - 1; i++) {
+        *(node->object + i) = *(node->object + i + 1);
     }
-    else {
-        NODE_STRUCT* temp = *head;
-        while (temp != NULL && temp->next != node) {
-            temp = temp->next;
-        }
-        if (temp != NULL) {
-            temp->next = node->next;
+    node->use--;
+    if (node->use == 0) {
+        if (*head == node) {
+            *head = node->next;
             DeleteNode(node);
         }
-    }
-    if (node->use == 0) {
-        NODE_STRUCT* temp = *head;
-        while (temp != NULL && temp->next != node) {
-            temp = temp->next;
-        }
-        if (temp != NULL) {
-            temp->next = node->next;
+        else {
+            NODE_STRUCT* current = *head;
+            while (current->next != node) {
+                current = current->next;
+            }
+            current->next = node->next;
             DeleteNode(node);
         }
     }

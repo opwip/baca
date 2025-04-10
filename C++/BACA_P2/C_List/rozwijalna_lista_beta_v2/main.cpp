@@ -182,10 +182,10 @@ int main() {
 			continue;
 		}
 
-		// if(operation == "GF") {
-		// 	GetFirst(root, &node_memory, &index_memory);
-		// 	continue;
-		// }
+		if(operation == "GF") {
+			GetFirst(root, &node_memory, &index_memory);
+			continue;
+		}
 
 		// if(operation == "GP") {
 		// 	GetPrev(root, node_memory, index_memory, &node_memory, &index_memory);
@@ -197,10 +197,10 @@ int main() {
 		// 	continue;
 		// }
 
-		// if(operation == "GL") {
-		// 	GetLast(root, &node_memory, &index_memory);
-		// 	continue;
-		// }
+		if(operation == "GL") {
+			GetLast(root, &node_memory, &index_memory);
+			continue;
+		}
 
 		// if(operation == "IP") {
 		// 	unsigned long long number;

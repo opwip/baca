@@ -50,6 +50,7 @@ void Clear(NODE_STRUCT** node) {
         *node = (*node)->next;
         DeleteNode(temp);
     }
+    // node = NULL;
 }
 
 void AddFirst(NODE_STRUCT** head, OBJECT_TYPE* object_to_add) {
@@ -136,10 +137,21 @@ void RemoveCurrent(NODE_STRUCT** head, NODE_STRUCT* node, BYTE obj) {
     }
 }
 
+void InsertNext(){
+    //ALWAYS CREATS NEW NODE IF USE == SIZE WITH USE = 1
+}
+
+void Reverse(){
+    //GET HEAD AND TAIL AND SWAP ELEMENTS USING 2 POINTERS REVERSE METHOD 
+}
+
 int main() {
-    int arr[3] = { 1,2,3 };
+    int arr[SIZE*3 - 1];
+    for (int i = 0; i < (SIZE*3-1); i++){
+        arr[i] = i+1;
+    }
     NODE_STRUCT* head = NewNode();
-    for (int i = 0; i < 3; i++) {
+    for (int i = 0; i < 8; i++) {
         // PrintList(head);
         AddLast(&head, &arr[i]);
 
@@ -151,15 +163,16 @@ int main() {
         AddFirst(&head, &arr[i]);
 
     }
-    std::cout << head << std::endl;
+    
     PrintAll(head);
+    std::cout << head << std::endl;
     NODE_STRUCT* rem = head->next;
     RemoveCurrent(&head, rem, 3);
 
-
-
-    std::cout << head << std::endl;
     PrintAll(head);
+    std::cout << head << std::endl;
     Clear(&head);
+    PrintAll(head);
+    std::cout << head << std::endl;
     return 0;
 }

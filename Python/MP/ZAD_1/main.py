@@ -18,45 +18,41 @@ class Employee:
         return '{} experience: {:2} salary: {:5}'.format(self.person,
                                                          self.experience, self.salary)
 
-
-def selection_sort_for_personas(Company):
-    for cur in range(len(Company)):
-        min_person = cur
-        for find_min in range(cur + 1, len(Company)):
-            if Company[find_min].person.surname < Company[min_person].person.surname:
-                min_person = find_min
-            elif Company[find_min].person.surname == Company[min_person].person.surname:
-                if Company[find_min].person.name < Company[min_person].person.name:
-                    min_person = find_min
-                elif Company[find_min].person.name == Company[min_person].person.name:
-                    #SELECTION SORT NIE STABILNY
-                    if Company[find_min].experience < Company[min_person].experience:
-                        min_person = find_min
-                    elif Company[find_min].experience == Company[min_person].experience:
-                        if Company[find_min].salary < Company[min_person].salary:
-                            min_person = find_min
-        Company[cur], Company[min_person] = Company[min_person], Company[cur]
-
-    return Company
-
-
-def cocktail_sort_for_salaries(Company):
+def cocktail_sort_for_personas(Company):
     swapped = True
     while swapped:
         swapped = False
         for search in range(0, len(Company) - 1):
-            if Company[search].salary > Company[search + 1].salary:
+            if Company[search].person.surname > Company[search + 1].person.surname:
                 Company[search], Company[search+1] = Company[search+1],Company[search]
                 swapped = True
+            elif Company[search].person.surname == Company[search + 1].person.surname:
+                if Company[search].person.name > Company[search + 1].person.name:
+                    Company[search], Company[search+1] = Company[search+1],Company[search]
+                    swapped = True
         if not swapped:
             break
         swapped = False
         for search in range(len(Company) - 2, -1, -1):
-            if Company[search].salary > Company[search + 1].salary:
+            if Company[search].person.surname > Company[search + 1].person.surname:
                 Company[search], Company[search+1] = Company[search+1],Company[search]
                 swapped = True
+            elif Company[search].person.surname == Company[search + 1].person.surname:
+                if Company[search].person.name > Company[search + 1].person.name:
+                    Company[search], Company[search+1] = Company[search+1],Company[search]
+                    swapped = True
     return Company
 
+
+def selection_sort_for_salaries(Company):
+    for cur in range(len(Company)):
+        min_person = cur
+        for find_min in range(cur + 1, len(Company)):
+            if Company[find_min].salary < Company[min_person].salary:
+                min_person = find_min
+        Company[cur], Company[min_person] = Company[min_person], Company[cur]
+
+    return Company
 
 def count_sort_for_experiences(Company):
     maximum = Company[0].experience
@@ -86,9 +82,7 @@ if len(names) == len(surnames) == len(experiences) == len(salaries):
     for i in range(len(names)):
         Company.append(Employee(Person(names[i], surnames[i]), int(experiences[i]), int(salaries[i])))
     if Company:
-        Company = cocktail_sort_for_salaries(Company)
-        Company = count_sort_for_experiences(Company)
-        Company = selection_sort_for_personas(Company)
+        Company = cocktail_sort_for_personas(count_sort_for_experiences(selection_sort_for_salaries(Company)))
         for i in Company:
             print(i)
 

@@ -25,6 +25,7 @@ struct NODE_STRUCT {
 };
 
 #include "source.cpp"
+// #include "BACA_7.cpp"
 
 void print_node(NODE_STRUCT* node) {
 	if(node == NULL) {
@@ -182,80 +183,80 @@ int main() {
 			continue;
 		}
 
-		// if(operation == "GF") {
-		// 	GetFirst(root, &node_memory, &index_memory);
-		// 	continue;
-		// }
+		if(operation == "GF") {
+			GetFirst(root, &node_memory, &index_memory);
+			continue;
+		}
 
-		// if(operation == "GP") {
-		// 	GetPrev(root, node_memory, index_memory, &node_memory, &index_memory);
-		// 	continue;
-		// }
+		if(operation == "GP") {
+			GetPrev(root, node_memory, index_memory, &node_memory, &index_memory);
+			continue;
+		}
 
-		// if(operation == "GN") {
-		// 	GetNext(root, node_memory, index_memory, &node_memory, &index_memory);
-		// 	continue;
-		// }
+		if(operation == "GN") {
+			GetNext(root, node_memory, index_memory, &node_memory, &index_memory);
+			continue;
+		}
 
-		// if(operation == "GL") {
-		// 	GetLast(root, &node_memory, &index_memory);
-		// 	continue;
-		// }
+		if(operation == "GL") {
+			GetLast(root, &node_memory, &index_memory);
+			continue;
+		}
 
-		// if(operation == "IP") {
-		// 	unsigned long long number;
-		// 	cin >> number;
-		// 	InsertPrev(&root, node_memory, index_memory, &number);
-		// 	continue;
-		// }
+		if(operation == "IP") {
+			unsigned long long number;
+			cin >> number;
+			InsertPrev(&root, node_memory, index_memory, &number);
+			continue;
+		}
 
-		// if(operation == "IN") {
-		// 	unsigned long long number;
-		// 	cin >> number;
-		// 	InsertNext(root, node_memory, index_memory, &number);
-		// 	continue;
-		// }
+		if(operation == "IN") {
+			unsigned long long number;
+			cin >> number;
+			InsertNext(root, node_memory, index_memory, &number);
+			continue;
+		}
 
-		// if(operation == "RF") {
-		// 	RemoveFirst(&root);
-		// 	continue;
-		// }
+		if(operation == "RF") {
+			RemoveFirst(&root);
+			continue;
+		}
 
-		// if(operation == "RP") {
-		// 	RemovePrev(&root, node_memory, index_memory);
-		// 	continue;
-		// }
+		if(operation == "RP") {
+			RemovePrev(&root, node_memory, index_memory);
+			continue;
+		}
 
 		if(operation == "RC") {
 			RemoveCurrent(&root, node_memory, index_memory);
 			continue;
 		}
 
-		// if(operation == "RN") {
-		// 	RemoveNext(root, node_memory, index_memory);
-		// 	continue;
-		// }
+		if(operation == "RN") {
+			RemoveNext(root, node_memory, index_memory);
+			continue;
+		}
 
-		// if(operation == "RL") {
-		// 	RemoveLast(&root);
-		// 	continue;
-		// }
+		if(operation == "RL") {
+			RemoveLast(&root);
+			continue;
+		}
 
-		// if(operation == "XF") {
-		// 	unsigned long long number;
-		// 	cin >> number;
-		// 	Find(root, &number, &node_memory, &index_memory);
-		// 	continue;
-		// }
+		if(operation == "XF") {
+			unsigned long long number;
+			cin >> number;
+			Find(root, &number, &node_memory, &index_memory);
+			continue;
+		}
 
-		// if(operation == "XC") {
-		// 	Compress(root);
-		// 	continue;
-		// }
+		if(operation == "XC") {
+			Compress(root);
+			continue;
+		}
 
-		// if(operation == "XR") {
-		// 	Reverse(root);
-		// 	continue;
-		// }
+		if(operation == "XR") {
+			Reverse(root);
+			continue;
+		}
 	}
 }

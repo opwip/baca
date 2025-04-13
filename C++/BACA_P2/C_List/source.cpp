@@ -1,35 +1,3 @@
-#include <iostream>
-
-typedef unsigned char BYTE;
-typedef int OBJECT_TYPE;
-BYTE SIZE = 8;
-
-
-struct NODE_STRUCT {
-    OBJECT_TYPE* object;
-    BYTE use;
-    NODE_STRUCT* next;
-};
-void PrintList(NODE_STRUCT* head) {
-    while (head != NULL) {
-        for (BYTE i = 0; i < head->use; i++) {
-            std::cout << *(head->object + i) << " ";
-        }
-        std::cout << std::endl;
-        head = head->next;
-    }
-}
-
-void PrintAll(NODE_STRUCT* head) {
-    while (head != NULL) {
-        for (BYTE i = 0; i < head->use; i++) {
-            std::cout << *(head->object + i) << " ";
-        }
-        std::cout << "NODE " << std::endl;
-        head = head->next;
-    }
-}
-
 //Yaroslav Kolesnik
 NODE_STRUCT* NewNode() {
     NODE_STRUCT* node = new NODE_STRUCT;
@@ -366,115 +334,55 @@ void Compress(NODE_STRUCT* head) {
 
 void Reverse(NODE_STRUCT* head) {
     
-   if (head == NULL) return;
-
-  
-    long long int total_length = 0;
+    if (head == NULL) return;
+    
     NODE_STRUCT* last = head;
-    while (last != NULL) {
-        total_length += last->use;
-        if (last->next == NULL) break;
+    while (last->next != NULL) {
         last = last->next;
     }
 
-    NODE_STRUCT* left = head;
-    BYTE left_idx = 0;
-    NODE_STRUCT* right = last;
-    BYTE right_idx = right->use - 1;
-
-    long long int left_pos = 0;
-    long long int right_pos = total_length - 1;
-
-    while (left_pos < right_pos) {
-        OBJECT_TYPE temp = *(left->object + left_idx);
-        *(left->object + left_idx) = *(right->object + right_idx);
-        *(right->object + right_idx) = temp;
-
-        left_idx++;
-        left_pos++;
-        if (left_idx >= left->use && left->next != NULL) {
-            left = left->next;
-            left_idx = 0;
+    NODE_STRUCT* left_node = head;
+    NODE_STRUCT* right_node = last;
+    OBJECT_TYPE* left_elem = left_node->object;
+    OBJECT_TYPE* right_elem = right_node->object + (right_node->use - 1);
+    bool first;
+    bool second;
+    while (true){
+        OBJECT_TYPE temp = *(left_elem);
+        *(left_elem) = *(right_elem);
+        *(right_elem) = temp;
+        
+        if (left_elem < (left_node->object + (left_node->use - 1))){
+            left_elem += 1;
         }
-
-        if (right_idx == 0 && right != head) {
-            NODE_STRUCT* temp = head;
-            while (temp->next != right && temp->next != NULL) {
-                temp = temp->next;
+        else {
+            left_node = left_node->next;
+            left_elem = left_node->object;
+        }
+        if (right_elem > right_node->object){
+            right_elem -= 1;
+        }
+        else {
+            NODE_STRUCT* prev = head;
+            while (prev->next != right_node){
+                prev = prev->next;
             }
-            right = temp;
-            right_idx = right->use - 1;
-        } else {
-            right_idx--;
+            right_node = prev;
+            right_elem = right_node->object + (right_node->use - 1);
         }
-        right_pos--;
+        
+        first = (left_node == right_node && (right_elem <= left_elem));
+        if (first){
+            break;
+        }
+        std::cout << "Hero" << std::endl;
+        second = ((left_node->object + (left_node->use - 1)) == left_elem && right_node->object == right_elem && left_node->next == right_node);
+        if (second){
+            break;
+        }
     }
     Compress(head);
+    
 
 }
 
-
-int main() {
-    // int arr[SIZE*3 - 1];
-    // for (int i = 0; i < (SIZE*3-1); i++){
-    //     arr[i] = i+1;
-    // }
-    // NODE_STRUCT* head = NewNode();
-    // for (int i = 0; i < 8; i++) {
-    //     // PrintList(head);
-    //     AddLast(&head, &arr[i]);
-
-    // }
-    // PrintAll(head);
-    // std::cout << head << std::endl;
-    // for (int i = 0; i < 3; i++) {
-    //     // PrintList(head);
-    //     AddFirst(&head, &arr[i]);
-
-    // }
-    
-    // PrintAll(head);
-    // std::cout << head << std::endl;
-    // NODE_STRUCT* rem = head->next;
-    // RemoveCurrent(&head, rem, 3);
-
-    // PrintAll(head);
-    // std::cout << head << std::endl;
-    // Clear(&head);
-    // PrintAll(head);
-    // std::cout << head << std::endl;
-    // return 0;
-    int values[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16};
-    
-    // Start with an empty list
-    NODE_STRUCT* head = NULL;
-
-    // Add elements as per the test input
-    AddFirst(&head, &values[0]);  // AF 1
-    AddLast(&head, &values[1]);   // AL 2
-    AddFirst(&head, &values[2]);  // AF 3
-    AddLast(&head, &values[3]);   // AL 4
-    AddFirst(&head, &values[4]);  // AF 
-    // AddLast(&head, &values[5]);   // AL 6
-    // AddFirst(&head, &values[6]);  // AF 7
-    // AddLast(&head, &values[7]);   // AL 8
-    // AddFirst(&head, &values[8]);  // AF 9
-    // AddLast(&head, &values[9]);   // AL 10
-    // AddFirst(&head, &values[10]); // AF 11
-    // AddLast(&head, &values[11]);  // AL 12
-    // AddFirst(&head, &values[12]); // AF 13
-    // AddLast(&head, &values[13]);  // AL 14
-    // AddFirst(&head, &values[14]); // AF 15
-    // AddLast(&head, &values[15]);  // AL 16
-
-    // Print the list
-    PrintAll(head);    
-    Reverse(head);
-    PrintAll(head);           // P
-
-    // Clean up memory before quitting
-    Clear(&head);
-
-    // Quit
-    return 0;                     // Q
-}

@@ -335,28 +335,19 @@ void Compress(NODE_STRUCT* head) {
 void Reverse(NODE_STRUCT* head) {
 
     if (head == NULL) return;
-    
-
-    NODE_STRUCT* left_node = head;
-    while (true){
-        if (left_node->use > 0){
-            break;
-        }
-        left_node = left_node->next;
+    Compress(head);
+    if (head->next == NULL && head->use == 1){
+        return;
     }
 
+    NODE_STRUCT* left_node = head;
+
     NODE_STRUCT* right_node = head;
-    NODE_STRUCT* result = head;
-    while (result != NULL){
-        if (result->use > 0){
-            right_node = result; 
-        }
-        result = result->next;
+    while (right_node->next != NULL){
+        right_node = right_node->next;
     }
     OBJECT_TYPE* left_elem = left_node->object;
     OBJECT_TYPE* right_elem = right_node->object + (right_node->use - 1);
-    bool first;
-    bool second;
     while (true){
         OBJECT_TYPE temp = *(left_elem);
         *(left_elem) = *(right_elem);
@@ -365,7 +356,6 @@ void Reverse(NODE_STRUCT* head) {
             left_elem += 1;
         }
         else {
-            if (left_node->next == NULL) break;
             left_node = left_node->next;
             left_elem = left_node->object;
         }
@@ -380,20 +370,17 @@ void Reverse(NODE_STRUCT* head) {
             right_node = prev;
             right_elem = right_node->object + (right_node->use - 1);
         }
-        first = (left_node == right_node && (right_elem <= left_elem));
-        if (first){
+        if (left_node == right_node && (right_elem <= left_elem)){
             break;
         }
- 
-        second = ((left_node->object + (left_node->use)) == (left_elem + 1) && right_node->object == right_elem && left_node->next == right_node);
-        if (second){
+        if ((left_node->object + (left_node->use)) == (left_elem + 1) && right_node->object == right_elem && left_node->next == right_node){
             OBJECT_TYPE temp2 = *(left_elem);
             *(left_elem) = *(right_elem);
             *(right_elem) = temp2;
             break;
         }
     }
-    Compress(head);
+    
 
 }
 

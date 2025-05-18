@@ -52,7 +52,9 @@
     "variant": "cpp",
     "fstream": "cpp",
     "iomanip": "cpp",
-    "sstream": "cpp"
+    "sstream": "cpp",
+    "cstdarg": "cpp",
+    "cinttypes": "cpp"
   },
   "C_Cpp_Runner.cCompilerPath": "gcc",
   "C_Cpp_Runner.cppCompilerPath": "g++",

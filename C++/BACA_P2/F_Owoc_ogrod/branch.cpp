@@ -1,7 +1,7 @@
 //Yaroslav Kolesnik
 #include "branch.hpp"
 #include "tree.hpp"
-#include "iostream"
+#include <cstddef>
 BRANCH_CLASS::BRANCH_CLASS(TREE_CLASS* tree, unsigned int height) {
     this->height = height;
     this->TreePointer = tree;
@@ -9,40 +9,56 @@ BRANCH_CLASS::BRANCH_CLASS(TREE_CLASS* tree, unsigned int height) {
     this->total_weight = 0;
     this->fruits_total = 0;
     this->fruit_list = new NODE_BRANCH();
-    this->TreePointer->addBranch();
+    this->TreePointer->addBranch(1);
 }
-BRANCH_CLASS::BRANCH_CLASS(BRANCH_CLASS& other) {
-    NODE_BRANCH* current = new NODE_BRANCH();
-    this->fruit_list = current;
+BRANCH_CLASS::BRANCH_CLASS(const BRANCH_CLASS& other) {
     this->length = other.length;
     this->total_weight = other.total_weight;
     this->fruits_total = other.fruits_total;
-    this->height = 0;
+    this->height = other.height;
+    this->fruit_list = NULL;
+
     NODE_BRANCH* other_current = other.fruit_list;
+    NODE_BRANCH* current = NULL;
+    NODE_BRANCH* prev = NULL;
 
-    while (other_current != nullptr) {
-        if (other_current->data != nullptr) {
+    while (other_current != NULL) {
+        current = new NODE_BRANCH();
 
+
+        if (prev == NULL) {
+            this->fruit_list = current;
+        }
+        else {
+            prev->next = current;
+        }
+
+
+        if (other_current->data != NULL) {
             current->data = new FRUIT_CLASS(*other_current->data);
             current->data->setBranchPointer(this);
         }
         else {
-            current->data = nullptr;
+            current->data = NULL;
         }
-        current->next = new NODE_BRANCH();
-        current = current->next;
+
+
+        current->next = NULL;
+
+
+        prev = current;
         other_current = other_current->next;
     }
-    current->next = nullptr;
 }
 
 BRANCH_CLASS::~BRANCH_CLASS() {
     this->length = 0;
-    if (this->fruit_list != nullptr) {
+    if (this->fruit_list != NULL) {
         delete this->fruit_list;
-        this->fruit_list = nullptr;
+        this->fruit_list = NULL;
     }
     this->TreePointer->fadeBranch();
+    this->TreePointer = NULL;
 }
 
 unsigned int BRANCH_CLASS::getFruitsTotal() {
@@ -70,7 +86,8 @@ void BRANCH_CLASS::addWeight() {
 
 void BRANCH_CLASS::fadeWeight(unsigned int weight) {
     this->total_weight -= weight;
-    getTreePointer()->fadeWeight(weight);
+    if (getTreePointer() != NULL)
+        getTreePointer()->fadeWeight(weight);
 }
 
 unsigned int BRANCH_CLASS::getLength() {
@@ -97,16 +114,18 @@ void BRANCH_CLASS::growthBranch() {
     addLength();
     NODE_BRANCH* current = this->fruit_list;
 
-    while (current != nullptr) {
-        if (current->data != nullptr) {
+    while (current != NULL) {
+        if (current->data != NULL) {
             current->data->growthFruit();
         }
-        if (current->next == nullptr && this->length % 2 == 0) {
+        if (current->next == NULL && this->length % 2 == 0 && this->height > 0) {
             current->next = new NODE_BRANCH();
             current->next->data = new FRUIT_CLASS(this, this->length);
-            current->next->next = nullptr;
+            current->next->data->setBranchPointer(this);
+            current->next->next = NULL;
             break;
         }
+
 
         current = current->next;
     }
@@ -118,22 +137,28 @@ void BRANCH_CLASS::fadeBranch() {
     if (this->length > 0) {
         if (this->length % 2 == 0) {
             NODE_BRANCH* current = this->fruit_list;
-            while (current != nullptr) {
-                if (current->next != nullptr) {
-                    if (current->next->next == nullptr) {
-                        delete current->next;
-                        current->next = nullptr;
-                        break;
-                    }
-                }
+            NODE_BRANCH* previous = NULL;
+            while (current->next != NULL) {
+                previous = current;
                 current = current->next;
             }
+            if (previous != NULL) {
+                delete previous->next;
 
+                previous->next = NULL;
+            }
+            else {
+                delete current;
+
+                this->fruit_list = NULL;
+            }
         }
         fadeLength();
         NODE_BRANCH* current = this->fruit_list;
-        while (current != nullptr) {
-            current->data->fadeFruit();
+        while (current != NULL) {
+            if (current->data != NULL) {
+                current->data->fadeFruit();
+            }
             current = current->next;
         }
     }
@@ -142,7 +167,7 @@ void BRANCH_CLASS::fadeBranch() {
 
 void BRANCH_CLASS::harvestBranch(unsigned int weight) {
     NODE_BRANCH* current = this->fruit_list;
-    while (current != nullptr) {
+    while (current != NULL) {
         FRUIT_CLASS* fruit = current->data;
         if (fruit->getWeight() >= weight) {
             fruit->pluckFruit();
@@ -158,10 +183,10 @@ void BRANCH_CLASS::cutBranch(unsigned int cut_to_length) {
         NODE_BRANCH* current = this->fruit_list;
         unsigned int index = 2;
 
-        while (current != nullptr) {
+        while (current != NULL) {
             if (index + 2 > cut_to_length) {
                 delete current->next;
-                current->next = nullptr;
+                current->next = NULL;
                 break;
             }
             index += 2;
@@ -172,18 +197,17 @@ void BRANCH_CLASS::cutBranch(unsigned int cut_to_length) {
 }
 
 FRUIT_CLASS* BRANCH_CLASS::getFruitPointer(unsigned int on_branch_length_index) {
-    unsigned int index = 1;
     NODE_BRANCH* current = this->fruit_list;
-    while (current != nullptr && index <= on_branch_length_index) {
-        if (index % 2 == 0) {
-            if (index == on_branch_length_index) {
+    while (current != NULL) {
+
+        if (current->data != NULL) {
+            if (current->data->getLength() == on_branch_length_index) {
                 return current->data;
             }
-            current = current->next;
         }
-        index++;
+        current = current->next;
     }
-    return nullptr;
+    return NULL;
 }
 
 TREE_CLASS* BRANCH_CLASS::getTreePointer() {

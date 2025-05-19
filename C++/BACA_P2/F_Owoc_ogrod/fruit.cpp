@@ -2,7 +2,7 @@
 
 #include "fruit.hpp"
 #include "branch.hpp"
-#include "iostream"
+#include <cstddef>
 
 FRUIT_CLASS::FRUIT_CLASS(BRANCH_CLASS* branch, unsigned int length) {
     this->length = length;
@@ -17,7 +17,7 @@ FRUIT_CLASS::FRUIT_CLASS(const FRUIT_CLASS& other) {
 FRUIT_CLASS::~FRUIT_CLASS() {
     pluckFruit();
     this->branchPointer->fadeFruit();
-    this->branchPointer = nullptr;
+    this->branchPointer = NULL;
 }
 unsigned int FRUIT_CLASS::getLength() {
     return this->length;
@@ -27,13 +27,14 @@ unsigned int FRUIT_CLASS::getWeight() {
 }
 
 void FRUIT_CLASS::growthFruit() {
-    // std::cout << "Fruit growth " << this->weight << std::endl;
     this->weight++;
     this->branchPointer->addWeight();
 }
 void FRUIT_CLASS::fadeFruit() {
-    if (this->weight > 0)
+    if (this->weight > 0) {
+        this->weight--;
         this->branchPointer->fadeWeight(1);
+    }
 }
 void FRUIT_CLASS::pluckFruit() {
     this->branchPointer->fadeWeight(this->weight);

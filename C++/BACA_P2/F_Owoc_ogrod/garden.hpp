@@ -3,20 +3,18 @@
 #ifndef GARDEN_HPP
 #define GARDEN_HPP
 #include "tree.hpp"
+#include <cstddef>
 struct NODE_GARDEN {
     TREE_CLASS* data;
     NODE_GARDEN* next;
 
-    NODE_GARDEN() : data(nullptr), next(nullptr) {}
+    NODE_GARDEN() : data(NULL), next(NULL) {}
     ~NODE_GARDEN() {
-        if (data != nullptr) {
+        if (data != NULL) {
             delete data;
-            data = nullptr;
+            data = NULL;
         }
-        // if (next != nullptr) {
-        //     delete next;
-        //     next = nullptr;
-        // }
+
     }
 };
 
@@ -27,6 +25,7 @@ private:
     unsigned int branches_total;
     unsigned int total_weight;
     unsigned int fruits_total;
+    unsigned int next_free_id;
     NODE_GARDEN* tree_list;
 public:
     GARDEN_CLASS();
@@ -35,7 +34,7 @@ public:
     void addTree();
     void fadeTree();
     unsigned int getBranchesTotal();
-    void addBranch();
+    void addBranch(unsigned int branches);
     void fadeBranch();
     unsigned int getFruitsTotal();
     void addFruit(unsigned int fruits);
@@ -51,7 +50,6 @@ public:
     void cutTree(unsigned int height);
     TREE_CLASS* getTreePointer(unsigned int tree_id);
     void cloneTree(unsigned int TREE_id);
-
     void DISPLAY_TREES();
 };
 

@@ -3,21 +3,22 @@
 #ifndef TREE_HPP
 #define TREE_HPP
 #include "branch.hpp"
+#include <cstddef>
 class GARDEN_CLASS;
 
 struct NODE_TREE {
     BRANCH_CLASS* data;
     NODE_TREE* next;
 
-    NODE_TREE() : data(nullptr), next(nullptr) {}
+    NODE_TREE() : data(NULL), next(NULL) {}
     ~NODE_TREE() {
-        if (data != nullptr) {
+        if (data != NULL) {
             delete data;
-            data = nullptr;
+            data = NULL;
         }
-        if (next != nullptr) {
+        if (next != NULL) {
             delete next;
-            next = nullptr;
+            next = NULL;
         }
     }
 };
@@ -34,9 +35,10 @@ private:
 public:
     TREE_CLASS();
     TREE_CLASS(GARDEN_CLASS* garden, unsigned int id);
+    TREE_CLASS(const TREE_CLASS& other);
     ~TREE_CLASS();
     unsigned int getBranchesTotal();
-    void addBranch();
+    void addBranch(unsigned int branches);
     void fadeBranch();
     unsigned int getFruitsTotal();
     void addFruit(unsigned int fruits);
@@ -45,6 +47,7 @@ public:
     void addWeight(unsigned int weight);
     void fadeWeight(unsigned int weight);
     unsigned int getNumber();
+    void setNumber(unsigned int id);
     unsigned int getHeight();
     void addHeight();
     void fadeHeight();
@@ -54,9 +57,9 @@ public:
     void cutTree(unsigned int height);
     void cloneBranch(BRANCH_CLASS* branch);
     GARDEN_CLASS* getGardenPointer();
-    BRANCH_CLASS* getBranchPointer(unsigned int on_tree_height_index);
+    void setGardenPointer(GARDEN_CLASS* garden);
 
-    void DISPAY_BRANCHES();
+    BRANCH_CLASS* getBranchPointer(unsigned int on_tree_height_index);
 };
 
 #endif // TREE_HPP

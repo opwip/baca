@@ -2,21 +2,22 @@
 #ifndef BRANCH_HPP
 #define BRANCH_HPP
 #include "fruit.hpp"
+#include <cstddef>
 class TREE_CLASS;
 
 struct NODE_BRANCH {
     FRUIT_CLASS* data;
     NODE_BRANCH* next;
 
-    NODE_BRANCH() : data(nullptr), next(nullptr) {}
+    NODE_BRANCH() : data(NULL), next(NULL) {}
     ~NODE_BRANCH() {
-        if (data != nullptr) {
+        if (data != NULL) {
             delete data;
-            data = nullptr;
+            data = NULL;
         }
-        if (next != nullptr) {
+        if (next != NULL) {
             delete next;
-            next = nullptr;
+            next = NULL;
         }
     }
 };
@@ -31,7 +32,7 @@ private:
     TREE_CLASS* TreePointer;
 public:
     BRANCH_CLASS(TREE_CLASS* tree, unsigned int height);
-    BRANCH_CLASS(BRANCH_CLASS& other);
+    BRANCH_CLASS(const BRANCH_CLASS& other);
     ~BRANCH_CLASS();
     unsigned int getFruitsTotal();
     void addFruit();

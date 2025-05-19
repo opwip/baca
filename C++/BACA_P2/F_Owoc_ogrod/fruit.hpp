@@ -2,6 +2,7 @@
 
 #ifndef FRUIT_HPP
 #define FRUIT_HPP
+#include <cstddef>
 class BRANCH_CLASS;
 
 class FRUIT_CLASS {

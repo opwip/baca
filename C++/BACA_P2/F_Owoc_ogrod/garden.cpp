@@ -8,12 +8,18 @@ GARDEN_CLASS::GARDEN_CLASS() {
     this->branches_total = 0;
     this->total_weight = 0;
     this->fruits_total = 0;
+    this->number_storage = new FREE_NUMBER_STORAGE(0);
 }
 
 GARDEN_CLASS::~GARDEN_CLASS() {
     while (this->tree_list != NULL) {
         NODE_GARDEN* current = this->tree_list;
         this->tree_list = current->next;
+        delete current;
+    }
+    while (this->number_storage != NULL){
+        FREE_NUMBER_STORAGE* current = this->number_storage;
+        this->number_storage = current->next;
         delete current;
     }
 }
@@ -67,96 +73,86 @@ void GARDEN_CLASS::fadeWeight(unsigned int weight) {
     this->total_weight -= weight;
 }
 
-void GARDEN_CLASS::plantTree() {
 
-    NODE_GARDEN* current = this->tree_list;
-    NODE_GARDEN* last = NULL;
-    unsigned int locate_lowest_free_id = 0;
-    while (current != NULL) {
-        if (current->data != NULL) {
-            if (current->data->getNumber() > locate_lowest_free_id) {
-                break;
-            }
-            locate_lowest_free_id++;
-        }
-        last = current;
-        current = current->next;
-
-    }
-    NODE_GARDEN* new_node = new NODE_GARDEN();
-    new_node->data = new TREE_CLASS(this, locate_lowest_free_id);
-
-    if (last != NULL) {
-        last->next = new_node;
-        new_node->next = current;
-
-    }
-    else {
-        new_node->next = current;
-        this->tree_list = new_node;
-
-    }
-} 
 // #include <iostream>
 // void GARDEN_CLASS::DISPLAY_TREES() {
 //     NODE_GARDEN* current = this->tree_list;
-//     while (current != nullptr) {
-//         if (current->data != nullptr)
+//     while (current != NULL) {
+//         if (current->data != NULL)
 //             std::cout << "Tree ID: " << current->data->getNumber() << " -> ";
 //         current = current->next;
 //     }
 //     std::cout << std::endl;
 // }
-// void GARDEN_CLASS::plantTree() {
-//     // Create new node with the next available ID
-//     NODE_GARDEN* new_node = new NODE_GARDEN();
-//     new_node->data = new TREE_CLASS(this, next_free_id);
 
-//     // Insert at the head of the list
-//     new_node->next = this->tree_list;
-//     this->tree_list = new_node;
-
-//     // Increment the next available ID
-//     next_free_id++;
-//     DISPLAY_TREES();
-
-// }
-// void GARDEN_CLASS::extractTree(unsigned int id) {
-//     NODE_GARDEN* current = this->tree_list;
-//     NODE_GARDEN* prev = nullptr;
-
-//     // Search for the node with the given ID
-//     while (current != nullptr && current->data->getNumber() != id) {
-//         prev = current;
+// void GARDEN_CLASS::DISPLAY_NUMBERS() {
+//     FREE_NUMBER_STORAGE* current = this->number_storage;
+//     while (current != NULL) {
+//         std::cout << "Number ID: " << current->number << " -> ";
 //         current = current->next;
 //     }
-
-//     // Check if we found the node
-//     if (current != nullptr) {
-//         // Update next_free_id if the removed ID is lower
-//         if (current->data->getNumber() < next_free_id) {
-//             next_free_id = current->data->getNumber();
-//         }
-
-//         // Remove the node
-//         if (prev != nullptr) {
-//             prev->next = current->next;
-//         }
-//         else {
-//             this->tree_list = current->next;
-//         }
-//         delete current;
-//     }
-//     DISPLAY_TREES();
-//     std::cout << "Free ID " <<  this->next_free_id << std::endl;
+//     std::cout << std::endl;
 // }
+void GARDEN_CLASS::plantTree() {
+    unsigned int locate_lowest_free_id;
+    if (this->number_storage->next != NULL){
+        locate_lowest_free_id = this->number_storage->next->number;
+        FREE_NUMBER_STORAGE* current = this->number_storage->next;
+        if (current->next != NULL){
+            this->number_storage->next = current->next;
+        }
+        else{
+            this->number_storage->next = NULL;
+        }
+        delete current;
+    }
+    else {
+        locate_lowest_free_id = this->number_storage->number;
+        this->number_storage->number++;
+    }
+    
+    NODE_GARDEN* new_node = new NODE_GARDEN();
+    new_node->data = new TREE_CLASS(this, locate_lowest_free_id);
+    new_node->next = this->tree_list;
+    this->tree_list = new_node;
+    // DISPLAY_TREES();
+    // DISPLAY_NUMBERS();
+    
+}
+
 void GARDEN_CLASS::extractTree(unsigned int id) {
+    if (this->getTreePointer(id) == NULL){
+        return;
+    }
     NODE_GARDEN* current = this->tree_list;
     NODE_GARDEN* previous = NULL;
     while (current != NULL) {
         if (current->data != NULL) {
 
             if (current->data->getNumber() == id) {
+                FREE_NUMBER_STORAGE* freed = new FREE_NUMBER_STORAGE(id);
+                if (this->number_storage->next != NULL){
+                    FREE_NUMBER_STORAGE* current_num = this->number_storage->next;
+                    FREE_NUMBER_STORAGE* last_num = this->number_storage;
+                    bool found = false;
+                    while (current_num != NULL){
+                        if (current_num->number > id){
+                            last_num->next = freed;
+                            freed->next = current_num;
+                            found = true;
+                            break;
+                        }
+                        last_num = current_num;
+                        current_num = current_num->next;
+
+                    }
+                    if (!found){
+                        last_num->next = freed;
+                    }
+                }
+                else{
+                    this->number_storage->next = freed;
+                }
                 if (previous != NULL) {
                     previous->next = current->next;
                 }
@@ -170,7 +166,72 @@ void GARDEN_CLASS::extractTree(unsigned int id) {
         previous = current;
         current = current->next;
     }
+    // DISPLAY_TREES();
+    // DISPLAY_NUMBERS();
 }
+// void GARDEN_CLASS::plantTree() {
+//     NODE_GARDEN* current = this->tree_list;
+//     NODE_GARDEN* last = NULL;
+//     unsigned int locate_lowest_free_id = 0;
+    
+//     if (current == NULL) {
+//         NODE_GARDEN* new_node = new NODE_GARDEN();
+//         new_node->data = new TREE_CLASS(this, 0);
+//         new_node->next = NULL;
+//         this->tree_list = new_node;
+//         return;
+//     }
+
+//     while (current != NULL) {
+//         if (current->data != NULL) {
+//             unsigned int current_id = current->data->getNumber();
+//             if (current_id > locate_lowest_free_id) {
+//                 break;
+//             }
+//             locate_lowest_free_id++;  
+//         }
+//         last = current;
+//         current = current->next;
+//         // DISPLAY_TREES();
+//     }
+
+//     NODE_GARDEN* new_node = new NODE_GARDEN();
+//     new_node->data = new TREE_CLASS(this, locate_lowest_free_id);
+
+//     if (last != NULL) {
+//         new_node->next = current;
+//         last->next = new_node;
+//     } else {
+//         new_node->next = this->tree_list;
+//         this->tree_list = new_node;
+//     }
+// }
+
+
+// void GARDEN_CLASS::extractTree(unsigned int id) {
+//     if (this->getTreePointer(id) == NULL){
+//         return;
+//     }
+//     NODE_GARDEN* current = this->tree_list;
+//     NODE_GARDEN* previous = NULL;
+//     while (current != NULL) {
+//         if (current->data != NULL) {
+
+//             if (current->data->getNumber() == id) {
+//                 if (previous != NULL) {
+//                     previous->next = current->next;
+//                 }
+//                 else {
+//                     this->tree_list = current->next;
+//                 }
+//                 delete current;
+//                 break;
+//             }
+//         }
+//         previous = current;
+//         current = current->next;
+//     }
+// }
 
 void GARDEN_CLASS::growthGarden() {
     NODE_GARDEN* current = this->tree_list;
@@ -197,45 +258,47 @@ void GARDEN_CLASS::fadeGarden() {
 void GARDEN_CLASS::harvestGarden(unsigned int weight) {
     NODE_GARDEN* current = this->tree_list;
     while (current != NULL) {
-        current->data->harvestTree(weight);
+        if (current->data != NULL){
+            current->data->harvestTree(weight);
+        }
         current = current->next;
     }
 }
 
 void GARDEN_CLASS::cloneTree(unsigned int TREE_id) {
-    NODE_GARDEN* current = this->tree_list;
-    NODE_GARDEN* last = NULL;
-    unsigned int locate_lowest_free_id = 0;
-    while (current != NULL) {
-        if (current->data != NULL) {
-            if (current->data->getNumber() > locate_lowest_free_id) {
-                break;
-            }
-            locate_lowest_free_id++;
+    if (this->getTreePointer(TREE_id) == NULL){
+        return;
+    }
+    unsigned int locate_lowest_free_id;
+    if (this->number_storage->next != NULL){
+        locate_lowest_free_id = this->number_storage->next->number;
+        FREE_NUMBER_STORAGE* current = this->number_storage->next;
+        if (current->next != NULL){
+            this->number_storage->next = current->next;
         }
-        last = current;
-        current = current->next;
-
+        else{
+            this->number_storage->next = NULL;
+        }
+        delete current;
+    }
+    else {
+        locate_lowest_free_id = this->number_storage->number;
+        this->number_storage->number++;
     }
     NODE_GARDEN* new_node = new NODE_GARDEN();
     new_node->data = new TREE_CLASS(*(this->getTreePointer(TREE_id)));
     new_node->data->setGardenPointer(this);
     new_node->data->setNumber(locate_lowest_free_id);
-
-    if (last != NULL) {
-        last->next = new_node;
-        new_node->next = current;
-
-    }
-    else {
-        new_node->next = current;
-        this->tree_list = new_node;
-
-    }
+    new_node->next = this->tree_list;
+    this->tree_list = new_node;
+    
     this->addTree();
     this->addBranch(new_node->data->getBranchesTotal());
     this->addFruit(new_node->data->getFruitsTotal());
     this->addWeight(new_node->data->getWeightsTotal());
+    // DISPLAY_TREES();
+    // DISPLAY_NUMBERS();
+
 }
 TREE_CLASS* GARDEN_CLASS::getTreePointer(unsigned int TREE_id) {
     NODE_GARDEN* current = this->tree_list;

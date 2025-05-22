@@ -197,16 +197,18 @@ void TREE_CLASS::fadeTree() {
 void TREE_CLASS::harvestTree(unsigned int weight) {
     NODE_TREE* current = this->branches_list;
     while (current != NULL) {
-        current->data->harvestBranch(weight);
+        if (current->data != NULL){
+            current->data->harvestBranch(weight);
+        }
         current = current->next;
     }
 }
 
 void TREE_CLASS::cutTree(unsigned int cut_to_height) {
-    if (cut_to_height > 0 && cut_to_height <= this->height) {
+    if (cut_to_height < this->height) {
         this->height = cut_to_height;
         NODE_TREE* current = this->branches_list;
-        unsigned int index = 3;
+        unsigned int index = 0;
         while (current != NULL) {
             if (index + 3 > cut_to_height) {
                 delete current->next;

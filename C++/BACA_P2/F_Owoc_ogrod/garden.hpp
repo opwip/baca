@@ -18,6 +18,19 @@ struct NODE_GARDEN {
     }
 };
 
+struct FREE_NUMBER_STORAGE{
+    unsigned int number;
+    FREE_NUMBER_STORAGE* next;
+    FREE_NUMBER_STORAGE(unsigned int number1){
+        number = number1;
+        next = NULL;
+    } 
+    ~FREE_NUMBER_STORAGE(){
+        number = 0;
+        next = NULL;
+    }
+};
+
 
 class GARDEN_CLASS {
 private:
@@ -27,6 +40,7 @@ private:
     unsigned int fruits_total;
     unsigned int next_free_id;
     NODE_GARDEN* tree_list;
+    FREE_NUMBER_STORAGE* number_storage;
 public:
     GARDEN_CLASS();
     ~GARDEN_CLASS();
@@ -51,6 +65,7 @@ public:
     TREE_CLASS* getTreePointer(unsigned int tree_id);
     void cloneTree(unsigned int TREE_id);
     void DISPLAY_TREES();
+    void DISPLAY_NUMBERS();
 };
 
 #endif // GARDEN_HPP

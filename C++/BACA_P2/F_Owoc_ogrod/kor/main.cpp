@@ -248,6 +248,9 @@ int main() {
 
         debug.extractTree(2);
 
+               
+
+
 
         if (drukuj_pomocnicze) cout << "RESULT AFTER 'debug.extractTree(2)': " << endl;
 
@@ -261,7 +264,13 @@ int main() {
 
 
         debug.extractTree(4);
-
+        // debug.extractTree(6);
+        // debug.plantTree();
+        // debug.plantTree();
+        // debug.plantTree();
+        // debug.plantTree();
+        // debug.plantTree();
+        
 
         if (drukuj_pomocnicze) cout << "RESULT AFTER 'debug.extractTree(4)': " << endl;
 

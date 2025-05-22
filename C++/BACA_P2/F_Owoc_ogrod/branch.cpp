@@ -184,29 +184,31 @@ void BRANCH_CLASS::fadeBranch() {
 void BRANCH_CLASS::harvestBranch(unsigned int weight) {
     NODE_BRANCH* current = this->fruit_list;
     while (current != NULL) {
-        FRUIT_CLASS* fruit = current->data;
-        if (fruit->getWeight() >= weight) {
-            fruit->pluckFruit();
+        if (current->data != NULL){
+            if (current->data->getWeight() >= weight) {
+                current->data->pluckFruit();
+            }
         }
         current = current->next;
     }
 }
 
 void BRANCH_CLASS::cutBranch(unsigned int cut_to_length) {
-
-        this->length = cut_to_length;
-        NODE_BRANCH* current = this->fruit_list;
-        unsigned int index = 2;
-        while (current != NULL) {
-            if (index + 2 > cut_to_length) {
-                if (current->next != NULL){
-                    delete current->next;
-                    current->next = NULL;
+    if (cut_to_length < this->length){
+            this->length = cut_to_length;
+            NODE_BRANCH* current = this->fruit_list;
+            unsigned int index = 0;
+            while (current != NULL) {
+                if (index + 2 > cut_to_length) {
+                    if (current->next != NULL){
+                        delete current->next;
+                        current->next = NULL;
+                    }
+                    break;
                 }
-                break;
-            }
-            index += 2;
-            current = current->next;
+                index += 2;
+                current = current->next;
+        }
     }
 }
 

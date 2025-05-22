@@ -1,8 +1,8 @@
 def knapsack_with_max_items(capacity, values, weights, n):
-    dp = [(0, 0)] * (capacity + 1)
-    # (value, count)
+    dp = [(0, 0)] * (capacity + 1) # +1 because dp[w] is the best solution for Weight w==index dp[0] always (0,0)
+    # (value, count of jewels (x out of n))
     for i in range(n):
-        for w in range(capacity, weights[i] - 1, -1):
+        for w in range(capacity, weights[i] - 1, -1): # capacity -> weights[i] - 1, -1 to include weights[i]
             curr_val, curr_count = dp[w - weights[i]]
             new_val = curr_val + values[i]
             new_count = curr_count + 1

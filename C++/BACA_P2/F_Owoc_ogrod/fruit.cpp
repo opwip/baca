@@ -4,6 +4,12 @@
 #include "branch.hpp"
 #include <cstddef>
 
+FRUIT_CLASS::FRUIT_CLASS() {
+    this->length = 0;
+    this->weight = 0;
+    this->branchPointer = NULL;
+}
+
 FRUIT_CLASS::FRUIT_CLASS(BRANCH_CLASS* branch, unsigned int length) {
     this->length = length;
     this->weight = 0;
@@ -16,8 +22,10 @@ FRUIT_CLASS::FRUIT_CLASS(const FRUIT_CLASS& other) {
 }
 FRUIT_CLASS::~FRUIT_CLASS() {
     pluckFruit();
-    this->branchPointer->fadeFruit();
-    this->branchPointer = NULL;
+    if (this->branchPointer != NULL){
+        this->branchPointer->fadeFruit();
+        this->branchPointer = NULL;
+    }
 }
 unsigned int FRUIT_CLASS::getLength() {
     return this->length;
@@ -28,16 +36,22 @@ unsigned int FRUIT_CLASS::getWeight() {
 
 void FRUIT_CLASS::growthFruit() {
     this->weight++;
-    this->branchPointer->addWeight();
+    if (this->branchPointer != NULL){
+        this->branchPointer->addWeight();
+    }
 }
 void FRUIT_CLASS::fadeFruit() {
     if (this->weight > 0) {
         this->weight--;
-        this->branchPointer->fadeWeight(1);
+        if (this->branchPointer != NULL){
+            this->branchPointer->fadeWeight(1);
+        }
     }
 }
 void FRUIT_CLASS::pluckFruit() {
-    this->branchPointer->fadeWeight(this->weight);
+    if (this->branchPointer != NULL){
+        this->branchPointer->fadeWeight(this->weight);
+    }
     this->weight = 0;
 }
 

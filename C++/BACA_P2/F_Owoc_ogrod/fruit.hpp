@@ -11,6 +11,7 @@ private:
     unsigned int length;
     BRANCH_CLASS* branchPointer;
 public:
+    FRUIT_CLASS();
     FRUIT_CLASS(BRANCH_CLASS* branch, unsigned int length);
     FRUIT_CLASS(const FRUIT_CLASS& other);
     ~FRUIT_CLASS();

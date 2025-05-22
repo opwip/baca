@@ -31,6 +31,7 @@ private:
     NODE_BRANCH* fruit_list;
     TREE_CLASS* TreePointer;
 public:
+    BRANCH_CLASS();
     BRANCH_CLASS(TREE_CLASS* tree, unsigned int height);
     BRANCH_CLASS(const BRANCH_CLASS& other);
     ~BRANCH_CLASS();

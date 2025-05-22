@@ -2,6 +2,14 @@
 #include "branch.hpp"
 #include "tree.hpp"
 #include <cstddef>
+BRANCH_CLASS::BRANCH_CLASS() {
+    this->height = 0;
+    this->TreePointer = NULL;
+    this->length = 0;
+    this->total_weight = 0;
+    this->fruits_total = 0;
+    this->fruit_list = new NODE_BRANCH();
+}
 BRANCH_CLASS::BRANCH_CLASS(TREE_CLASS* tree, unsigned int height) {
     this->height = height;
     this->TreePointer = tree;
@@ -57,8 +65,10 @@ BRANCH_CLASS::~BRANCH_CLASS() {
         delete this->fruit_list;
         this->fruit_list = NULL;
     }
-    this->TreePointer->fadeBranch();
-    this->TreePointer = NULL;
+    if (this->TreePointer != NULL){
+        this->TreePointer->fadeBranch();
+        this->TreePointer = NULL;
+    }
 }
 
 unsigned int BRANCH_CLASS::getFruitsTotal() {
@@ -67,12 +77,16 @@ unsigned int BRANCH_CLASS::getFruitsTotal() {
 
 void BRANCH_CLASS::addFruit() {
     this->fruits_total++;
-    getTreePointer()->addFruit(1);
+    if (this->TreePointer != NULL){
+        this->TreePointer->addFruit(1);
+    }
 }
 
 void BRANCH_CLASS::fadeFruit() {
     this->fruits_total--;
-    getTreePointer()->fadeFruit();
+    if (this->TreePointer != NULL){
+        this->TreePointer->fadeFruit();
+    }
 }
 
 
@@ -81,13 +95,15 @@ unsigned int BRANCH_CLASS::getWeightsTotal() {
 }
 void BRANCH_CLASS::addWeight() {
     this->total_weight++;
-    getTreePointer()->addWeight(1);
+    if (this->TreePointer != NULL){
+        this->TreePointer->addWeight(1);
+    }
 }
 
 void BRANCH_CLASS::fadeWeight(unsigned int weight) {
     this->total_weight -= weight;
-    if (getTreePointer() != NULL)
-        getTreePointer()->fadeWeight(weight);
+    if (this->TreePointer != NULL)
+        this->TreePointer->fadeWeight(weight);
 }
 
 unsigned int BRANCH_CLASS::getLength() {
@@ -118,7 +134,7 @@ void BRANCH_CLASS::growthBranch() {
         if (current->data != NULL) {
             current->data->growthFruit();
         }
-        if (current->next == NULL && this->length % 2 == 0 && this->height > 0) {
+        if (current->next == NULL && this->length % 2 == 0) {
             current->next = new NODE_BRANCH();
             current->next->data = new FRUIT_CLASS(this, this->length);
             current->next->data->setBranchPointer(this);
@@ -149,7 +165,7 @@ void BRANCH_CLASS::fadeBranch() {
             }
             else {
                 delete current;
-
+                current - NULL;
                 this->fruit_list = NULL;
             }
         }
@@ -177,22 +193,20 @@ void BRANCH_CLASS::harvestBranch(unsigned int weight) {
 }
 
 void BRANCH_CLASS::cutBranch(unsigned int cut_to_length) {
-    if (cut_to_length >= 0) {
 
         this->length = cut_to_length;
         NODE_BRANCH* current = this->fruit_list;
         unsigned int index = 2;
-
         while (current != NULL) {
             if (index + 2 > cut_to_length) {
-                delete current->next;
-                current->next = NULL;
+                if (current->next != NULL){
+                    delete current->next;
+                    current->next = NULL;
+                }
                 break;
             }
             index += 2;
             current = current->next;
-        }
-
     }
 }
 

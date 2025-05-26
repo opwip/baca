@@ -1,21 +1,13 @@
 //Yaroslav Kolesnik
 
-#ifndef GARDEN_HPP
-#define GARDEN_HPP
-#include "tree.hpp"
 #include <cstddef>
+class TREE_CLASS;
 struct NODE_GARDEN {
     TREE_CLASS* data;
     NODE_GARDEN* next;
 
-    NODE_GARDEN() : data(NULL), next(NULL) {}
-    ~NODE_GARDEN() {
-        if (data != NULL) {
-            delete data;
-            data = NULL;
-        }
-
-    }
+    NODE_GARDEN();
+    ~NODE_GARDEN();
 };
 
 struct FREE_NUMBER_STORAGE{
@@ -67,5 +59,3 @@ public:
     void DISPLAY_TREES();
     void DISPLAY_NUMBERS();
 };
-
-#endif // GARDEN_HPP

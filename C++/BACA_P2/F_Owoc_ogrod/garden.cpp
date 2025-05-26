@@ -1,6 +1,19 @@
 //Yaroslav Kolesnik
 #include "garden.hpp"
+#include "tree.hpp"
 #include <cstddef>
+
+NODE_GARDEN::NODE_GARDEN() {
+    this->data = NULL;
+    this->next = NULL;
+}
+NODE_GARDEN::~NODE_GARDEN() {
+    if (data != NULL) {
+        delete data;
+        data = NULL;
+    }
+}
+
 GARDEN_CLASS::GARDEN_CLASS() {
     this->tree_list = new NODE_GARDEN();
     this->next_free_id = 0;
@@ -17,7 +30,7 @@ GARDEN_CLASS::~GARDEN_CLASS() {
         this->tree_list = current->next;
         delete current;
     }
-    while (this->number_storage != NULL){
+    while (this->number_storage != NULL) {
         FREE_NUMBER_STORAGE* current = this->number_storage;
         this->number_storage = current->next;
         delete current;
@@ -95,13 +108,13 @@ void GARDEN_CLASS::fadeWeight(unsigned int weight) {
 // }
 void GARDEN_CLASS::plantTree() {
     unsigned int locate_lowest_free_id;
-    if (this->number_storage->next != NULL){
+    if (this->number_storage->next != NULL) {
         locate_lowest_free_id = this->number_storage->next->number;
         FREE_NUMBER_STORAGE* current = this->number_storage->next;
-        if (current->next != NULL){
+        if (current->next != NULL) {
             this->number_storage->next = current->next;
         }
-        else{
+        else {
             this->number_storage->next = NULL;
         }
         delete current;
@@ -110,18 +123,18 @@ void GARDEN_CLASS::plantTree() {
         locate_lowest_free_id = this->number_storage->number;
         this->number_storage->number++;
     }
-    
+
     NODE_GARDEN* new_node = new NODE_GARDEN();
     new_node->data = new TREE_CLASS(this, locate_lowest_free_id);
     new_node->next = this->tree_list;
     this->tree_list = new_node;
     // DISPLAY_TREES();
     // DISPLAY_NUMBERS();
-    
+
 }
 
 void GARDEN_CLASS::extractTree(unsigned int id) {
-    if (this->getTreePointer(id) == NULL){
+    if (this->getTreePointer(id) == NULL) {
         return;
     }
     NODE_GARDEN* current = this->tree_list;
@@ -131,12 +144,12 @@ void GARDEN_CLASS::extractTree(unsigned int id) {
 
             if (current->data->getNumber() == id) {
                 FREE_NUMBER_STORAGE* freed = new FREE_NUMBER_STORAGE(id);
-                if (this->number_storage->next != NULL){
+                if (this->number_storage->next != NULL) {
                     FREE_NUMBER_STORAGE* current_num = this->number_storage->next;
                     FREE_NUMBER_STORAGE* last_num = this->number_storage;
                     bool found = false;
-                    while (current_num != NULL){
-                        if (current_num->number > id){
+                    while (current_num != NULL) {
+                        if (current_num->number > id) {
                             last_num->next = freed;
                             freed->next = current_num;
                             found = true;
@@ -146,11 +159,11 @@ void GARDEN_CLASS::extractTree(unsigned int id) {
                         current_num = current_num->next;
 
                     }
-                    if (!found){
+                    if (!found) {
                         last_num->next = freed;
                     }
                 }
-                else{
+                else {
                     this->number_storage->next = freed;
                 }
                 if (previous != NULL) {
@@ -173,7 +186,7 @@ void GARDEN_CLASS::extractTree(unsigned int id) {
 //     NODE_GARDEN* current = this->tree_list;
 //     NODE_GARDEN* last = NULL;
 //     unsigned int locate_lowest_free_id = 0;
-    
+
 //     if (current == NULL) {
 //         NODE_GARDEN* new_node = new NODE_GARDEN();
 //         new_node->data = new TREE_CLASS(this, 0);
@@ -258,7 +271,7 @@ void GARDEN_CLASS::fadeGarden() {
 void GARDEN_CLASS::harvestGarden(unsigned int weight) {
     NODE_GARDEN* current = this->tree_list;
     while (current != NULL) {
-        if (current->data != NULL){
+        if (current->data != NULL) {
             current->data->harvestTree(weight);
         }
         current = current->next;
@@ -266,17 +279,17 @@ void GARDEN_CLASS::harvestGarden(unsigned int weight) {
 }
 
 void GARDEN_CLASS::cloneTree(unsigned int TREE_id) {
-    if (this->getTreePointer(TREE_id) == NULL){
+    if (this->getTreePointer(TREE_id) == NULL) {
         return;
     }
     unsigned int locate_lowest_free_id;
-    if (this->number_storage->next != NULL){
+    if (this->number_storage->next != NULL) {
         locate_lowest_free_id = this->number_storage->next->number;
         FREE_NUMBER_STORAGE* current = this->number_storage->next;
-        if (current->next != NULL){
+        if (current->next != NULL) {
             this->number_storage->next = current->next;
         }
-        else{
+        else {
             this->number_storage->next = NULL;
         }
         delete current;
@@ -291,7 +304,7 @@ void GARDEN_CLASS::cloneTree(unsigned int TREE_id) {
     new_node->data->setNumber(locate_lowest_free_id);
     new_node->next = this->tree_list;
     this->tree_list = new_node;
-    
+
     this->addTree();
     this->addBranch(new_node->data->getBranchesTotal());
     this->addFruit(new_node->data->getFruitsTotal());

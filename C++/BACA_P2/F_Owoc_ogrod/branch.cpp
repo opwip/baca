@@ -1,7 +1,24 @@
 //Yaroslav Kolesnik
 #include "branch.hpp"
+#include "fruit.hpp"
 #include "tree.hpp"
 #include <cstddef>
+
+NODE_BRANCH::NODE_BRANCH() {
+    this->data = NULL;
+    this->next = NULL;
+}
+NODE_BRANCH::~NODE_BRANCH() {
+    if (data != NULL) {
+        delete data;
+        data = NULL;
+    }
+    if (next != NULL) {
+        delete next;
+        next = NULL;
+    }
+}
+
 BRANCH_CLASS::BRANCH_CLASS() {
     this->height = 0;
     this->TreePointer = NULL;
@@ -65,7 +82,7 @@ BRANCH_CLASS::~BRANCH_CLASS() {
         delete this->fruit_list;
         this->fruit_list = NULL;
     }
-    if (this->TreePointer != NULL){
+    if (this->TreePointer != NULL) {
         this->TreePointer->fadeBranch();
         this->TreePointer = NULL;
     }
@@ -77,14 +94,14 @@ unsigned int BRANCH_CLASS::getFruitsTotal() {
 
 void BRANCH_CLASS::addFruit() {
     this->fruits_total++;
-    if (this->TreePointer != NULL){
+    if (this->TreePointer != NULL) {
         this->TreePointer->addFruit(1);
     }
 }
 
 void BRANCH_CLASS::fadeFruit() {
     this->fruits_total--;
-    if (this->TreePointer != NULL){
+    if (this->TreePointer != NULL) {
         this->TreePointer->fadeFruit();
     }
 }
@@ -95,7 +112,7 @@ unsigned int BRANCH_CLASS::getWeightsTotal() {
 }
 void BRANCH_CLASS::addWeight() {
     this->total_weight++;
-    if (this->TreePointer != NULL){
+    if (this->TreePointer != NULL) {
         this->TreePointer->addWeight(1);
     }
 }
@@ -184,7 +201,7 @@ void BRANCH_CLASS::fadeBranch() {
 void BRANCH_CLASS::harvestBranch(unsigned int weight) {
     NODE_BRANCH* current = this->fruit_list;
     while (current != NULL) {
-        if (current->data != NULL){
+        if (current->data != NULL) {
             if (current->data->getWeight() >= weight) {
                 current->data->pluckFruit();
             }
@@ -194,20 +211,20 @@ void BRANCH_CLASS::harvestBranch(unsigned int weight) {
 }
 
 void BRANCH_CLASS::cutBranch(unsigned int cut_to_length) {
-    if (cut_to_length < this->length){
-            this->length = cut_to_length;
-            NODE_BRANCH* current = this->fruit_list;
-            unsigned int index = 0;
-            while (current != NULL) {
-                if (index + 2 > cut_to_length) {
-                    if (current->next != NULL){
-                        delete current->next;
-                        current->next = NULL;
-                    }
-                    break;
+    if (cut_to_length < this->length) {
+        this->length = cut_to_length;
+        NODE_BRANCH* current = this->fruit_list;
+        unsigned int index = 0;
+        while (current != NULL) {
+            if (index + 2 > cut_to_length) {
+                if (current->next != NULL) {
+                    delete current->next;
+                    current->next = NULL;
                 }
-                index += 2;
-                current = current->next;
+                break;
+            }
+            index += 2;
+            current = current->next;
         }
     }
 }

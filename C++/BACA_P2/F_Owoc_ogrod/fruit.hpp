@@ -1,7 +1,4 @@
 //Yaroslav Kolesnik
-
-#ifndef FRUIT_HPP
-#define FRUIT_HPP
 #include <cstddef>
 class BRANCH_CLASS;
 
@@ -23,5 +20,3 @@ public:
     void setBranchPointer(BRANCH_CLASS* branch);
     BRANCH_CLASS* getBranchPointer();
 };
-
-#endif 

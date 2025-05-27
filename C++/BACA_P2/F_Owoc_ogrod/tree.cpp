@@ -1,8 +1,24 @@
 //Yaroslav Kolesnik
-
 #include "tree.hpp"
+#include "branch.hpp"
 #include "garden.hpp"
 #include <cstddef>
+
+NODE_TREE::NODE_TREE() {
+    this->data = NULL;
+    this->next = NULL;
+}
+NODE_TREE::~NODE_TREE() {
+    if (data != NULL) {
+        delete data;
+        data = NULL;
+    }
+    if (next != NULL) {
+        delete next;
+        next = NULL;
+    }
+}
+
 TREE_CLASS::TREE_CLASS() {
     this->id = 0;
     this->branches_list = new NODE_TREE();
@@ -197,7 +213,7 @@ void TREE_CLASS::fadeTree() {
 void TREE_CLASS::harvestTree(unsigned int weight) {
     NODE_TREE* current = this->branches_list;
     while (current != NULL) {
-        if (current->data != NULL){
+        if (current->data != NULL) {
             current->data->harvestBranch(weight);
         }
         current = current->next;

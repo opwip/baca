@@ -41,5 +41,3 @@ for k in range(Z):
     instr = raw_input().split()
     for i in range(M_len):
         print('{} {}'.format(int(instr[i]), find_kth_smallest(arr_N[:], 0, len(nums)-1, int(instr[i]))))
-
-        

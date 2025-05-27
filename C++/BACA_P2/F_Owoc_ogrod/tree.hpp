@@ -1,26 +1,15 @@
 //Yaroslav Kolesnik
 
-#ifndef TREE_HPP
-#define TREE_HPP
-#include "branch.hpp"
 #include <cstddef>
+class BRANCH_CLASS;
 class GARDEN_CLASS;
 
 struct NODE_TREE {
     BRANCH_CLASS* data;
     NODE_TREE* next;
 
-    NODE_TREE() : data(NULL), next(NULL) {}
-    ~NODE_TREE() {
-        if (data != NULL) {
-            delete data;
-            data = NULL;
-        }
-        if (next != NULL) {
-            delete next;
-            next = NULL;
-        }
-    }
+    NODE_TREE();
+    ~NODE_TREE();
 };
 
 class TREE_CLASS {
@@ -61,5 +50,3 @@ public:
 
     BRANCH_CLASS* getBranchPointer(unsigned int on_tree_height_index);
 };
-
-#endif // TREE_HPP

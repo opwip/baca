@@ -1,0 +1,135 @@
+V "GNAT Lib v13"
+M P W=b
+P ZX
+
+RN
+RV NO_DELAY
+RV NO_FIXED_POINT
+RV NO_IO
+RV NO_RELATIVE_DELAY
+RV NO_TASK_HIERARCHY
+RV NO_TASKING
+RV NO_DEFAULT_INITIALIZATION
+RV NO_DYNAMIC_SIZED_OBJECTS
+RV MAX_TASKS=1+
+
+U test_main%b		test_main.adb		78249504 NE OO SU
+W ada%s			ada.ads			ada.ali
+Z ada.calendar.delays%s	a-caldel.adb		a-caldel.ali
+W ada.integer_text_io%s	a-inteio.ads		a-inteio.ali
+Z ada.strings.text_buffers%s  a-sttebu.adb	a-sttebu.ali
+W ada.text_io%s		a-textio.adb		a-textio.ali
+W rozwiazanie%s		rozwiazanie.adb		rozwiazanie.ali
+Z system%s		system.ads		system.ali
+Z system.concat_2%s	s-conca2.adb		s-conca2.ali
+Z system.soft_links%s	s-soflin.adb		s-soflin.ali
+Z system.tasking%s	s-taskin.adb		s-taskin.ali
+Z system.tasking.rendezvous%s  s-tasren.adb	s-tasren.ali
+Z system.tasking.stages%s  s-tassta.adb		s-tassta.ali
+
+D ada.ads		20240521074738 76789da1 ada%s
+D a-calend.ads		20240904144414 e6961b4c ada.calendar%s
+D a-caldel.ads		20240521074737 9f20b83d ada.calendar.delays%s
+D a-except.ads		20240521074738 2a7d8d70 ada.exceptions%s
+D a-finali.ads		20240521074738 bf4f806b ada.finalization%s
+D a-inteio.ads		20240521074738 f64b89a4 ada.integer_text_io%s
+D a-ioexce.ads		20240521074738 40018c65 ada.io_exceptions%s
+D a-reatim.ads		20240521074737 b89a10c3 ada.real_time%s
+D a-stream.ads		20240521074738 119b8fb3 ada.streams%s
+D a-string.ads		20240521074738 90ac6797 ada.strings%s
+D a-sttebu.ads		20240521074738 f1ad67a2 ada.strings.text_buffers%s
+D a-stuten.ads		20240521074738 c6ced0ae ada.strings.utf_encoding%s
+D a-tags.ads		20240521074738 9eaa38c6 ada.tags%s
+D a-textio.ads		20240521074738 5c2c6153 ada.text_io%s
+D a-tiinio.ads		20240521074738 e58fa6fb ada.text_io.integer_io%s
+D a-unccon.ads		20240521074738 0e9b276f ada.unchecked_conversion%s
+D interfac.ads		20240521074738 15f799c2 interfaces%s
+D i-c.ads		20240521074738 5c5a6c17 interfaces.c%s
+D i-cstrea.ads		20240521074738 e53d8b8e interfaces.c_streams%s
+D rozwiazanie.ads	20250613162725 b62ca0d0 rozwiazanie%s
+D system.ads		20240521074738 426dafb8 system%s
+D s-atacco.ads		20240521074738 903317eb system.address_to_access_conversions%s
+D s-c_time.ads		20240904144414 535885c5 system.c_time%s
+D s-conca2.ads		20240521074738 b5fb73f7 system.concat_2%s
+D s-crtl.ads		20240521074738 8a0692f8 system.crtl%s
+D s-exctab.ads		20240521074738 91bef6ef system.exception_table%s
+D s-ficobl.ads		20240521074738 dc5161d4 system.file_control_block%s
+D s-finroo.ads		20240521074738 4ff27390 system.finalization_root%s
+D s-linux.ads		20240904144414 96312dab system.linux%s
+D s-multip.ads		20240521074738 38ac9f73 system.multiprocessors%s
+D s-oscons.ads		20240904144414 ece202eb system.os_constants%s
+D s-osinte.ads		20240904144414 a8f58951 system.os_interface%s
+D s-parame.ads		20240904144414 1f39ba92 system.parameters%s
+D s-putima.ads		20240521074738 17291fe4 system.put_images%s
+D s-secsta.ads		20240521074738 578279f5 system.secondary_stack%s
+D s-soflin.ads		20240521074738 df77073e system.soft_links%s
+D s-stache.ads		20240521074738 0b81c1fe system.stack_checking%s
+D s-stausa.ads		20240521074738 5be75682 system.stack_usage%s
+D s-stalib.ads		20240521074738 1c9580f6 system.standard_library%s
+D s-stoele.ads		20240521074738 ab5468e4 system.storage_elements%s
+D s-stoele.adb		20240521074738 8f5a9db6 system.storage_elements%b
+D s-tasinf.ads		20240521074737 528dde74 system.task_info%s
+D s-taspri.ads		20240521074737 4ec891e7 system.task_primitives%s
+D s-taprop.ads		20240521074737 6eefbe12 system.task_primitives.operations%s
+D s-taskin.ads		20240521074737 0ec7ab0b system.tasking%s
+D s-taprob.ads		20240521074737 acd6094d system.tasking.protected_objects%s
+D s-tpoben.ads		20240521074737 60ad3dae system.tasking.protected_objects.entries%s
+D s-tasren.ads		20240521074737 a67a9949 system.tasking.rendezvous%s
+D s-tassta.ads		20240521074737 cca55c94 system.tasking.stages%s
+D s-traent.ads		20240521074738 c81cbf8c system.traceback_entries%s
+D s-unstyp.ads		20240521074738 fa2a7f59 system.unsigned_types%s
+D s-wchcon.ads		20240521074738 d9032363 system.wch_con%s
+D test_main.adb		20250613201143 646fdd23 test_main%b
+G a e
+G c Z b b [test_main standard 5 11 none]
+G r s przystan [test_main standard 5 11 none] [przystanVIP rozwiazanie 3 1 none]
+G r q none [test_main standard 5 11 none] [przystan rozwiazanie 3 11 none]
+G r r none [test_main standard 5 11 none] [kasa rozwiazanie__przystan 4 9 none]
+G r r none [test_main standard 5 11 none] [wejdz rozwiazanie__przystan 5 9 none]
+G r r none [test_main standard 5 11 none] [zejdz rozwiazanie__przystan 6 9 none]
+X 1 ada.ads
+16K9*Ada 20e8 53|2r6 2r31 3r6 3r31
+X 6 a-inteio.ads
+18K13*Integer_Text_IO[15|46] 53|3w10 3r35
+X 14 a-textio.ads
+58K13*Text_IO 787e16 53|2w10 2r35
+88I12*Field{integer}
+282U14*New_Line 53|126s4 129s4
+519U14*Put 53|19s7 20s7 21s7 124s4 127s4
+566U14*Put_Line 53|23s10 26s10 36s7 66s4 67s4 77s7 97s7 112s7 123s4
+X 15 a-tiinio.ads
+83U14*Put 53|125s4[6|18] 128s4[6|18]
+85i7 Width{14|88I12} 53|125r23[6|18] 128r23[6|18]
+X 20 rozwiazanie.ads
+1K9*Rozwiazanie 9e16 53|1w6 33r18 74r18 94r18 109r18
+3T11*Przystan 7e13 53|33r30 74r30 94r30 109r30
+4Y9 Kasa 53|40s19 44s19 48s19 80s16 81s16 82s16 86s16 100s16 101s16 114s16
+5Y9 Wejdz 53|42s19 46s19 50s19
+6Y9 Zejdz 53|53s19 55s19 57s19
+X 38 s-stausa.ads
+207U14*Initialize 208i<c,__gnat_stack_usage_initialize>22
+272U14*Output_Results 276i<c,__gnat_stack_usage_output_results>22
+X 53 test_main.adb
+5U11*Test_Main 5b11 130l5 130t14
+7i4 CHILD_PRICE{integer} 40r25 44r25
+8i4 NORMAL_PRICE{integer} 80r22 81r22 82r22 86r22
+9i4 VIP_PRICE{integer} 48r25 100r22 101r22
+10i4 EMPLOYEE_PRICE{integer} 114r22
+13i4 Tests_Passed{natural} 24m10 24r26 125r9
+14i4 Tests_Failed{natural} 27m10 27r26 128r9
+17U14 Print_Result 17b14 17>28 17>48 29l8 29t20 41s10 43s10 45s10 47s10 49s10
+. 51s10 54s10 56s10 58s10 83s7 87s7 102s7 115s7 118s7
+17a28 Test_Name{string} 20r12
+17b48 Passed{boolean} 22r10
+32U14 Run_Test_Group 32b14 32>30 63l8 63t22 70s4
+32a30 Group_Name{string} 36r43 41r24 43r24 45r24 47r24 49r24 51r24 54r24
+. 56r24 58r24
+33t7 Przystan{20|3T11} 40r10 42r10 44r10 46r10 48r10 50r10 53r10 55r10 57r10
+34i7 Bilet{integer} 40m38 41r65 44m38 45r65 48m36 49r56
+74t7 Przystan{20|3T11} 80r7 81r7 82r7 86r7
+75i7 Bilet{integer} 80m36 81m36 82m36 83r62 86m36 87r62
+94t7 Przystan{20|3T11} 100r7 101r7
+95i7 Bilet{integer} 100m33 101m33 102r61
+109t7 Przystan{20|3T11} 114r7
+110i7 Bilet{integer} 114m38 115r63
+

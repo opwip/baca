@@ -9,6 +9,7 @@ def solve_agent(n, k, edges):
     
 
     for step in range(k + 1):
+        
         curr = prev[:]  
         
 
@@ -17,7 +18,7 @@ def solve_agent(n, k, edges):
                 if curr[b] > prev[a] + c:
                     curr[b] = prev[a] + c
         
-        prev = curr
+        prev = curr 
     
     return prev[n-1] if prev[n-1] != INF else -1
 

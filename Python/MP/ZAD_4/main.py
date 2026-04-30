@@ -1,4 +1,5 @@
 #Yaroslav Kolesnik
+#Mediana median magig fives REWORK
 def slicer(arr, l, r):
     
     x = arr[r]
